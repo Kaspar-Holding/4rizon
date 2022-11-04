@@ -62,6 +62,8 @@ Route::group(['middleware' =>[
     Route::get('/fetch_dha_profile/{id}', [UserController::class, 'fetch_dha_profile'])->name('fetch_dha_profile');
     Route::get('/register_new_user', [UserController::class, 'register_new_user'])->name('register_new_user');
     Route::post('/save_user',[UserController::class, 'save_user'])->name('save_user');
+    Route::get('/fetch_dj_dha_profile/{id}', [UserController::class, 'fetch_dj_dha_profile'])->name('fetch_dj_dha_profile');
+
     
     
     //DJ Routes
@@ -220,6 +222,7 @@ Route::group(['middleware' =>[
 Route::get('/', [WebsiteController::class, 'get_data'])->name('home');
 Route::get('/club', [WebsiteController::class, 'get_club'])->name('club_special');
 Route::get('/privacy_policy', [WebsiteController::class, 'privacy_policy'])->name('privacy_policy');
+Route::get('/terms', [WebsiteController::class, 'terms'])->name('terms');
 Route::get('/booth', [WebsiteController::class, 'get_booth'])->name('booth');
 Route::get('/gallery', [WebsiteController::class, 'get_gallery'])->name('gallery');
 Route::get('/club_events', [WebsiteController::class, 'get_clubevent'])->name('club_events');

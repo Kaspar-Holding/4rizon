@@ -42,6 +42,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register_user' , [UserController::class, 'register_user'])->name('register_user');
     Route::post('/login_user' ,  [UserController::class, 'user_login'])->name('login_user');
+    Route::post('/user_delete' ,  [UserController::class, 'user_delete'])->name('user_delete');
      Route::post('/email_verify_mail' , [UserController::class, 'email_verify_mail'])->name('email_verify_mail');
     Route::post('/register_test_user' , [UserController::class, 'register_test_user'])->name('register_test_user');
     Route::post('/email_verification' ,  [UserController::class, 'email_verification'])->name('email_verification');
@@ -138,6 +139,7 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     
     Route::post('/register_djuser' , [DjAppController::class, 'register_djuser'])->name('register_djuser');
     Route::post('/login_djuser' , [DjAppController::class, 'login_djuser'])->name('login_djuser');
+    Route::post('/dj_delete' , [DjAppController::class, 'dj_delete'])->name('dj_delete');
     Route::get('/music_genre' , [DjAppController::class, 'music_genre'])->name('music_genre');
     Route::get('/dj_agreement' , [DjAppController::class, 'dj_agreement'])->name('dj_agreement');
     Route::post('/dj_agreement_status_on' , [DjAppController::class, 'dj_agreement_status_on'])->name('dj_agreement_status_on');
@@ -151,7 +153,7 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::post('/register_device' ,  [DjAppController::class, 'register_device'])->name('register_device');
     Route::post('/dj_booking_id' ,  [DjAppController::class, 'dj_booking_id'])->name('dj_booking_id');
     Route::post('/dj_notifications', [DjAppController::class, 'dj_notifications'])->name('dj_notifications');
-    Route::post('/email_verify_mail_dj', [DjAppController::class, 'email_verify_mail'])->name('email_verify_mail');
+    Route::post('/email_verify_mail_dj', [DjAppController::class, 'email_verify_mail_dj'])->name('email_verify_mail_dj');
     Route::post('/one_event' ,  [DjAppController::class, 'one_event'])->name('one_event');
     Route::post('/dj_notification_status_on' ,  [DjAppController::class, 'dj_notification_status_on'])->name('dj_notification_status_on');
     

@@ -21,6 +21,9 @@ class WebsiteController extends Controller
     function privacy_policy(){
         return view("privacy_policy");
     }
+    function terms(){
+        return view("terms");
+    }
     function get_booth(){
         return view("booth");
     }

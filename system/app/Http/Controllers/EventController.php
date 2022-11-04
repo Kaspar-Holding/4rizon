@@ -155,6 +155,7 @@ class EventController extends Controller
             $return_code = str::random(30);
             $tomorrow = date("Y-m-d H:i:s", strtotime('+1 day'));
             $event = new Bookings;
+            $event->booking_type          = "1";
             $event->event_id              = $req->event_id;
             $event->user_id               = $req->user_id;
             $event->booking_id            = $return_code;
@@ -176,13 +177,13 @@ class EventController extends Controller
         $event_data = Event::where('created_at','>=',$date)->get();
         $bookings   = Bookings::where('user_id',$id)->get();
         if(!empty($bookings)){
-            return response()->json(['event_list' =>$event_data,'booking_list' =>$bookings,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+            return response()->json(['event_list' =>$event_data,'booking_list' =>$bookings,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
         }
-        return response()->json(['event_list' =>$event_data,'booking_list' =>[],'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['event_list' =>$event_data,'booking_list' =>[],'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     function single_event_api($id){
         $event = Event::find($id);
-         return response()->json(['event' =>$event,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+         return response()->json(['event' =>$event,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     function get_bookings($id){
       

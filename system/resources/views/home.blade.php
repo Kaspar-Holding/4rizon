@@ -22,7 +22,7 @@
   <meta name="twitter:title" content="">
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="">
-
+  <meta name="facebook-domain-verification" content="8olnxhd8hyskgthxsxazra6p39aw4l" />
   <!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
   <link href="favicon.ico" rel="shortcut icon">
 
@@ -83,6 +83,11 @@
     width: 30%;
   	margin: auto;
  }
+ #services {
+  background: url("../image/Background.png") fixed center center;
+  background-size: cover;
+  padding: 5px 0 60px 0;
+}
  </style>
 </head>
 
@@ -91,7 +96,7 @@
     <div class="container">
         <div class="row ">
             <div class="col-sm-12 para1" style="text-align: center; padding-top:10px;">
-                <img src="image/logo.png" height="300px" width="300px" >
+                <img src="image/Logo.png" height="300px" width="300px" >
                 <p><span class="fontt">4RIZON IS COMING SOON!</span>
                 
                 <p class="">TWO DANCE FLOORS WITH STATE-OF-THE-ART SOUND SYSTEMS AND <br> BRAND-NEW VISUAL EFFECTS <hr class="hr">

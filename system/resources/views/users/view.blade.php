@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="row p-3">
-                            <div class="col-6">
+                            <div class="col-6"> 
                                 <h5>Date of Birth:</h5>
                             </div>
                             <div class="col-6">
@@ -180,24 +180,9 @@
                                         </div>
                                     </div>
                                     <div class="row p-3">
+                                       
                                         <div class="col-6">
-                                            <h5>Address:</h5>
-                                        </div>
-                                        <div class="col-6">
-                                            <h5>{{ $dha_address->addressLine1 }}
-                                                @if (!is_null($dha_address->addressLine2))
-                                                , {{ $dha_address->addressLine2 }}
-                                                @endif
-                                                @if (!is_null($dha_address->addressLine3))
-                                                , {{ $dha_address->addressLine3 }}
-                                                @endif
-                                                @if (!is_null($dha_address->addressLine4))
-                                                , {{ $dha_address->addressLine4 }}
-                                                @endif
-                                                @if (!is_null($dha_address->addressLine5))
-                                                , {{ $dha_address->addressLine5 }}
-                                                @endif
-                                            </h5>
+                                           
                                             {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
                                         </div>
                                     </div>
@@ -206,7 +191,7 @@
                                 <div class="row p-3">
                                     <div class="col-12">
                                         <div class="d-flex justify-content-center">
-                                            <a href="/fetch_dha_profile/{{$user->user_id}}" type="submit" class="btn btn-primary link-light col-sm-4">Fetch DHA Information</a>
+                                            <a href="{{route('fetch_dha_profile',$user->user_id)}}" type="submit" class="btn btn-primary link-light col-sm-4">Fetch DHA Information</a>
                                         </div>
                                     </div>
                                 </div>

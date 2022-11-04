@@ -18,6 +18,9 @@ use Illuminate\Support\Str;
 use App\Models\user_wallets;
 use App\Models\Purchase;
 use App\UserEmails;
+use App\Models\DjUser;
+use App\Models\Dj_Dha_Address;
+use App\Models\Dj_Dha_profile;
 use App\Models\EventAttend;
 use App\Models\Dha_profile;
 use App\Models\Dha_Address;
@@ -565,6 +568,12 @@ class UserController extends Controller
         }
     return view("users.invalid",['users_list'=>$users_data,]);
   }
+  function user_delete(){
+    $type = "application/json";
+    $result = json_decode(file_get_contents("php://input"), true);
+    $dj = user_infos::where('user_id', '=',$result['id'])->delete();
+    return response()->json(["message" => "User Deleted"],200);
+  }
   function view_user_details(Request $req){
     $id = $req->id;
     $user_data = user_infos::where('user_id','=',$id)->get();
@@ -822,7 +831,7 @@ class UserController extends Controller
         $data_array['Username'] = "Jynx";
         $data_array['Password'] = "Pass12345";
         $data_array['TransactionReference'] = "Your internal reference";
-        $user_infos = user_infos::where('user_infos.user_id','=',$req->id)->first();
+        $user_infos = user_infos::where('user_id','=',$req->id)->first();
         $data_array['idNumber'] = $user_infos->identification_num;
         $result = json_decode(file_get_contents("php://input"), true);
         // $make_call = array();
@@ -853,21 +862,76 @@ class UserController extends Controller
         $dha_info->aliveStatus          = $make_call['aliveStatus'];
         $dha_info->dha_api_status       = $make_call['clientFeedback']['clientErrorInfo'];
         $dha_info->save();
-        $make_call = json_decode($this->callContactInfoAPI(json_encode($data_array)),true);
-        $dha_address = new Dha_Address;
-        $dha_address->user_id              = $req->id;
-        $dha_address->identification_num   = $user_infos->identification_num;
-        $dha_address->addressLine1         = $make_call['addressLine1'];
-        $dha_address->addressLine2         = $make_call['addressLine2'];
-        $dha_address->addressLine3         = $make_call['addressLine3'];
-        $dha_address->addressLine4         = $make_call['addressLine4'];
-        $dha_address->addressLine5         = $make_call['addressLine5'];
-        $dha_address->save();
+
         // return redirect()->to('view_user_details/'.$req->id)->with('success','User Status Changed Successfully!');
-        return Redirect::to("/".$req->id)->with('success','User Status Changed Successfully!');
+        return Redirect::to("view_user_details/".$req->id)->with('success','User Status Changed Successfully!');
     }
     else{            
-        return Redirect::to("/".$req->id)->with('success','Already Exists!');
+        return Redirect::to("view_user_details/".$req->id)->with('success','Already Exists!');
+    }
+      # code...
+  }
+
+  public function fetch_dj_dha_profile(Request $req)
+  {
+    $dha_info = Dj_Dha_profile::where('dj_id','=',$req->id)->get();
+    if (sizeof($dha_info) == 0){
+        $data_array = array();
+
+        $data_array['Token'] = "9a88abd8-2f4a-4f6f-bbcf-22755254f89b";
+        $data_array['Username'] = "Jynx";
+        $data_array['Password'] = "Pass12345";
+        $data_array['TransactionReference'] = "Your internal reference";
+        $user_infos = DjUser::where('id','=',$req->id)->first();
+
+        if($user_infos->southAfrican_id != null){
+          $data_array['idNumber'] = $user_infos->southAfrican_id;
+          // dd($user_infos);die();
+
+        }
+        else{
+          $data_array['idNumber'] = $user_infos->passport_id;
+        }
+        $result = json_decode(file_get_contents("php://input"), true);
+        // $make_call = array();
+        // $make_call['personName'] = "KANZA";
+        // $make_call['personSurname'] = "NAJAM UL HUDA";
+        // $make_call['gender'] = "Female";
+        // $make_call['dateOfBirth'] = "1986-08-12";
+        // $make_call['aliveStatus'] = "ALIVE";
+        $make_call = json_decode($this->callCoreInfoAPI(json_encode($data_array)),true);
+        // $make_call = json_decode('{
+        //     "personName": "KANZA",
+        //     "personSurname": "NAJAM UL HUDA",
+        //     "gender": "Female",
+        //     "dateOfBirth": "1986-08-12",
+        //     "aliveStatus": "ALIVE",
+        //     "clientFeedback": {
+        //         "systemErrorInfo": "0",
+        //         "clientErrorInfo": "0"
+        //     }
+        // }', true);
+        $dha_info = new Dj_Dha_profile;
+        $dha_info->dj_id              = $req->id;
+        if($user_infos->southAfrican_id){
+          $dha_info->identification_num = $user_infos->southAfrican_id;
+        }
+        else{
+          $dha_info->identification_num = $user_infos->passport_id;
+        }
+        $dha_info->personName           = $make_call['personName'];
+        $dha_info->personSurname        = $make_call['personSurname'];
+        $dha_info->gender               = $make_call['gender'];
+        $dha_info->dateOfBirth          = $make_call['dateOfBirth'];
+        $dha_info->aliveStatus          = $make_call['aliveStatus'];
+        $dha_info->dha_api_status       = $make_call['clientFeedback']['clientErrorInfo'];
+        $dha_info->save();
+       
+        // return redirect()->to('view_user_details/'.$req->id)->with('success','User Status Changed Successfully!');
+        return Redirect::to("edit_djadmin_details/".$req->id)->with('success','User Status Changed Successfully!');
+    }
+    else{            
+        return Redirect::to("edit_djadmin_details/".$req->id)->with('success','Already Exists!');
     }
       # code...
   }

@@ -59,6 +59,83 @@
                     <option value="0" @if($user['dj_status'] == '0') selected @endif>Not Approved</option>
                   </select>
                 </div>
+                @if ( $user->identification_type == 1)
+                            <div class="full graph_head">
+                                <div class="heading1 margin_0">
+                                    <h2>DHA Detail</h2>
+                                </div>
+                            </div>               
+                          @if (($dj_dha_profile))
+                          
+                              @if ($dj_dha_profile->dha_api_status == -1)
+                                  <div class="row p-3">
+                                      <div class="col-6">
+                                          <h5>Status:</h5>
+                                      </div>
+                                      <div class="col-6">
+                                          <h5>Invalid credentials</h5>
+                                          {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                      </div>
+                                  </div>
+                              @else 
+                                  <div class="row p-3">
+                                      <div class="col-6">
+                                          <h5>Name:</h5>
+                                      </div>
+                                      <div class="col-6">
+                                          <h5>{{ $dj_dha_profile->personName }} {{ $dj_dha_profile->personSurname }}</h5>
+                                          {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                      </div>
+                                  </div>
+                                  <div class="row p-3">
+                                      <div class="col-6">
+                                          <h5>Gender:</h5>
+                                      </div>
+                                      <div class="col-6">
+                                          <h5>{{ $dj_dha_profile->gender }}</h5>
+                                          {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                      </div>
+                                  </div>
+                                  <div class="row p-3">
+                                      <div class="col-6">
+                                          <h5>Date of Birth:</h5>
+                                      </div>
+                                      <div class="col-6">
+                                          <h5>{{ $dj_dha_profile->dateOfBirth }}</h5>
+                                          {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                      </div>
+                                  </div>
+                                  <div class="row p-3">
+                                      <div class="col-6">
+                                          <h5>Status:</h5>
+                                      </div>
+                                      <div class="col-6">
+                                          <h5>{{ $dj_dha_profile->aliveStatus }}</h5>
+                                          {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                      </div>
+                                  </div>
+                                  <div class="row p-3">
+                                     
+                                      <div class="col-6">
+                                        
+                                          <h5>
+                                          </h5>
+                                          {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                      </div>
+                                  </div>
+                              @endif
+                          @else
+                              <div class="row p-3">
+                                  <div class="col-12">
+                                      <div class="d-flex justify-content-center">
+                                          <a href="{{route('fetch_dj_dha_profile',$user->id)}}" type="submit" class="btn btn-primary link-light col-sm-4">Fetch DHA Information</a>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                              <hr>
+                          @endif
+                      @endif
                 <br>
                 <br>
                 <div class="row" style="padding-left:30px; padding-top:10px;">

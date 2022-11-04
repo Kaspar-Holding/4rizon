@@ -49,6 +49,19 @@ class SplashController extends Controller
         $splash->save();
         return redirect('/splash_list')->with('success','Splash Details Updated Successfully!');
     }
+    function update_splash(Request $req){
+        $splash                               = Splash::find($req->id);
+        $splash->splash_name                  = $req->splash_name;
+        if ($req->hasFile('splash_image')) {
+            $splashPic             = time().'.'.$req->splash_image->extension();  
+            $req->splash_image->move(public_path('image'), $splashPic);
+            $splash->splash_image = $splashPic;
+        }
+        $splash->splash_short_description    = $req->splash_short_description;
+        $splash->splash_description          = $req->splash_description   ;        
+        $splash->save();
+        return redirect('/splash_list')->with('success','Splash Details Updated Successfully!');
+    }
     public function delete_splash ($id) {
         if(Splash::where('id', $id)->exists()) {
             $splash= Splash::where('id', $id)->delete();
@@ -61,10 +74,10 @@ class SplashController extends Controller
     // api's
     function splash_list_api(){
         $splash_data = Splash::all();
-        return response()->json(['splash_list' =>$splash_data,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['splash_list' =>$splash_data,'image_url'=>'https://www.4rizon.com/image/', 'success' => true], 200);
     }
     function single_splash_api($id){
         $splash = Splash::find($id);
-        return response()->json(['splash' =>$splash,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['splash' =>$splash,'image_url'=>'https://www.4rizon.com/image/', 'success' => true], 200);
     }
 }

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>JYNX</title>
+  <title>4RIZON</title>
    <link rel="shortcut icon" href="images/logo.png" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
@@ -61,7 +61,7 @@
         <!--<h1><a href="#hero">Header 1</a></h1>-->
       <!-- </div> -->
 
-      <nav id="nav-menu-container">
+      <!-- <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="{{ route('home')}}">HOME</a></li>
           <li><a href="{{ route('club_events')}}">EVENTS CALENDAR</a></li>
@@ -87,7 +87,7 @@
           </li> -->
           <li><a  class="vip_button" href="#">BOOK A VIP BOOTH</a></li>
         </ul>
-      </nav>
+      </nav> -->
       <!-- #nav-menu-container -->
     </div>
   </header>
@@ -111,31 +111,31 @@
         <div class="carousel-inner event_section">
           <div class="carousel-item active">
             <div class="text-center col-lg-12 col-md-12 col-sm-6 event"><h1>Privacy Policy</h1>
-            <p class="text-justify">JYNX is committed to safeguarding your privacy online. This Privacy Policy, which is part of our overall Terms and Conditions of Use, is designed to provide you with information about how we collect, store and use personally identifiable information obtained through the JYNX Website and Mobile App. JYNX does not collect personal information about individuals, such as names and mailing or email addresses, unless the individual knowingly provides it. In choosing to provide this information, you agree to be bound by the terms and conditions of JYNX’s Privacy Policy. JYNX’s Privacy Policy is outlined below. Please note that we review our privacy practices from time to time, and that these practices are subject to change. We ask that our visitors periodically review this page to ensure familiarity with the most current version of our privacy statement. If you have any questions or comments about our privacy practices, you can contact us at media@JYNX.com (please include the word “privacy” in the subject line).</p>
+            <p class="text-justify">4RIZON is committed to safeguarding your privacy online. This Privacy Policy, which is part of our overall Terms and Conditions of Use, is designed to provide you with information about how we collect, store and use personally identifiable information obtained through the 4RIZON Website and Mobile App. 4RIZON does not collect personal information about individuals, such as names and mailing or email addresses, unless the individual knowingly provides it. In choosing to provide this information, you agree to be bound by the terms and conditions of 4RIZON’s Privacy Policy. 4RIZON’s Privacy Policy is outlined below. Please note that we review our privacy practices from time to time, and that these practices are subject to change. We ask that our visitors periodically review this page to ensure familiarity with the most current version of our privacy statement. If you have any questions or comments about our privacy practices, you can contact us at media@4RIZON.com (please include the word “privacy” in the subject line).</p>
             <hr />
             <h1>Usage Data</h1>
             <p class="text-justify">When you visit the Site our servers automatically collect information about the IP address from which you access the site (an IP address is the number that is automatically assigned to your computer whenever you are surfing the web), the pages you visit, the date and time you access our site, and the type of hrowser and operating system that you are using. We use this information to better understand how the Site is used. This research is compiled and analysed on an aggregated basis.</p>
             <hr />
             <h1>Email Content</h1>
-            <p class="text-justify">As a service, JYNX offers visitors the opportunity to subscribe to the JYNX Newsletter. If you choose to join, you will receive newsletters and/or information on the topics you choose. You may unsubscribe at any time. Any information you choose to provide may be used for marketing and promotional purposes. JYNX wishes to assure subscribers that email addresses are never shared, rented or sold to third parties. However, we may use cookies to track the pages on our site visited by subscribers to our email list.</p>
+            <p class="text-justify">As a service, 4RIZON offers visitors the opportunity to subscribe to the 4RIZON Newsletter. If you choose to join, you will receive newsletters and/or information on the topics you choose. You may unsubscribe at any time. Any information you choose to provide may be used for marketing and promotional purposes. 4RIZON wishes to assure subscribers that email addresses are never shared, rented or sold to third parties. However, we may use cookies to track the pages on our site visited by subscribers to our email list.</p>
             <hr />
             <h1>Users under eighteen </h1>
-            <p class="text-justify">JYNX does not solicit personal information from children. Visitors under eighteen years of age should remember they are not prohibited to use the application.</p>
+            <p class="text-justify">4RIZON does not solicit personal information from children. Visitors under eighteen years of age should remember they are not prohibited to use the application.</p>
             <hr />
             <h1>Cookies </h1>
             <p class="text-justify">Cookies are small files of information that are stored on your computer's hard drive by your Web hrowser. The cookies we use do not contain any personal information. Most Web hrowsers automatically accept cookies, but you can change the preferences of your hrowser so that it does not accept or blocks them. If you block cookies you may not be able to use certain site features or functions.</p>
             <hr />
             <h1>Data Sharing </h1>
-            <p class="text-justify">JYNX does not share any of the information provided by its customers with any 3rd party. We do not sell, exchange, share, or rent any lists to political parties or candidates for political office. Credit card information is not made available to any third party and is considered completely confidential.</p>
+            <p class="text-justify">4RIZON does not share any of the information provided by its customers with any 3rd party. We do not sell, exchange, share, or rent any lists to political parties or candidates for political office. Credit card information is not made available to any third party and is considered completely confidential.</p>
             <hr />
             <h1>Security</h1>
-            <p class="text-justify">JYNX’s secure server software uses industry-standard Secure Socket Layer (SSL) encryption technology. SSL encodes your personal information, including credit card number, name, and address, as it travels over the Internet so that all transactions are secure.</p>
+            <p class="text-justify">4RIZON’s secure server software uses industry-standard Secure Socket Layer (SSL) encryption technology. SSL encodes your personal information, including credit card number, name, and address, as it travels over the Internet so that all transactions are secure.</p>
             <hr />
             <h1>Users from Outside the South Africa</h1>
-            <p class="text-justify">This Application is operated and controlled by JYNX in the South Africa and Pakistan. By using the application, you:</p>
+            <p class="text-justify">This Application is operated and controlled by 4RIZON in the South Africa and Pakistan. By using the application, you:</p>
             <ul class="text-left">
               <li><p>Acknowledge that your information will be processed as described in the Privacy Policy;</p></li>
-              <li><p>Consent to having your information transferred to JYNX and/or our third party service providers, in the South Africa or elsewhere, as described in the Privacy Policy</p></li>
+              <li><p>Consent to having your information transferred to 4RIZON and/or our third party service providers, in the South Africa or elsewhere, as described in the Privacy Policy</p></li>
             </ul> 
             <p class="text-justify">If you are an EU national and reside in the EU, or are a non-EU national residing in the EU, we will transfer your personal data to the EU in accordance with EU data protection law requirements and/or by using standard contractual clauses that have been approved by the European Commission.  Such a transfer may also take place with your explicit consent and/or if necessary in order to perform a contract with you or fulfill your request.</p>
             <hr />
@@ -151,7 +151,7 @@
             <p class="text-justify">lodge a complaint with your national data protection regulator if you feel that your personal data has been unlawfully processed.</p>
             <hr />
             <h1>Controller</h1>
-            <p class="text-justify">If you are an EU national and reside in the EU, or are a non-EU national residing in the EU, the data controller (as defined under EU data protection law) will be JYNX server located in South Africa.</p>
+            <p class="text-justify">If you are an EU national and reside in the EU, or are a non-EU national residing in the EU, the data controller (as defined under EU data protection law) will be 4RIZON server located in South Africa.</p>
             
           </div>
           </div>
@@ -183,7 +183,7 @@
         </svg>      
         </div>
         <div class="col-sm-4 para" style="align-self:center; padding-top:10px;">
-            <p>JYNXNightClub@All Rights Reserved</p>
+            <p>4RIZONNightClub@All Rights Reserved</p>
         </div>
         <div class="col-sm-4" style="padding-top:6px;">
             <div class="social-icons">

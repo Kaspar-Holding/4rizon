@@ -220,6 +220,12 @@ Route::group(['middleware' =>[
     
 );
 Route::get('/', [WebsiteController::class, 'get_data'])->name('home');
+Route::get('/homepage', [WebsiteController::class, 'get_data_homepage'])->name('homepage');
+Route::get('/about-us', [WebsiteController::class, 'get_about_us'])->name('about-us');
+Route::get('/book-event', [WebsiteController::class, 'get_book_event'])->name('book-event');
+Route::get('/contact-us', [WebsiteController::class, 'get_contact_us'])->name('contact-us');
+Route::get('/event-page', [WebsiteController::class, 'get_event_page'])->name('event-page');
+Route::get('/gallery1', [WebsiteController::class, 'get_gallery1'])->name('gallery1');
 Route::get('/club', [WebsiteController::class, 'get_club'])->name('club_special');
 Route::get('/privacy_policy', [WebsiteController::class, 'privacy_policy'])->name('privacy_policy');
 Route::get('/terms', [WebsiteController::class, 'terms'])->name('terms');

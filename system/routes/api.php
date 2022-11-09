@@ -114,6 +114,7 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     
     Route::get('/profile_user/{id}' ,  [UserController::class, 'profile_user'])->name('profile_user');
     Route::post('/update_profile' ,  [UserController::class, 'update_profile'])->name('update_profile');
+    Route::post('/upload_user_files' ,  [UserController::class, 'upload_user_files'])->name('upload_user_files');
     Route::post('/update_profile_picture' ,  [UserController::class, 'update_profile_picture'])->name('update_profile_picture');
     
     Route::get('/get_available_coins/{id}' ,  [UserController::class, 'get_available_coins'])->name('get_available_coins');

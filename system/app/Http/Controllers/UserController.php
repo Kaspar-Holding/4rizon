@@ -430,6 +430,49 @@ class UserController extends Controller
     
     return view("reset_password");
   }
+  function upload_user_files(Request $req){
+    $type = "application/json";
+    $result = json_decode(file_get_contents("php://input"), true);
+    $user_infos = user_infos::where('email','=',$req->user_id)->get();
+    if (sizeof($user_infos) > 0){
+      return redirect('/users_list')->with('error','Email already exists!');
+    }else{
+      $user_infosPic = "";
+      if ($req->hasFile('picture')) {
+        $user_infosPic             = time().'.'.$req->picture->extension();
+        $req->picture->move('image', $user_infosPic);
+      }
+     
+      if ($req->hasFile('front_id')) {
+     
+        $user_infosFrontId             = time().'.'.$req->front_id->extension();
+        $req->front_id->move('image', $user_infosFrontId);
+        
+      }
+      if ($req->hasFile('back_id')) {
+        $user_infosBackId           = time().'.'.$req->back_id->extension();
+        $req->back_id->move('image', $user_infosBackId);
+      }
+      if(!empty($user_infosPic)){
+        user_infos::where('user_id','=',$req->id)->update([
+          'picture'=> $user_infosPic,
+        ]);
+      }
+      if(!empty($user_infosFrontId)){
+        user_infos::where('user_id','=',$req->id)->update([
+          'front_id' => $user_infosFrontId,
+        ]);
+      }
+      if(!empty($user_infosBackId)){
+        user_infos::where('user_id','=',$req->id)->update([
+          'back_id'=> $user_infosBackId,
+        ]);
+      }
+      
+      return response()->json(['message' =>"Uploaded Successfully", 'success' => true], 200);
+
+    }
+  }
   function save_user(Request $req){
     $user_infos = user_infos::where('email','=',$req->email)->get();
     if (sizeof($user_infos) > 0){
@@ -942,7 +985,7 @@ class UserController extends Controller
 		//OPTIONS:
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-		curl_setopt($curl, CURLOPT_URL, "https://flexywarebio.com/homeaffairs/getcoreinfo");
+		curl_setopt($curl, CURLOPT_URL, "https://flexywarebio.com/biometric/getdhaidinfo");
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json',));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);

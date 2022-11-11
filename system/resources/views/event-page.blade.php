@@ -15,8 +15,7 @@
   <script type="text/javascript">WebFont.load({  google: {    families: ["Mulish:300,regular,500,600,700,800,900"]  }});</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
   <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-  <link href="images/webclip.png" rel="apple-touch-icon">
+  <link href="images/favicon-32x32.png" rel="shortcut icon" type="image/x-icon">
 </head>
 <body class="body-2">
   <div class="main-section wf-section">
@@ -24,8 +23,8 @@
       <div class="w-container">
         <a href="#" class="w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-5 image-6"></a>
         <nav role="navigation" class="nav-menu-2 w-nav-menu">
-          <a href="{{ route('homepage') }}" aria-current="page" class="nav-link w-nav-link w--current">Home</a>
-          <a href="{{ route('event-page') }}" class="nav-link-2 w-nav-link">Events</a>
+          <a href="{{ route('homepage') }}" aria-current="page" class="nav-link w-nav-link">Home</a>
+          <a href="{{ route('event-page') }}" class="nav-link-2 w-nav-link w--current">Events</a>
           <a href="{{ route('gallery1') }}" class="nav-link-2 w-nav-link">Gallery</a>
           <a href="{{ route('about-us') }}" class="nav-link-2 w-nav-link">About Us</a>
           <a href="{{ route('contact-us') }}" class="nav-link-3 w-nav-link">Contact</a>

@@ -97,11 +97,11 @@ class ItemController extends Controller
     function item_list_api(){
         $category_data = ItemCategory::all();
         $items_data = Item::all();
-        return response()->json(['item_list' =>$items_data,'item_category_list' =>$category_data,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['item_list' =>$items_data,'item_category_list' =>$category_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     function single_item_api($id){
         $item_data = Item::find($id);
-        return response()->json(['item' =>$item_data,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['item' =>$item_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     function get_attributes_and_values_api(){
         $attribute_data = ItemAttributes::all();

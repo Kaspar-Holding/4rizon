@@ -19,7 +19,7 @@
                   <h2></h2>
                 </div>
               </div>
-              <form class="container-fluid" action="/add_user" method="POST" style="padding:30px; padding-bottom:40px;">
+              <form class="container-fluid" action="{{ route('add_user')}}" method="POST" style="padding:30px; padding-bottom:40px;">
                 @csrf
                 <div>
                   <label class="form-label">Name</label>

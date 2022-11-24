@@ -16,7 +16,7 @@
             <div class="white_shd full margin_bottom_30">
               <div class="full graph_head">
               </div>
-              <form class="container-fluid form" action="{{route('create_survey')}}" method="POST" enctype="multipart/form-data">
+              <form class="container-fluid form" action="{{ route('create_survey') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                   <div class="col-md-6">

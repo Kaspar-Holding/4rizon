@@ -8,7 +8,7 @@
                 <h2>{{ $user['name'] }} Edit Details</h2><br>
             </div>
         </div>      
-        <form class="container-fluid" action="/edit_user" method="post">
+        <form class="container-fluid" action="{{ route('edit_user')}}" method="post">
             @csrf
             <div class="row">
                 <div class="col-6">

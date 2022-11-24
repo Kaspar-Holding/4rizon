@@ -24,7 +24,7 @@
                                 <h2>Splash Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_new_splash" class="btn my-button btn-inverse btn-outline-primary">Create Splash</a>
+                                <a href="{{ route('add_new_splash')}}" class="btn my-button btn-inverse btn-outline-primary">Create Splash</a>
                             </div>
                         </div>
                      </div>

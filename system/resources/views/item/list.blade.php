@@ -24,7 +24,7 @@
                                 <h2>Item Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_item" class="btn my-button btn-inverse btn-outline-primary">Create Item</a>
+                                <a href="{{ route('add_item')}}" class="btn my-button btn-inverse btn-outline-primary">Create Item</a>
                             </div>
                         </div>
                      </div>
@@ -49,14 +49,14 @@
                               @endphp
                               <tr>
                                 <td class="text-capitalize">{{$count}}</td>
-                                <td class="text-capitalize">{{$category->category_name}}</td>
+                                <td class="text-capitalize">{{$category->category_name ?? ''}}</td>
                                 <td class="text-capitalize">{{$item['item_name']}}</td>
                                 <td class="text-capitalize">{{$item['item_price']}}</td>
                                 <td>
-                                    <a href="edit_item/{{$item['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
+                                    <a href="/edit_item/{{$item['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 
                                     </a>
-                                    <a href="delete_item/{{$item['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
+                                    <a href="/delete_item/{{$item['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
                                       <i class="fa fa-trash"></i> 
                                     </a>
                                    

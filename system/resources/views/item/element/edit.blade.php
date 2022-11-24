@@ -19,11 +19,11 @@
                   
                 </div>
               </div>
-              <form class="container-fluid" action="update_item_element" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
+              <form class="container-fluid" action="{{route('update_item_element')}}" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
                 @csrf
                 <input type="hidden" name="id" value="{{ $item_element->id }}">
                 <div>
-                  <label class="form-label">Element Name<</label>
+                  <label class="form-label">Element Name</label>
                   <input type="text" name="name" class="form-control" value="{{ $item_element->name }}" >
                 </div>
                 <br>

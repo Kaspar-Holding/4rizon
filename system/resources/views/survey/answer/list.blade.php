@@ -24,7 +24,7 @@
                                 <h2>Answer Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_new_answer/{{$question->id}}" class="btn my-button btn-inverse btn-outline-primary">Add New Answer</a>
+                                <a href="{{route('add_new_answer', ['id' => $question->id])}}" class="btn my-button btn-inverse btn-outline-primary">Add New Answer</a>
                             </div>
                         </div>
                      </div>

@@ -19,7 +19,7 @@
                   <h2></h2>
                 </div>
               </div>
-              <form class="container-fluid" action="/create_weekly_lineup" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
+              <form class="container-fluid" action="{{ route('create_weekly_lineup')}}" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
                 @csrf
                 <div>
                   <label class="form-label">Name</label>
@@ -37,7 +37,7 @@
                 </div>
                 <br>
                 <div>
-                  <label class="form-label">mage</label>
+                  <label class="form-label">Image</label>
                   <input type="file" name="weekly_lineup_image" class="form-control" required >
                 </div>
                 <br>

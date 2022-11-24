@@ -40,7 +40,7 @@
                 <br>
                 <div>
                     <label class="form-label">Phone Number</label>
-                    <input type="text" pattern="[^\+][0-9]{6,14}[0-9]$" name="phone_number" class="form-control" value="{{ $user->phone_number }}" >
+                    <input type="text" pattern="^\+[1-9]{1}[0-9]{3,14}$" name="phone_number" class="form-control" value="{{ $user->phone_number }}" >
                   </div>
                   <br>
                 <div>

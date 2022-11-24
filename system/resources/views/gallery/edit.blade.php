@@ -19,15 +19,16 @@
                   <h2></h2>
                 </div>
               </div>
-              <form class="container-fluid" action="update_gallery" method="POST" enctype="multipart/form-data" style="padding:30px; pading-bottom:40px;">
+              <form class="container-fluid" action="{{ route('update_gallery') }}" method="POST" enctype="multipart/form-data" style="padding:30px; pading-bottom:40px;">
                 @csrf
                 <input type="hidden" name="id" value="{{ $gallery->id }}">
                 <input type="hidden" name="unique_id" value="{{ $gallery->unique_id }}">
                 <div>
                   <label class="form-label">Event</label>
                   <select class="form-control" name="event_id">
-                      <option>-- Select --</option>
-                      @foreach($events as $event)
+                  @foreach($events as $event)
+                      <option value="{{ $event->id }}">{{$event->event_name}}</option>
+                     
                       <option value="{{ $event->id }}" @if($event->id == $gallery->event_id) selected @endif>{{ $event->event_name }}</option>
                       @endforeach
                   </select>
@@ -38,16 +39,6 @@
                   <input type="text" name="gallery_name" class="form-control" value="{{ $gallery->gallery_name }}" >
                 </div>
                 <br>
-                <!--<div>-->
-                <!--  <label class="form-label">Gallery Short Description</label>-->
-                <!--  <textarea name="gallery_short_description" rows="4" class="form-control">{{ $gallery->gallery_short_description }}</textarea>-->
-                <!--</div>-->
-                <!--<br>-->
-                <!--<div>-->
-                <!--  <label class="form-label">Gallery Description</label>-->
-                <!--  <textarea name="gallery_description" rows="6" class="form-control">{{ $gallery->gallery_description }}</textarea>-->
-                <!--</div>-->
-                <!--<br>-->
                 <div>
                   <label class="form-label">Gallery Image</label>
                   <img src="{{asset('image/'.$gallery->gallery_image)}}" style="width: 20%;">
@@ -56,6 +47,13 @@
                 <div>
                   <label class="form-label">Change Gallery Image</label>
                   <input type="file" name="gallery_image" class="form-control">
+                </div>
+                <br>
+                <div>
+                  <label class="form-label">Gallery Images</label>
+                  @foreach($gallery_images as $image)
+                  <img src="{{asset('image/'.$image->image)}}" style="width: 10%;">
+                  @endforeach
                 </div>
                 <br>
                 <div>

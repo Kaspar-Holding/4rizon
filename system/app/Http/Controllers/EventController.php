@@ -95,14 +95,19 @@ class EventController extends Controller
         $event->save();
         $push_message = "Event Request";
         $message = " Event Request";
-        $dj = DjUser::where('djusers.id','=',$req->dj_id)->first();  
-        $this->mobile_push_notificationdj($push_message,$dj->device_id);  
-        $djs = new Notifications;
-        $djs->dj_id            = $dj->id;
-        $djs->event_id         = $req->id;
-        $djs->notification_type  = "5";
-        $djs->admin_msg          = "You have been assigned a new event"   ;
-        $djs->save();
+        $dj = DjUser::where('djusers.id','=',$req->dj_id)->first(); 
+        if(isset($dj)){
+
+            $this->mobile_push_notificationdj($push_message,$dj->device_id);  
+            $djs = new Notifications;
+            $djs->dj_id            = $dj->id;
+            $djs->event_id         = $req->id;
+            $djs->event_name        = $event->event_name;
+            $djs->notification_type  = "5";
+            $djs->admin_msg          = "You have been assigned a $event->event_name"   ;
+            $djs->save();
+        } 
+        
         return redirect('/event_list')->with('success','Event Details Updated Successfully!');
     }
     public function delete_event ($id) {
@@ -149,20 +154,25 @@ class EventController extends Controller
     function create_qr_code_event(Request $req){
        
         $check = Bookings::where('event_id',$req->event_id)->where('user_id',$req->user_id)->where('status','Qr Code Created')->first();
+        $event_expiry = Event::where('id',$req->event_id)->first();
+        $expiry_time = date("G:i:s", strtotime($event_expiry->event_end_time));
+        $expiry = $event_expiry->event_date.' '.$expiry_time;
+        // echo json_encode( $expiry);die();
         if(!empty($check)){
             return response()->json(['message' => "Qr Code Already Created",'qr_code' => $check->booking_id,'qr_code_expires_at'=>$check->qr_code_expires_at, 'error' => true,'code'=>'201'], 201);
         }else{
             $return_code = str::random(30);
-            $tomorrow = date("Y-m-d H:i:s", strtotime('+1 day'));
+            // $tomorrow = date("Y-m-d H:i:s", strtotime('+1 day'));
             $event = new Bookings;
             $event->booking_type          = "1";
             $event->event_id              = $req->event_id;
             $event->user_id               = $req->user_id;
             $event->booking_id            = $return_code;
             $event->status                = "Qr Code Created";
-            $event->qr_code_expires_at    = $tomorrow;
+            $event->qr_code_expires_at    = $expiry;
             $event->save();
-            return response()->json(['message' => "Qr Code Created",'qr_code' => $return_code,'qr_code_expires_at'=>$tomorrow, 'success' => true], 200);
+            
+            return response()->json(['message' => "Qr Code Created",'qr_code' => $return_code,'qr_code_expires_at'=>$expiry, 'success' => true], 200);
         }
     }
     function user_event_exit(Request $req){

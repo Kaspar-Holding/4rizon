@@ -19,7 +19,7 @@
                   
                 </div>
               </div>
-              <form class="container-fluid" action="update_item_element_value" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
+              <form class="container-fluid" action="{{ route('update_item_element_value') }}" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
                 @csrf
                 <input type="hidden" name="id" value="{{ $value->id }}">
                 <input type="hidden" name="parent_id" value="{{ $value->attribute_parent_id }}">

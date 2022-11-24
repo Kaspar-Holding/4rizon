@@ -21,7 +21,7 @@
   <div class="contact wf-section">
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-2 w-nav">
       <div class="w-container">
-        <a href="#" class="w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-5 image-6"></a>
+        <a href="#" class="w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-6"></a>
         <nav role="navigation" class="nav-menu-2 w-nav-menu">
           <a href="{{ route('homepage') }}" aria-current="page" class="nav-link w-nav-link">Home</a>
           <a href="{{ route('event-page') }}" class="nav-link-2 w-nav-link">Events</a>
@@ -64,38 +64,38 @@
     <div class="container-4 w-container">
       <div class="div-block-17">
         <div class="w-layout-grid grid-10">
-          <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650aa-2ef08568" class="div-block-20">
+          <div id="w-node-_02d47209-7f69-f6ac-efb3-10ae17829d7e-b5a84b13" class="div-block-20">
             <p class="paragraph-5">A totally new nightlife immersive experience with the best DJs and Specialists. Now is the ideal time to take your entertainment to a higher level.</p>
           </div>
-          <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650ad-2ef08568">
+          <div id="w-node-ea50531f-4263-c568-cc49-6f7a1024e3f9-b5a84b13">
             <h1 class="heading-10">Contact Us</h1>
             <div class="w-layout-grid grid-11">
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650b1-2ef08568"><img src="images/icon-03.webp" loading="lazy" width="696" id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650b2-2ef08568" sizes="(max-width: 479px) 57vw, (max-width: 767px) 91vw, 695.9942626953125px" srcset="images/icon-03-p-500.webp 500w, images/icon-03-p-800.webp 800w, images/icon-03.webp 1392w" alt="" class="image-2"></div>
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650b3-2ef08568">
+              <div id="w-node-d79204e9-6a71-909b-8b63-070778ed3dc7-b5a84b13"><img src="images/icon-03.webp" loading="lazy" width="696" id="w-node-ef6687b5-37ed-2755-78d5-5bfb4e29f9eb-b5a84b13" sizes="(max-width: 479px) 57vw, (max-width: 767px) 91vw, 695.9942626953125px" srcset="images/icon-03-p-500.webp 500w, images/icon-03-p-800.webp 800w, images/icon-03.webp 1392w" alt="" class="image-2"></div>
+              <div id="w-node-_282152f2-4872-b5c6-4a38-e615f5c1a003-b5a84b13">
                 <h6 class="heading-11">Fourways, Johannesburg</h6>
               </div>
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650b6-2ef08568"><img src="images/icon-04.webp" loading="lazy" id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650b7-2ef08568" srcset="images/icon-04-p-500.webp 500w, images/icon-04-p-800.webp 800w, images/icon-04.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-3"></div>
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650b8-2ef08568">
-                <h6 class="heading-12">Fourways, Johannesburg</h6>
+              <div id="w-node-_40c5f859-5786-53a1-39be-b678ddbacd56-b5a84b13"><img src="images/icon-04.webp" loading="lazy" id="w-node-_7bab0343-76e0-d7f0-919b-6c4175c72bb5-b5a84b13" srcset="images/icon-04-p-500.webp 500w, images/icon-04-p-800.webp 800w, images/icon-04.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-3"></div>
+              <div id="w-node-_1533551e-2849-f0bf-9479-2e925e545d29-b5a84b13">
+                <h6 class="heading-12">+27 66 230 4022</h6>
               </div>
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650bb-2ef08568"><img src="images/icon-05.webp" loading="lazy" id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650bc-2ef08568" srcset="images/icon-05-p-500.webp 500w, images/icon-05-p-800.webp 800w, images/icon-05.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-4"></div>
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650bd-2ef08568" class="div-block-29">
-                <h6 class="heading-13">Fourways, Johannesburg</h6>
+              <div id="w-node-_47e5aff7-874e-52c9-045a-84fe8c68c385-b5a84b13"><img src="images/icon-05.webp" loading="lazy" id="w-node-_8ba039fa-7113-8084-3abd-ea1cc74bd5f1-b5a84b13" srcset="images/icon-05-p-500.webp 500w, images/icon-05-p-800.webp 800w, images/icon-05.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-4"></div>
+              <div id="w-node-b56d7c11-3533-446a-9f2c-a4eaf3e133d9-b5a84b13" class="div-block-29">
+                <h6 class="heading-13">contact@4rizon.com</h6>
               </div>
             </div>
           </div>
-          <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650c0-2ef08568">
+          <div id="w-node-_7c2092a7-786e-3fce-4a55-b867e09686d2-b5a84b13">
             <h1 class="heading-10">Working Hours</h1>
             <div class="div-block-19">
-              <h6 class="heading-11">Mon - Wed : 9 PM - 4 AM</h6>
+              <h6 class="heading-11">Will be opening Soon</h6>
             </div>
             <div class="div-block-18">
-              <h6 class="heading-12">Thu - Fri : 9 PM - 4 AM</h6>
+              <h6 class="heading-12">Will be opening Soon</h6>
             </div>
           </div>
-          <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650c9-2ef08568">
+          <div id="w-node-_2672fe8e-b26c-a35f-71f8-2191f43ed520-b5a84b13">
             <div class="w-layout-grid grid-26">
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650cb-2ef08568">
+              <div id="w-node-ae45a09d-c61f-c5ed-b0e0-ba62358da8b6-b5a84b13">
                 <h2 class="heading-19 heading-20">Download Our App</h2>
                 <p class="paragraph-10">Download the 4rizon Application on the App store and the Playstore for some exciting new features and earn some perks!</p>
                 <div class="div-block-41">
@@ -105,11 +105,11 @@
                   </div>
                 </div>
               </div>
-              <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650d6-2ef08568"><img src="images/Download-App-02-1.png" loading="lazy" alt=""></div>
+              <div id="w-node-_8831a1ae-69b4-4c66-42c9-16dfe114eb08-b5a84b13"><img src="images/Download-App-02-1.png" loading="lazy" alt=""></div>
             </div>
           </div>
         </div>
-        <div id="w-node-b2b01900-e8ee-fac7-d03d-bbe1ce0650d8-2ef08568">
+        <div id="w-node-fc1b37b1-f0df-ac54-e1ec-7dec7fbe4d1a-b5a84b13">
           <h3 class="heading-14">Copyright 4rizon Bar, lounge &amp; Musical Entertainment. 2022</h3>
         </div>
       </div>

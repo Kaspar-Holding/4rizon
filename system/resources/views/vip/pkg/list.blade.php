@@ -24,7 +24,7 @@
                                 <h2>Vip Booth Package Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_new_vip_pkg" class="btn my-button btn-inverse btn-outline-primary">Create Package</a>
+                                <a href="{{ route('add_new_vip_pkg')}}" class="btn my-button btn-inverse btn-outline-primary">Create Package</a>
                             </div>
                         </div>
                      </div>

@@ -52,7 +52,7 @@
                     @if (session('status'))
                         <div class="alert alert-success mb-3 rounded-0" role="alert">
                             {{ session('status') }}
-                        </div>
+                        </div> 
                     @endif
                      <form method="POST" action="{{ route('login') }}" class="login_section">
                         @csrf

@@ -150,7 +150,7 @@ class UserController extends Controller
                         $user_infos->remember_token=str::random(50);
                         DB::table('user_infos')->where('user_id',$user_infos->user_id)->update(['remember_token'=>$user_infos->remember_token]);
                         // $sendT = UserEmails::signUpEmail($request->email, $user_infos->user_id);
-                        return ['code'=>'200','Status'=>'success','image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/','user_info'=>$user_infos]; 
+                        return ['code'=>'200','Status'=>'success','image_url'=>'https://4rizon.com/image/','user_info'=>$user_infos]; 
                     }elseif($user_infos->user_status == '2'){
                         return ['code'=>'201','status'=>'failed','message'=>'Your Account Is Invalid Due To Email Verification.'];
                     }elseif($user_infos->user_status == '-1'){
@@ -328,17 +328,26 @@ class UserController extends Controller
             }
        }
           return response()->json(["message" => "Password Updated Successfully"], 200);
-    }
+    } 
     public function update_forget_password_api(Request $req){
         $user = user_infos::where('email',$req->email)->first();
-        if(!empty($user)){
-              UserEmails::passwordReset($req->email);   
-              return response()->json(["message" => "Email Sent"], 200);
-            
+        if(is_null($user)){
+          return response()->json(["message" => "User Not Found"], 201);  
         }else{
-            return response()->json(["message" => "User Not Found"], 201);
+          UserEmails::passwordReset($req->email);   
+          return response()->json(["message" => "Email Sent"], 200);
         }
     }
+    public function dj_forget_password_api(Request $req){
+      $user = DjUser::where('email',$req->email)->first();
+      if(is_null($user)){
+        return response()->json(["message" => "User Not Found"], 201);  
+      }else{
+        UserEmails::passwordReset($req->email);   
+        return response()->json(["message" => "Email Sent"], 200);
+      }
+      UserEmails::passwordReset($req->email);  
+  }
     public function deleteUser ($id) {
     if(user_infos::where('user_id', $id)->exists()) {
        $user= user_infos::where('user_id', $id)->delete();
@@ -397,6 +406,9 @@ class UserController extends Controller
   function reset_password(){
     return view("reset_password");
   }
+  function dj_reset_password(){
+    return view("dj_reset_password");
+  }
   function update_password(Request $request){
       $validator = \Validator::make($request->all(), [
           'password' => 'required|string|max:191',
@@ -430,6 +442,39 @@ class UserController extends Controller
     
     return view("reset_password");
   }
+  function dj_update_password(Request $request){
+    $validator = \Validator::make($request->all(), [
+        'password' => 'required|string|max:191',
+        'email' => 'required',
+    ]);
+    if ($validator->fails()) {
+        $responseArr['message'] = $validator->errors();
+        return response()->json($responseArr);
+    }
+    try{
+        $email=$request->email;
+        $password = $request->password;
+        $user_infos=DB::table('djusers')->select('email')->where('email',$request->email)->first();
+        if (empty($user_infos)) {
+            return ['code'=>'201','status'=>'failed','message'=>'Invalid EMAIL'];
+        }
+        if(!empty($user_infos)){
+          DjPasswordReset::where('email','=',$request->email)->update([
+            'password'=>$password
+          ]);
+          $password = Hash::make($request->password);
+          DjUser::where('email','=',$request->email)->update([
+            'password'=>$password
+          ]);
+          return view("success");
+          
+        }
+    }catch(\Exception $e){
+        return response()->json(["status"=>"error", "code" => 201, "message"=> $e->getMessage()]);
+    }
+  
+  return view("dj_reset_password");
+}
   function upload_user_files(Request $req){
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);
@@ -503,7 +548,7 @@ class UserController extends Controller
       $user_wallet->user_id      = $user->user_id;
       $user_wallet->available_points    = 0;
       $user_wallet->save();
-      $reset_passwords = new reset_passwords;
+      $reset_passwords = new PasswordReset;
       $reset_passwords->email = $req->email;
       $reset_passwords->password = $req->password;  
       $reset_passwords->save();   
@@ -535,6 +580,16 @@ class UserController extends Controller
         $users->save();
         return redirect('/admin_list')->with('success','Admin Updated Successfully!');
   }
+  function check_user(Request $req){
+    $type = "application/json";
+    $result = json_decode(file_get_contents("php://input"), true);
+    $users = DjUser::where('email', $result['email'])->get();
+   
+    if(!empty($users)){
+      return response()->json(['status' =>"1", 'success' => true], 200);
+    }
+    return response()->json(['status' =>"0", 'success' => false], 201);
+}
   public function delete_admin_details ($id) {
     if(User::where('id', $id)->exists()) {
        $user= User::where('id', $id)->delete();
@@ -749,7 +804,7 @@ class UserController extends Controller
         ]);
     }
     
-    return response()->json(['message' =>"Profile Updated Successfully!",'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+    return response()->json(['message' =>"Profile Updated Successfully!",'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
   }
   function update_profile_picture(Request $req){
      $result = json_decode(file_get_contents("php://input"), true);
@@ -772,7 +827,7 @@ class UserController extends Controller
      user_infos::where('user_id','=',$result['id'])->update([ 
       'picture'=> $pic
     ]);
-    return response()->json(['message' =>"Profile Picture Updated Successfully!",'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/'.$pic, 'success' => true], 200);
+    return response()->json(['message' =>"Profile Picture Updated Successfully!",'image_url'=>'https://4rizon.com/image/'.$pic, 'success' => true], 200);
   }
   public function login_admin_user(Request $request){
       

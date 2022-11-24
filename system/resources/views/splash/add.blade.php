@@ -19,7 +19,7 @@
                   
                 </div>
               </div>
-              <form class="container-fluid" action="create_splash" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
+              <form class="container-fluid" action="{{ route('create_splash')}}" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
                 @csrf
                 <div>
                   <label class="form-label">Splash Name</label>

@@ -24,7 +24,7 @@
                                 <h2>Users Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="register_new_user" class="btn btn-inverse my-button btn-outline-primary">Register New User</a>
+                                <a href="{{ route('register_new_user') }}" class="btn btn-inverse my-button btn-outline-primary">Register New User</a>
                             </div>
                         </div>
                      </div>

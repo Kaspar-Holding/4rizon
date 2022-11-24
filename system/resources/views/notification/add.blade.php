@@ -19,7 +19,7 @@
                   
                 </div>
               </div>
-              <form class="container-fluid" action="create_admin_msg" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
+              <form class="container-fluid" action="{{ route('create_admin_msg')}}" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
                 @csrf
                 <div>
                   <label class="form-label">Notification</label>

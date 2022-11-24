@@ -24,7 +24,7 @@
                                 <h2>Elements Value Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_item_element_value/{{$id}}" class="btn my-button btn-inverse btn-outline-primary">Create Element Value</a>
+                                <a href="/add_item_element_value/{{$id}}" class="btn my-button btn-inverse btn-outline-primary">Create Element Value</a>
                             </div>
                         </div>
                      </div>
@@ -46,10 +46,10 @@
                                 <td class="text-capitalize">{{$count}}</td>
                                 <td class="text-capitalize">{{$value['value']}}</td>
                                 <td>
-                                    <a href="edit_item_element_value/{{$value['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
+                                    <a href="/edit_item_element_value/{{$value['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 
                                     </a>
-                                    <a href="delete_item_element_value/{{$value['id']}}/{{$value['attribute_parent_id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
+                                    <a href="/delete_item_element_value/{{$value['id']}}/{{$value['attribute_parent_id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
                                       <i class="fa fa-trash"></i> 
                                     </a>
                                    

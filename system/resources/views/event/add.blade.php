@@ -21,7 +21,7 @@
                  
                 </div>
               </div>
-              <form class="container-fluid" action="create_event" method="POST" enctype="multipart/form-data" style="padding:30px;">
+              <form class="container-fluid" action="{{ route('create_event')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
                 @csrf
                 <div>
                   <label class="form-label">Event Name</label>

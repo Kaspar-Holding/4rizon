@@ -24,7 +24,7 @@
                                 <h2>Weekly Lineup Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_new_weekly_lineup" class="btn my-button btn-inverse btn-outline-primary">Create Weekly Lineup</a>
+                                <a href="{{ route('add_new_weekly_lineup')}}" class="btn my-button btn-inverse btn-outline-primary">Create Weekly Lineup</a>
                             </div>
                         </div>
                      </div>

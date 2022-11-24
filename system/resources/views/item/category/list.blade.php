@@ -24,7 +24,7 @@
                                 <h2>Item Category Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_item_category" class="btn my-button btn-inverse btn-outline-primary">Create Item Category</a>
+                                <a href="{{ route('add_item_category')}}" class="btn my-button btn-inverse btn-outline-primary">Create Item Category</a>
                             </div>
                         </div>
                      </div>
@@ -46,10 +46,10 @@
                                 <td class="text-capitalize">{{$count}}</td>
                                 <td class="text-capitalize">{{$category['category_name']}}</td>
                                 <td>
-                                    <a href="edit_item_category/{{$category['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
+                                    <a href="/edit_item_category/{{$category['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 
                                     </a>
-                                    <a href="delete_item_category/{{$category['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
+                                    <a href="/delete_item_category/{{$category['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
                                       <i class="fa fa-trash"></i> 
                                     </a>
                                    

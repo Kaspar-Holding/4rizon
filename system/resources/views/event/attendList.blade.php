@@ -47,9 +47,9 @@
                               @if($user)
                               <tr>
                                 <td class="text-capitalize">{{$count}}</td>
-                                <td class="text-capitalize">{{$events->event_name}}</td>
+                                <td class="text-capitalize">{{$events->event_name?? ''}}</td>
                                 <td class="text-capitalize">{{$user->first_name}} {{$user->last_name}}</td>
-                                <td class="text-capitalize">{{$events->event_date}}</td>
+                                <td class="text-capitalize">{{$events->event_date ?? ''}}</td>
                                 <td class="text-capitalize">@if(!empty($vip_pkg)) {{$vip_pkg['pkg_name']}} @endif</td>
                                 <td class="text-capitalize">
                                     {{ $event->status }}

@@ -14,7 +14,7 @@
             <!-- table section -->
           <div class="col-md-12">
             <div class="white_shd full margin_bottom_30">
-              <form class="container-fluid form" action="/save_user" method="POST" enctype="multipart/form-data">
+              <form class="container-fluid form" action="{{ route('save_user')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row" >
                   <div class="col-md-6">
@@ -39,7 +39,7 @@
                 <div class="row"style="margin-top:10px;" >
                   <div class="col-md-6">
                     <label class="form-label">Phone Number</label>
-                    <input type="text" name="phone_number" class="form-control" required >
+                    <input type="text" pattern="^\+[1-9]{1}[0-9]{3,14}$" name="phone_number" class="form-control" required >
                   </div>
                 </div>
                 <div class="row"style="margin-top:10px;" >

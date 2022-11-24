@@ -82,7 +82,7 @@ class DJQuestionnaireController extends Controller
         $question->answers                      = $answers;
         // $question->dj_questionnaire_description = $req->dj_questionnaire_question_description;
         $question->save();
-        return redirect('view_dj_questionnaire_questions/'.$req->questionnaire_id)->with('success','Question Details Updated Successfully!');
+        return redirect('view_dj_questionnaire_questions/'.$req->dj_questionnaire_id)->with('success','Question Details Updated Successfully!');
     }
     public function delete_dj_questionnaire_question ($id) {
         $question_id = DJQuestions::where('id',$id)->first();
@@ -98,7 +98,7 @@ class DJQuestionnaireController extends Controller
     // api's
     function questionnaire_list_api(){
         $questionnaire_data = DJ_Questionnaire::all();
-        return response()->json(['questionnaire_list' =>$questionnaire_data,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['questionnaire_list' =>$questionnaire_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     function get_dj_questionnaire_questions(Request $req){
         $questions = DJQuestions::where('dj_questionnaire_id',12)->get();

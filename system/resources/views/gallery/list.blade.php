@@ -24,7 +24,7 @@
                                 <h2>Gallery Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_new_gallery" class="btn my-button btn-inverse btn-outline-primary">Create Gallery</a>
+                                <a href="{{ route('add_new_gallery')}}" class="btn my-button btn-inverse btn-outline-primary">Create Gallery</a>
                             </div>
                         </div>
                      </div>

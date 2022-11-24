@@ -63,10 +63,10 @@ class NewsController extends Controller
     // api's
     function news_list_api(){
         $news_data = News::all();
-        return response()->json(['news_list' =>$news_data,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['news_list' =>$news_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     function single_news_api($id){
         $news = News::find($id);
-         return response()->json(['news' =>$news,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+         return response()->json(['news' =>$news,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
 }

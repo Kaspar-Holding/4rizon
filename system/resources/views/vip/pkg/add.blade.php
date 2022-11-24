@@ -19,7 +19,7 @@
                   
                 </div>
               </div>
-              <form class="container-fluid" action="/create_vip_pkg" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
+              <form class="container-fluid" action="{{ route('create_vip_pkg')}}" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
                 @csrf
                 <div>
                   <label class="form-label">Package Name</label>

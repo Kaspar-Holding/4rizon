@@ -24,7 +24,7 @@
                                 <h2>Event Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_new_event" class="btn btn-inverse my-button btn-outline-primary">Create Event</a>
+                                <a href="{{ route('add_new_event')}}" class="btn btn-inverse my-button btn-outline-primary">Create Event</a>
                             </div>
                         </div>
                      </div>

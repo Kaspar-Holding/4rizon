@@ -287,7 +287,7 @@ class DjAppController extends Controller
       $p = array();
       foreach($music_genre as  $row){
         $music_id = $row['id'];
-        $sub_genre = Sub_Genre::where('id', $music_id)->get();
+        $sub_genre = Sub_Genre::where('music_genre', $music_id)->get();
         $row['sub_genre'] = $sub_genre;
         array_push($p, $row);
       }
@@ -335,7 +335,9 @@ class DjAppController extends Controller
   }
   
   function register_new_djuser(){
-    return view("users.register_djuser");
+    $genre = Genre::all();
+    $sub_genre = Sub_Genre::all();
+    return view("users.register_djuser",['genre'=>$genre,'sub_genre'=>$sub_genre]);
   }
   public function email_verify_mail_dj(Request $req){
     $type = "application/json";
@@ -422,15 +424,16 @@ class DjAppController extends Controller
       $djusers->password         = Hash::make($req->password);
       $djusers->phone_number     = $req->phone_number;
       $djusers->music_genre      = $req->music_genre;
-     
+      $djusers->sub_genre        = $req->sub_genre;
       $djusers->gender           = $req->gender;
-      $djusers->representation      = $req->representation;
+      $djusers->representation   = $req->representation;
       // if ($req->hasFile('picture')) {
       //     $djusersPic             = time().'.'.$req->picture->extension();
       //     $req->picture->move('image', $djusersPic);
       //     $djusers->picture = $djusersPic;
       // }
       $djusers->save();
+      
       return redirect('/admin_djlist')->with('success','DJ User Registered Successfully!');
     }
   }
@@ -500,28 +503,30 @@ class DjAppController extends Controller
       $push_message = "Event Accepted";
       $message = " Event Accepted";
       $dj = DjUser::where('djusers.id','=',$result['dj_id'])->first();  
+      $event = Event::where('id','=',$result['event_id'])->first();
       $this->mobile_push_notification($push_message,$dj->device_id);  
       $djs = new AdminNotification;
         $djs->dj_id            = $dj->id;
         $djs->item_qr_code      = $bookingId;
         $djs->event_id         = $result['event_id'];
+        $djs->event_name      = $event->event_name;
         $djs->notification_type  = "6";
-        $djs->admin_msg          = "Your Event Bokking has been confirmed"   ;
+        $djs->admin_msg          = "Your $event->event_name Booking has been confirmed"   ;
         $djs->save();
       return response()->json(["message" => "Event Accepted",'success' => true], 200);
   }
   public function reject_event(Request $req){
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);    
-         
-          $djusers = new EventReject;
-          $djusers->event_id      = $result['event_id'];
-          $djusers->dj_id        = $result['dj_id'];
-          $djusers->save(); 
+    $event = Event::where('id','=',$result['event_id'])->first();
+      $djusers = new EventReject;
+      $djusers->event_id      = $result['event_id'];
+      $djusers->dj_id        = $result['dj_id'];
+      $djusers->save(); 
 
     Event::where('id','=',$result['event_id'])->update(['going_status'=>0,'dj_id'=>NULL,
         ]);           
-        return response()->json(["message" => "Event Rejected"],200);
+        return response()->json(["message" => "$event->event_name Rejected"],200);
   }
   function gallery_event_list(Request $req){
     $type = "application/json";

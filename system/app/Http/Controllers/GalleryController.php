@@ -22,15 +22,17 @@ class GalleryController extends Controller
     }
     function edit_gallery($id){
     	$gallery = Gallery::find($id);
+        $gallery_id = $gallery->unique_id;
+        $gallery_images = GalleryImage::where("gallery_id",$gallery_id)->get();
     	$event_data = Event::all();
-    	return view("gallery.edit",['gallery'=>$gallery,'events'=>$event_data,]);
+    	return view("gallery.edit",['gallery'=>$gallery,'events'=>$event_data,'gallery_images'=>$gallery_images]);
     }
     function add_new_gallery(){
         $event_data = Event::all();
     	return view("gallery.add",['events'=>$event_data,]);
     }
     function create_gallery(Request $req){
-        $findUsersAttendedEvent = Bookings::where("even_id",$req->event_id)->whereNotNull("enter_at")->get();
+        $findUsersAttendedEvent = Bookings::where("event_id",$req->event_id)->whereNotNull("enter_at")->get();
         foreach($findUsersAttendedEvent as $attendUsers){
             $getUser = user_infos::where("user_id",$attendUsers->user_id)->first();
             $messages = "Gallery Uploaded Of Event Which You attended.";
@@ -67,14 +69,16 @@ class GalleryController extends Controller
     }
     function update_gallery(Request $req){
         $gallery                               = Gallery::find($req->id);
+        $gallery->event_id                     =$req->id;
         $gallery->gallery_name                 = $req->gallery_name;
+        $nums = 0;
         if ($req->hasFile('gallery_image')) {
             $galleryPic             = time().$nums.'.'.$req->gallery_image->extension();  
             $req->gallery_image->move(public_path('image'), $galleryPic);
             $gallery->gallery_image = $galleryPic;
         }
         $gallery->gallery_date  = $req->gallery_date;
-        $gallery->save();
+        $gallery->save(); 
         if($req->hasFile('gallery_images'))
         {
             $nums = 0;
@@ -117,12 +121,12 @@ class GalleryController extends Controller
     		}
     	}
         
-        return response()->json(['gallery_list' =>$gallery_final_data,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['gallery_list' =>$gallery_final_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     function single_gallery_api($id){
         $gallery = Gallery::find($id);
         $value1 = GalleryImage::where("gallery_id",$gallery->unique_id)->get();
-        return response()->json(['gallery' =>$gallery,'gallery_images'=>$value1,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['gallery' =>$gallery,'gallery_images'=>$value1,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     
     /** Mobile Push Notification Function **/

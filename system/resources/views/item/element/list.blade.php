@@ -24,7 +24,7 @@
                                 <h2>Item Element Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_item_element" class="btn my-button btn-inverse btn-outline-primary">Create Item Element</a>
+                                <a href="{{route('add_item_element')}}" class="btn my-button btn-inverse btn-outline-primary">Create Item Element</a>
                             </div>
                         </div>
                      </div>

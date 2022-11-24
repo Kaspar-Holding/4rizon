@@ -24,7 +24,7 @@
                                 <h2>News Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_news" class="btn my-button btn-inverse btn-outline-primary">Create News</a>
+                                <a href="{{ route('add_news')}}" class="btn my-button btn-inverse btn-outline-primary">Create News</a>
                             </div>
                         </div>
                      </div>

@@ -39,7 +39,7 @@
                 <br>
                 <div>
                   <label class="form-label">Change Survey Image</label>
-                  <input type="file" name="survey_image" class="form-control" required >
+                  <input type="file" name="survey_image" class="form-control">
                 </div>
                 <br>
                 <div>

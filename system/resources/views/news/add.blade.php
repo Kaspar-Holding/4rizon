@@ -19,7 +19,7 @@
                   <h2></h2>
                 </div>
               </div>
-              <form class="container-fluid" action="create_news" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
+              <form class="container-fluid" action="{{ route('create_news')}}" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
                 @csrf
                 <div>
                   <label class="form-label">News Title</label>

@@ -53,6 +53,7 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::get('/user_select_list_api' ,  [UserController::class, 'user_select_list_api'])->name('user_select_list_api');
     Route::post('/edit_user/{id}' ,  [UserController::class, 'edit_user'])->name('edit_user');
     Route::post('/update_user' ,  [UserController::class, 'update_user'])->name('update_user');
+    Route::post('/check_user' ,  [UserController::class, 'check_user'])->name('check_user');
     Route::post('/delete_user/{id}' ,  [UserController::class, 'deleteUser'])->name('delete_user');
     Route::post('/update_status' ,  [UserController::class, 'update_status'])->name('update_status');
     Route::post('/wallet_points' ,  [UserController::class, 'wallet_points'])->name('wallet_points');
@@ -69,6 +70,8 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     
     Route::post('/update_password_api' ,  [UserController::class, 'update_password_api'])->name('update_password_api');
     Route::post('/update_forget_password_api' ,  [UserController::class, 'update_forget_password_api'])->name('update_forget_password_api');
+
+    Route::post('/dj_forget_password_api' ,  [UserController::class, 'dj_forget_password_api'])->name('dj_forget_password_api');
     
     Route::post('/create_qr_code_event' ,  [EventController::class, 'create_qr_code_event'])->name('create_qr_code_event');
     Route::post('/user_going_to_event' ,  [EventController::class, 'user_going_to_event'])->name('user_going_to_event');
@@ -100,8 +103,6 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::get('/currently_in_club', [EntranceController::class, 'currently_in_club'])->name('currently_in_club');
     Route::post('/user_n_event_details', [EntranceController::class, 'user_n_event_details'])->name('user_n_event_details');
 
-     
-    Route::post('/read_qr_code', [EntranceController::class, 'event_booking_qr_reading'])->name('read_qr_code');
     Route::post('/change_event_status', [EntranceController::class, 'change_event_status'])->name('change_event_status');
     Route::get('/currently_in_club', [EntranceController::class, 'currently_in_club'])->name('currently_in_club');
     Route::post('/user_n_event_details', [EntranceController::class, 'user_n_event_details'])->name('user_n_event_details');
@@ -147,6 +148,8 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::post('/dj_agreement_status_check' , [DjAppController::class, 'dj_agreement_status_check'])->name('dj_agreement_status_check');
     Route::post('/dj_event_list_api' , [DjAppController::class, 'dj_event_list_api'])->name('dj_event_list_api');
     Route::post('/update_password' ,  [DjAppController::class, 'update_password'])->name('update_password');
+    Route::post('/dj_update_password' ,  [DjAppController::class, 'dj_update_password'])->name('dj_update_password');
+
     Route::post('/accept_event' ,  [DjAppController::class, 'accept_event'])->name('accept_event');
     Route::post('/reject_event' ,  [DjAppController::class, 'reject_event'])->name('reject_event');
     Route::post('/gallery_event_list' , [DjAppController::class, 'gallery_event_list'])->name('gallery_event_list');

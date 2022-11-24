@@ -19,7 +19,7 @@
                   
                 </div>
               </div>
-              <form class="container-fluid" action="update_item_category" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
+              <form class="container-fluid" action="{{route('update_item_category')}}" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
                 @csrf
                 <input type="hidden" name="id" value="{{ $item_category->id }}">
                 <div>

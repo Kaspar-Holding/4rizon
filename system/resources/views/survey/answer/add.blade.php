@@ -19,7 +19,7 @@
                   <h2></h2>
                 </div>
               </div>
-              <form class="container-fluid" action="create_answer" method="POST" style="padding:30px; padding-bottom:40px;">
+              <form class="container-fluid" action="{{ route('create_answer') }}" method="POST" style="padding:30px; padding-bottom:40px;">
                 @csrf
                 <input type="hidden" name="question_id" value="{{ $question->id }}">
                 <div>

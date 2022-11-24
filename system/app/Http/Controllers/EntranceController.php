@@ -35,7 +35,7 @@ class EntranceController extends Controller
     
     public function manual_event_list(){
     	$event_data = Event::all();
-        return response()->json(['event_list' =>$event_data,'image_url'=>'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/image/', 'success' => true], 200);
+        return response()->json(['event_list' =>$event_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
     public function mobile_push_notification($message='', $player_id=''){
 		/* SEND NOTIFICATION */

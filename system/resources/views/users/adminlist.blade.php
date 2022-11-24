@@ -24,7 +24,7 @@
                                 <h2>Admin Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_new_user" class="btn btn-inverse my-button btn-outline-primary">Add New User</a>
+                                <a href="{{ route('add_new_user')}}" class="btn btn-inverse my-button btn-outline-primary">Add New User</a>
                             </div>
                         </div>
                      </div>

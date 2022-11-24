@@ -24,7 +24,7 @@
                                 <h2>Notification Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_admin_msg" class="btn my-button btn-inverse btn-outline-primary">Create Notification</a>
+                                <a href="{{ route('add_admin_msg')}}" class="btn my-button btn-inverse btn-outline-primary">Create Notification</a>
                             </div>
                         </div>
                      </div>
@@ -36,6 +36,7 @@
                               <tr>
                                  <th>#</th>
                                  <th>User Name</th>
+                                 <th>Admin Message</th>
                                  <th>Notification Type</th>
                                  <th>Status</th>
                                  <th>Action</th>
@@ -57,6 +58,7 @@
                               <tr>
                                 <td class="text-capitalize">{{$count}}</td>;
                                 <td class="text-capitalize">@if(!empty($user)) {{$user->first_name}} {{$user->last_name}} @else Event Type @endif</td>
+                                <td class="text-capitalize">{{$notification['admin_msg']}}</td>
                                 <td class="text-capitalize">@if($notification['notification_type'] == 3) Admin Message @elseif($notification['notification_type'] == 2) Purchase Item Notification @elseif($notification['notification_type'] == 1) Event Notification @elseif($notification['notification_type'] == 4) Event Invitation @elseif($notification['notification_type'] ==5) DJ Notification @endif</td>
                                 <td class="text-capitalize">{{$notification['status']}}</td>
                                 <td>

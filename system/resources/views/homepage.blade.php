@@ -6,9 +6,11 @@
   <title>4RIZON</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
-  <link href="new/css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="new/css/webflow.css" rel="stylesheet" type="text/css">
-  <link href="new/css/4rizon.css" rel="stylesheet" type="text/css">
+ 
+  <link href="/new/css/4rizon.css" rel="stylesheet" type="text/css">
+  <link href="/new/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="/new/css/webflow.css" rel="stylesheet" type="text/css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
   <script type="text/javascript">WebFont.load({  google: {    families: ["Mulish:300,regular,500,600,700,800,900"]  }});</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
@@ -19,7 +21,7 @@
   <div class="hero-section wf-section">
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
       <div class="container-10 w-container">
-        <a href="#" class="brand w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" height="161" width="125" alt="" class="image"></a>
+        <a href="#" class="brand w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" height="191" width="150" alt="" class="image" style="padding-right:30px;"></a>
         <nav role="navigation" class="nav-menu w-nav-menu">
           <a href="{{ route('homepage') }}" aria-current="page" class="nav-link w-nav-link w--current">Home</a>
           <a href="{{ route('event-page') }}" class="nav-link-2 w-nav-link">Events</a>
@@ -70,7 +72,7 @@
           </div>
           <div id="w-node-_84d9da0c-e34b-51fd-a7a7-36e66481dc71-b5a84b13" class="div-block-10">
             <h1 id="w-node-a14fd459-4267-ecc2-1926-19c924158524-b5a84b13" class="heading-5">ABOUT 4RIZON</h1>
-            <p class="paragraph-5">Welcome to 4rizon, The most smoking and exciting new club in Johannesburg, bringing totally new energy and involvement in an astounding 3 phase landscape, VIP Booth, Iridescent energy, extraordinary sounds, and astonishing music, beverages, and food.</p>
+            <p class="paragraph-6">Welcome to 4rizon, The most smoking and exciting new club in Johannesburg, bringing totally new energy and involvement in an astounding 3 phase landscape, VIP Booth, Iridescent energy, extraordinary sounds, and astonishing music, beverages, and food.</p>
             <p class="paragraph-6">We mean to bring you a totally new nightlife immersive experience with the best DJs and Specialists. Now is the ideal time to take your entertainment to a higher level.</p>
             <div class="div-block-11">
               <a href="#" class="button w-button">Learn More</a>
@@ -81,7 +83,7 @@
           <div class="w-layout-grid grid-4">
             <div id="w-node-da97c73e-57e2-b1cd-f665-a1b02e73308d-b5a84b13">
               <h1 class="heading-5">Merch Coming Soon</h1>
-              <p class="paragraph-5">Be on the lookout for when we discharge our interesting assortment of 4rizon Outfits for you to paint the streets with, every one of the freshest and most jazzy outfits from hoodies, covers, shirts, and some more.</p>
+              <p class="paragraph-6">Be on the lookout for when we discharge our interesting assortment of 4rizon Outfits for you to paint the streets with, every one of the freshest and most jazzy outfits from hoodies, covers, shirts, and some more.</p>
               <p class="paragraph-6">Download our versatile application to find out more about our Merchandise assortment and other cool things 4rizon brings to the table.</p>
               <div class="div-block-14">
                 <a href="#" class="button w-button">Download App</a>
@@ -149,21 +151,21 @@
               </div>
               <div id="w-node-_40c5f859-5786-53a1-39be-b678ddbacd56-b5a84b13"><img src="images/icon-04.webp" loading="lazy" id="w-node-_7bab0343-76e0-d7f0-919b-6c4175c72bb5-b5a84b13" srcset="images/icon-04-p-500.webp 500w, images/icon-04-p-800.webp 800w, images/icon-04.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-3"></div>
               <div id="w-node-_1533551e-2849-f0bf-9479-2e925e545d29-b5a84b13">
-                <h6 class="heading-12">Fourways, Johannesburg</h6>
+                <h6 class="heading-12">+27 66 230 4022</h6>
               </div>
               <div id="w-node-_47e5aff7-874e-52c9-045a-84fe8c68c385-b5a84b13"><img src="images/icon-05.webp" loading="lazy" id="w-node-_8ba039fa-7113-8084-3abd-ea1cc74bd5f1-b5a84b13" srcset="images/icon-05-p-500.webp 500w, images/icon-05-p-800.webp 800w, images/icon-05.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-4"></div>
               <div id="w-node-b56d7c11-3533-446a-9f2c-a4eaf3e133d9-b5a84b13" class="div-block-29">
-                <h6 class="heading-13">Fourways, Johannesburg</h6>
+                <h6 class="heading-13">contact@4rizon.com</h6>
               </div>
             </div>
           </div>
           <div id="w-node-_7c2092a7-786e-3fce-4a55-b867e09686d2-b5a84b13">
             <h1 class="heading-10">Working Hours</h1>
             <div class="div-block-19">
-              <h6 class="heading-11">Mon - Wed : 9 PM - 4 AM</h6>
+              <h6 class="heading-11">Will be opening Soon</h6>
             </div>
             <div class="div-block-18">
-              <h6 class="heading-12">Thu - Fri : 9 PM - 4 AM</h6>
+              <h6 class="heading-12">Will be opening Soon</h6>
             </div>
           </div>
           <div id="w-node-_2672fe8e-b26c-a35f-71f8-2191f43ed520-b5a84b13">
@@ -189,7 +191,8 @@
     </div>
   </div>
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=636417981c03ca1b09a84b12" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="new/js/webflow.js" type="text/javascript"></script>
+  <script src="/new/js/webflow.js" type="text/javascript"></script>
+  
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
 </body>
 </html>

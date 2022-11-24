@@ -24,7 +24,7 @@
                                 <h2>Notification Lists</h2>
                             </div>
                             <div class="col-md-3">
-                                <a href="add_admin_msg" class="btn my-button btn-inverse btn-outline-primary">Create Notification</a>
+                                <a href="{{ route('add_admin_msg')}}" class="btn my-button btn-inverse btn-outline-primary">Create Notification</a>
                             </div>
                         </div>
                      </div>

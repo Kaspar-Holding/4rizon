@@ -30,6 +30,8 @@ use App\Http\Controllers\SplashController;
 */
 Route::post('/update_password',[UserController::class, 'update_password'])->name('update_password');
 Route::get('/reset_password',[UserController::class, 'reset_password'])->name('reset_password');
+Route::get('/dj_reset_password',[UserController::class, 'dj_reset_password'])->name('dj_reset_password');
+
 Route::group(['middleware' =>[
     'auth:sanctum', 'verified'
 ]], function(){
@@ -38,7 +40,7 @@ Route::group(['middleware' =>[
     Route::get('/layout', [DashboardController::class, 'layout'])->name('layout');
     // User Routes
     Route::get('/add_new_user', [UserController::class, 'add_new_user'])->name('add_new_user');
-    Route::post('/add_user',[UserController::class, 'create']);
+    Route::post('/add_user',[UserController::class, 'create'])->name('add_user');
     Route::get('/admin_list' ,  [UserController::class, 'admin_list'])->name('admin_list');
     Route::get('/edit_admin_details/{id}' ,  [UserController::class, 'edit_admin_details'])->name('edit_admin_details');
     Route::get('/delete_admin_details/{id}' ,  [UserController::class, 'delete_admin_details'])->name('delete_admin_details');
@@ -85,7 +87,7 @@ Route::group(['middleware' =>[
     Route::get('/survey_list' ,  [SurveyController::class, 'survey_list'])->name('survey_list');
     Route::get('/add_new_survey', [SurveyController::class, 'add_new_survey'])->name('add_new_survey');
     Route::get('/delete_survey/{id}', [SurveyController::class, 'delete_survey'])->name('delete_survey');
-    Route::post('/create_survey',[SurveyController::class, 'create_survey']);
+    Route::post('/create_survey',[SurveyController::class, 'create_survey'])->name('create_survey');;
     Route::get('/edit_survey/{id}', [SurveyController::class, 'edit_survey'])->name('edit_survey');
     Route::post('/survey_update', [SurveyController::class, 'survey_update'])->name('survey_update');
     Route::get('/view_survey_questions/{id}', [SurveyController::class, 'view_survey_questions'])->name('view_survey_questions');

@@ -21,7 +21,7 @@
                          </div>
                     </div>
         
-                    <form class="container-fluid" action="user_status_update" method="post">
+                    <form class="container-fluid" action="{{ route('user_status_update')}}" method="post">
                         @csrf
                         <div>
                             @include('flashmessages')

@@ -5,7 +5,7 @@
         <div class="row column_title">
           <div class="col-md-12">
             <div class="page_title"> 
-              <h2>Register User</h2>
+              <h2>Register DJ User</h2>
             </div>
           </div>
         </div>
@@ -43,24 +43,28 @@
                 <div class="row"style="margin-top:10px;" >
                   <div class="col-md-6">
                     <label class="form-label">Phone Number</label>
-                    <input type="numeric" pattern="[0-9]{6,14}[0-9]$"   name="phone_number" class="form-control" required >
+                    <input type="text" pattern="^\+[1-9]{1}[0-9]{3,14}$"   name="phone_number" class="form-control" required >
                   </div>
                 </div>
                 <div class="row"style="margin-top:10px;" >
                   <div class="col-md-6">
                     <label class="form-label">Music Genre </label>
+                    
                     <select name="music_genre" id="music_genre"  class="form-control" required >
-                      <option value="jazz">House</option>
-                      <option value="opera">Opera</option>
+                    @foreach($genre as $genres)
+                      <option value="{{$genres->id}}">{{$genres->music_genre}}</option>
+                      @endforeach
                     </select>
+                    
                   </div>
                 </div>
                 <div class="row"style="margin-top:10px;" >
                   <div class="col-md-6">
                     <label class="form-label">Sub Genre </label>
-                    <select name="music_genre" id="music_genre"  class="form-control" required >
-                      <option value="jazz">Bassline</option>
-                      <option value="opera">Hard Tock</option>
+                    <select name="sub_genre" id="sub_genre"  class="form-control" required >
+                    @foreach($sub_genre as $sub_genres)
+                      <option value="{{$sub_genres->id}}">{{$sub_genres->sub_genre}}</option>
+                    @endforeach
                     </select>
                   </div>
                 </div>

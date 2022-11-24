@@ -10,7 +10,7 @@
               @include('flashmessages')
           </div>
       </div>      
-      <form class="container-fluid" action="/edit_permissions" method="post">
+      <form class="container-fluid" action="{{ route('edit_permissions')}}" method="post">
           @csrf
           <input type="hidden" name="id" value="{{ $permissions->id }}">
           <table class="table table-striped">

@@ -7,9 +7,9 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
  
-  <link href="/new/css/4rizon.css" rel="stylesheet" type="text/css">
-  <link href="/new/css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="/new/css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="{{asset('new/css/4rizon.css?v=').time()}}" rel="stylesheet" type="text/css">
+  <link href="{{asset('new/css/normalize.css?v=').time()}}" rel="stylesheet" type="text/css">
+  <link href="{{asset('new/css/webflow.css?v=').time()}}" rel="stylesheet" type="text/css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
   <script type="text/javascript">WebFont.load({  google: {    families: ["Mulish:300,regular,500,600,700,800,900"]  }});</script>

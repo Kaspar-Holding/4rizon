@@ -16,15 +16,64 @@
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
   <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
   <link href="images/favicon-32x32.png" rel="shortcut icon" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+  <style>
+    .has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+#date {
+  width: 150px;
+  outline: none;
+  border: 1px solid #aaa;
+  padding: 6px 28px;
+  color: #aaa;
+}
+
+.date-container {
+  position: relative;
+  float: left;
+  .date-text {
+    position: absolute;
+    top: 6px;
+    left: 12px;
+    color: #aaa;
+  }
+  
+  .date-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /* pointer-events: none; */
+    cursor: pointer;
+    color: #aaa;
+  }
+}
+  </style>
 </head>
 <body class="body-2">
   <div class="main-section wf-section">
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-2 w-nav">
       <div class="w-container">
         <a href="#" class="w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-6"></a>
-        <nav role="navigation" class="nav-menu-2 w-nav-menu">
-          <a href="{{ route('homepage') }}" aria-current="page" class="nav-link w-nav-link">Home</a>
-          <a href="{{ route('event-page') }}" class="nav-link-2 w-nav-link w--current">Events</a>
+         <nav role="navigation" class="nav-menu-2 w-nav-menu">
+          <a href="{{ route('homepage') }}" aria-current="page" class="nav-link-3 w-nav-link">Home</a>
+          <a href="{{ route('event-page') }}" class="nav-link-3 w-nav-link w--current">Events</a>
           <a href="{{ route('gallery1') }}" class="nav-link-2 w-nav-link">Gallery</a>
           <a href="{{ route('about-us') }}" class="nav-link-2 w-nav-link">About Us</a>
           <a href="{{ route('contact-us') }}" class="nav-link-3 w-nav-link">Contact</a>
@@ -44,6 +93,29 @@
   <div class="events wf-section">
     <div class="container-6 w-container">
       <div>
+        <div class="row">
+          <div class="col-lg-6">
+              <div class="form-group has-search" style="display: flex;
+    flex-direction: row-reverse;">
+             
+              <input type="text" class="form-control" placeholder="Search"  style="padding-left: 0.67em!important">
+               <span class="fa fa-search form-control-feedback"></span>
+              
+            </div>
+          </div>
+          <div class="col-lg-6">
+           
+        <div class="ui calendar" id="rangestart">
+          <div class="ui input left icon" style="width:100%">
+            
+            <input type="text" placeholder="Select Date" style="padding-left: 0.67em!important">
+            <i class="calendar icon" style="right: 1px;
+    left: auto;"></i>
+          </div>
+        
+      </div>
+          </div>
+        </div>
         <div class="w-layout-grid grid-14">
           <div id="w-node-_9a8c6244-0816-b407-bda3-415b577fda87-e30a8bda" class="div-block-24"></div>
           <div id="w-node-_44b47dcc-fa36-a317-2391-ac345425520d-e30a8bda" class="div-block-25"></div>
@@ -52,7 +124,7 @@
           <div class="w-layout-grid grid-15">
             @foreach ($event_list as $event)
                 <div id="w-node-_63f0f9a8-7dc0-ac4c-1892-a756653ae65e-e30a8bda">
-                  <div class="w-layout-grid grid-16">
+                  <div class="w-layout-grid grid-16" style="margin-bottom:40px;">
                     <div id="w-node-_346e9f91-eb85-6676-fc75-91adb38748b7-e30a8bda"><img src="image/{{$event['event_image']}}" loading="lazy"  sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, 604.9999389648438px" alt="" style="width:500px;height:500px;"></div>
                     <div id="w-node-abe0d26a-7e21-ffd5-2fad-088e6ed55d82-e30a8bda">
                       <h3 class="heading-16">{{$event['event_name']}}</h3>
@@ -124,6 +196,65 @@
       </div>
     </div>
   </div>
+  <script>
+    $('#example1').calendar();
+$('#example2').calendar({
+  type: 'date'
+});
+$('#example3').calendar({
+  type: 'time'
+});
+$('#rangestart').calendar({
+  type: 'date',
+  endCalendar: $('#rangeend')
+});
+$('#rangeend').calendar({
+  type: 'date',
+  startCalendar: $('#rangestart')
+});
+$('#example4').calendar({
+  startMode: 'year'
+});
+$('#example5').calendar();
+$('#example6').calendar({
+  ampm: false,
+  type: 'time'
+});
+$('#example7').calendar({
+  type: 'month'
+});
+$('#example8').calendar({
+  type: 'year'
+});
+$('#example9').calendar();
+$('#example10').calendar({
+  on: 'hover'
+});
+var today = new Date();
+$('#example11').calendar({
+  minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 5),
+  maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5)
+});
+$('#example12').calendar({
+  monthFirst: false
+});
+$('#example13').calendar({
+  monthFirst: false,
+  formatter: {
+    date: function (date, settings) {
+      if (!date) return '';
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+      return day + '/' + month + '/' + year;
+    }
+  }
+});
+$('#example14').calendar({
+  inline: true
+});
+$('#example15').calendar();
+  </script>
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=636417981c03ca1b09a84b12" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="new/js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->

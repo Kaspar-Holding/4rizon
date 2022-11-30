@@ -44,7 +44,7 @@
   <div class="wf-section">
     <div class="container-9 w-container">
       <div class="div-block-32">
-        <div class="div-block-33"><img src="images/Maps.jpg" loading="lazy" srcset="images/Maps-p-500.jpg 500w, images/Maps-p-800.jpg 800w, images/Maps-p-1080.jpg 1080w, images/Maps.jpg 1232w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 84vw, (max-width: 991px) 647.9923706054688px, 859.9999389648438px" alt="">
+        <div class="div-block-33"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3585.3098211188726!2d27.990443!3d-26.023417000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0!2zMjbCsDAxJzI0LjMiUyAyN8KwNTknMjUuNiJF!5e0!3m2!1sen!2s!4v1669781453009!5m2!1sen!2s" width="600" height="450" style="border:0; width:100%;!important" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"  sizes="(max-width: 479px) 100vw, (max-width: 767px) 84vw, (max-width: 991px) 647.9923706054688px, 859.9999389648438px"></iframe>
           <div class="div-block-36">
             <div class="w-layout-grid grid-19">
               <div id="w-node-c8e4d9d2-9e71-b116-5bb2-6496da9ad9b4-8ea60539" class="div-block-34">
@@ -52,7 +52,7 @@
                 <h3 class="heading-18">Fourways, Johannesburg</h3>
               </div>
               <div id="w-node-c8e4d9d2-9e71-b116-5bb2-6496da9ad9b9-8ea60539" class="div-block-35">
-                <a href="#" class="button w-button">Open in Maps</a>
+                <a href="https://www.google.com/maps/place/26%C2%B001'24.3%22S+27%C2%B059'25.6%22E/@-26.023417,27.990443,16z/data=!4m4!3m3!8m2!3d-26.023417!4d27.990443" class="button w-button">Open in Maps</a>
               </div>
             </div>
           </div>

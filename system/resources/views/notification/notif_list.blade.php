@@ -3,10 +3,14 @@
 @section('content')
     <div class="container-fluid">
         <div class="row column_title">
-            <div class="col-md-12">
+            <div class="col-md-8">
                <div class="page_title">
                   <h2>Notifications</h2>
                </div>
+            </div>
+            <div class="col-md-4"  style="margin-top: 40px;">
+                <a href="{{ route('notif_list') }}" class="btn btn-inverse my-button btn-outline-primary">All Notifications</a>
+                <a href="{{ route('create_group') }}" class="btn btn-inverse my-button btn-outline-primary">Create Group</a>
             </div>
         </div>
          <!-- row -->
@@ -14,7 +18,7 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+                    <div class = "alerti">
                         @include('flashmessages')
                     </div>
                   <div class="full graph_head">

@@ -11,24 +11,264 @@
   <link href="new/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="new/css/webflow.css" rel="stylesheet" type="text/css">
   <link href="new/css/4rizon.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="new/css/contactus.css">
+  
+
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-  <script type="text/javascript">WebFont.load({  google: {    families: ["Mulish:300,regular,500,600,700,800,900"]  }});</script>
+  <script type="text/javascript">WebFont.load({ google: {    families: ["Mulish:300,regular,500,600,700,800,900"]  }});</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
   <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
   <link href="images/favicon-32x32.png" rel="shortcut icon" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+  <style>
+/* Google Font CDN Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+/* .container1{
+  min-height: 100vh;
+  width: 100%;
+  background: #c8e8e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+.container1{
+  width: 85%;
+  background: #fff;
+  border-radius: 6px;
+  max-width: 900px;
+  margin-top: 40px;
+  padding : 0px;
+  margin-left: 270px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.container1 .content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container1 .content .left-side{
+  width: 25%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  position: relative;
+}
+.content .left-side::before{
+  content: '';
+  position: absolute;
+  height: 70%;
+  width: 2px;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #afafb6;
+}
+.content .left-side .details{
+  margin: 14px;
+  text-align: center;
+}
+.content .left-side .details i{
+  font-size: 30px;
+  color: #3e2093;
+  margin-bottom: 10px;
+}
+.content .left-side .details .topic{
+  font-size: 18px;
+  font-weight: 500;
+}
+.content .left-side .details .text-one,
+.content .left-side .details .text-two{
+  font-size: 14px;
+  color: #afafb6;
+}
+.container1 .content .right-side{
+  width: 75%;
+  margin-left: 75px;
+}
+.content .right-side .topic-text{
+  font-size: 23px;
+  margin-top: 10px;
+  margin-bottom: 13px;
+  font-weight: 600;
+  color: #3e2093;
+}
+.right-side .input-box{
+  height: 50px;
+  width: 100%;
+  margin: 12px 0;
+}
+.right-side .input-box input,
+.right-side .input-box textarea{
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: #F0F1F8;
+  border-radius: 6px;
+  padding: 0 15px;
+  resize: none;
+}
+.right-side .message-box{
+  min-height: 110px;
+}
+.right-side .input-box textarea{
+  padding-top: 6px;
+}
+.right-side .button{
+  display: inline-block;
+  margin-top: 12px;
+  
+}
+.right-side .button input[type="button"]{
+  color: #fff;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #3e2093;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.button input[type="button"]:hover{
+  background: #5029bc;
+}
+@media (min-width: 1020px) {
+  .container1{
+    margin-left : 77px;
+  }
+ 
+}
+@media (min-width: 1360px) {
+  .container1{
+    margin-left : 230px;
+  }
+ 
+}
+@media (min-width: 1440px) {
+  .container1{
+    margin-left : 270px;
+  }
+ 
+}
+@media (max-width: 950px) {
+  .container1{
+    width: 90%;
+    padding: 30px 40px 40px 35px ;
+  }
+  .container1 .content .right-side{
+   width: 75%;
+   margin-left: 55px;
+}
+}
+@media (max-width: 820px) {
+  .container1{
+    margin-top: 40px;
+    margin-left:38px;
+    margin-right:20px;
+    height: 100%;
+  }
+  .container1 .content{
+    flex-direction: column-reverse;
+  }
+ .container1 .content .left-side{
+   width: 100%;
+   flex-direction: row;
+   margin-top: 40px;
+   justify-content: center;
+   flex-wrap: wrap;
+ }
+ .container1 .content .left-side::before{
+   display: none;
+ }
+ .container1 .content .right-side{
+   width: 100%;
+   margin-left: 0;
+ }
+}
+@media(min-width: 1440px){
+.container-5 {
+    padding-top: 215px !important;
+    padding-bottom: 123px;
+}
+}
+.nav-menu-2{
+  font-size: medium;
+    font-weight: bold;
+}
+.brand {
+    position: relative;
+    left: 8%;
+    bottom: 8px;
+    text-align: justify;
+}
+.nav-menu{
+  padding:0%;
+  background-color: black;
+  margin-top: 60px;
+  margin-right:110px;
+
+}
+#navbar {
+  overflow: hidden;
+ 
+}
+
+/* Navbar links */
+#navbar a {
+  float: left;
+  display: block;
+  /* color: #f2f2f2; */
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+    top: -40px;
+    width: 45%;
+    right: 95px;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+.button{
+  margin-top : 3px !important;
+}
+    </style>
 </head>
 <body class="body-4">
   <div class="contact wf-section">
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-2 w-nav">
-      <div class="w-container">
-        <a href="#" class="w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-6"></a>
-        <nav role="navigation" class="nav-menu-2 w-nav-menu">
+      <div class="">
+        <a href="#" class="w-nav-brand brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-6" style="    margin-left: 0px; filter: contrast(6.5);"></a>
+        <nav role="navigation" id = "navbar" class="nav-menu w-nav-menu" style="font-weight:bold;">
           <a href="{{ route('homepage') }}" aria-current="page" class="nav-link w-nav-link">Home</a>
           <a href="{{ route('event-page') }}" class="nav-link-2 w-nav-link">Events</a>
           <a href="{{ route('gallery1') }}" class="nav-link-2 w-nav-link">Gallery</a>
           <a href="{{ route('about-us') }}" class="nav-link-2 w-nav-link">About Us</a>
-          <a href="{{ route('contact-us') }}" class="nav-link-3 w-nav-link w--current">Contact</a>
-          <a href="{{ route('book-event') }}" class="nav-link-3 button w-nav-link">Book Event</a>
+          <a href="{{ route('contact-us') }}" class="nav-link-3 w-nav-link w--current">Contact Us</a>
+          <a href="{{ route('register') }}" class="nav-link-3 w-nav-link">Register</a>
+          <a href="{{ route('book-event') }}" class="nav-link-3 button w-nav-link" style="background: transparent;padding:10.5px;">Book Event</a>
         </nav>
         <div class="menu-button-2 w-nav-button">
           <div class="w-icon-nav-menu"></div>
@@ -36,12 +276,56 @@
       </div>
       <div class="container-5 w-container">
         <div>
-          <h1 class="heading-15">Contact Us</h1>
+          <h2 class="heading-15" style = "margin-top: 200px;">Contact Us</h2>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div class="container1">
+    <div class="content">
+      <div class="left-side">
+        <div class="address details">
+          <i class="fas fa-map-marker-alt"></i>
+          <div class="topic">4rizon Address</div>
+          <div class="text-one">Fourways, Johannesburg</div>
+        </div>
+        <div class="phone details">
+          <i class="fas fa-phone-alt"></i>
+          <div class="topic">Phone</div>
+          <div class="text-one">+27 66 230 4022</div>
+        </div>
+        <div class="email details">
+          <i class="fas fa-envelope"></i>
+          <div class="topic">Email</div>
+          <div class="text-one">contact@4rizon.com</div>
         </div>
       </div>
+      <div class="right-side">
+        <div class="topic-text">Send us a message</div>
+       
+        <form method="POST" action="{{ route('create_contact') }}">
+          @csrf
+        <div class="input-box">
+          <input type="text" name="name" placeholder="Enter your name">
+        </div>
+        <div class="input-box">
+          <input type="text" name="email" placeholder="Enter your email">
+        </div>
+        <div class="input-box">
+          <input type="text" name="message" placeholder="Enter your message">
+
+        </div>
+        <div class="button">
+          <input type="submit" class="button w-button" value="Send Now">
+        </div>
+      </form>
+    </div>
     </div>
   </div>
   <div class="wf-section">
+    
     <div class="container-9 w-container">
       <div class="div-block-32">
         <div class="div-block-33"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3585.3098211188726!2d27.990443!3d-26.023417000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0!2zMjbCsDAxJzI0LjMiUyAyN8KwNTknMjUuNiJF!5e0!3m2!1sen!2s!4v1669781453009!5m2!1sen!2s" width="600" height="450" style="border:0; width:100%;!important" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"  sizes="(max-width: 479px) 100vw, (max-width: 767px) 84vw, (max-width: 991px) 647.9923706054688px, 859.9999389648438px"></iframe>
@@ -82,26 +366,34 @@
               <div id="w-node-b56d7c11-3533-446a-9f2c-a4eaf3e133d9-b5a84b13" class="div-block-29">
                 <h6 class="heading-13">contact@4rizon.com</h6>
               </div>
-            </div>
+              <!-- <div id=""><a href="https://www.instagram.com/4rizon_za/" class="insta"><img src="images/instagram.png" loading="lazy" alt=""></a></div>
+              <div id=""><a href="https://www.facebook.com/4rizonza" class="insta"><img src="images/124010.png" loading="lazy" alt=""></a></div> -->
+              </div>
+              <div class="" style = "display : flex;">
+                  <a href="https://www.instagram.com/4rizon_za/" class="w-inline-block"><img src="images/insta.jpg" loading="lazy" alt=""></a>
+               
+                  <a href="https://www.facebook.com/4rizonza" class="w-inline-block"><img style = "height: 42px; width: 41px; margin-top: 11px; margin-right: 95px;" src="images/facebook.jpg" loading="lazy" alt=""></a>
+              
+                </div>
+  
+           
           </div>
           <div id="w-node-_7c2092a7-786e-3fce-4a55-b867e09686d2-b5a84b13">
             <h1 class="heading-10">Working Hours</h1>
             <div class="div-block-19">
-              <h6 class="heading-11">Will be opening Soon</h6>
+              <h6 class="heading-11">Will be opening soon</h6>
             </div>
-            <div class="div-block-18">
-              <h6 class="heading-12">Will be opening Soon</h6>
-            </div>
+           
           </div>
           <div id="w-node-_2672fe8e-b26c-a35f-71f8-2191f43ed520-b5a84b13">
             <div class="w-layout-grid grid-26">
               <div id="w-node-ae45a09d-c61f-c5ed-b0e0-ba62358da8b6-b5a84b13">
                 <h2 class="heading-19 heading-20">Download Our App</h2>
-                <p class="paragraph-10">Download the 4rizon Application on the App store and the Playstore for some exciting new features and earn some perks!</p>
+                <p class="paragraph-10" style = "font-size : 12px;">Download the 4rizon Application on the App store and the Playstore for some exciting new features and earn some perks!</p>
                 <div class="div-block-41">
-                  <a href="#" class="w-inline-block"><img src="images/Group-6.png" loading="lazy" alt=""></a>
+                  <a href="https://apps.apple.com/us/app/4rizon/id6443894348" class="w-inline-block"><img src="images/Group-6.png" loading="lazy" alt=""></a>
                   <div class="div-block-40">
-                    <a href="#" class="w-inline-block"><img src="images/Group-7.png" loading="lazy" alt=""></a>
+                    <a href="https://play.google.com/store/apps/details?id=com.frizon.customer" class="w-inline-block"><img src="images/Group-7.png" loading="lazy" alt=""></a>
                   </div>
                 </div>
               </div>
@@ -110,7 +402,7 @@
           </div>
         </div>
         <div id="w-node-fc1b37b1-f0df-ac54-e1ec-7dec7fbe4d1a-b5a84b13">
-          <h3 class="heading-14">Copyright 4rizon Bar, lounge &amp; Musical Entertainment. 2022</h3>
+          <h3 class="heading-14">© Copyright 4rizon Bar, Lounge &amp; Musical Entertainment. 2022</h3>
         </div>
       </div>
     </div>
@@ -118,5 +410,23 @@
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=636417981c03ca1b09a84b12" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="new/js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+      <script>
+    window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+    </script>
 </body>
 </html>

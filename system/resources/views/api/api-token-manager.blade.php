@@ -15,7 +15,8 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+               <div class = "alerti">
+
                         @include('flashmessages')
                     </div>
                   <div class="full graph_head">
@@ -89,7 +90,7 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+                    <div class = "alerti">
                         @include('flashmessages')
                     </div>
                      <div class="table_section padding_infor_info">

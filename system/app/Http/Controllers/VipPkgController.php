@@ -11,6 +11,7 @@ use App\Models\VipBookings;
 use App\Models\Bookings;
 use App\Models\user_infos;
 use App\Models\Event;
+use App\Models\Guest;
 use App\Models\AdminNotification;
 use Illuminate\Support\Str;
 use DB;
@@ -93,7 +94,10 @@ class VipPkgController extends Controller
             $vip_booking->user_id          = $result['userId'];
             $vip_booking->guest_lists      = $decodes ;
             $vip_booking->unique_id        = $unique_id;
+          
+
             $vip_booking->save();
+           
             $userFind = user_infos::where('user_id',$result['userId'])->first();
             $message = "Vip Booking Created Successfully.";
             $this->mobile_push_notification($message,$userFind->player_id);
@@ -111,6 +115,13 @@ class VipPkgController extends Controller
                     $notification->event_description = $events->event_short_description;
                     $notification->event_date = $events->event_date;
                     $notification->save();
+                     $guest_list = new Guest;
+                        $guest_list->host_id         = $result['userId'];
+                        $guest_list->booking_id       = $code;
+                        $guest_list->user_id          = $user['id'];
+                        $guest_list->first_name      = $user['name'] ;
+                        $guest_list->last_name      = $user['sur_name'] ;
+                        $guest_list->save();
                     $userFind = user_infos::where('user_id',$user['id'])->first();
                     $message = "You Are Invited For An Event";
                     $this->mobile_push_notification($message,$userFind->player_id);
@@ -118,7 +129,7 @@ class VipPkgController extends Controller
                
                 
             }
-            return response()->json(['qr_code' => $code, 'success' => true], 200);
+            return response()->json(['qr_code' => $code,'success' => true], 200);
         }else{
             $decodes = json_encode($result['users']);
             Bookings::where('id','=',$check->id)->update([

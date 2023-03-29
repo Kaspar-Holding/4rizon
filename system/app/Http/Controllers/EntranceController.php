@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\user_infos;
 
 use Illuminate\Support\Facades\Hash;
-
+use App\UserEmails;
 use App\Models\Dha_profile;
 
 use App\Models\Dha_Address;
@@ -25,9 +25,12 @@ use App\Models\Event;
 use App\Models\Entries;
 use App\Models\DjUser;
 use App\Models\VipPkg;
+use App\Models\Users;
 use App\Models\Bookings;
 use App\Models\Purchase;
 use App\Models\Item;
+use App\Models\PasswordReset2;
+
 use App\Models\EventAttend;
 
 class EntranceController extends Controller
@@ -37,6 +40,74 @@ class EntranceController extends Controller
     	$event_data = Event::all();
         return response()->json(['event_list' =>$event_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
     }
+    public function find_user(){
+        $type = "application/json";
+        $result = json_decode(file_get_contents("php://input"), true);
+        $check = user_infos::where('identification_num',$result['identification_number'])->first();
+        if (!empty($check)) {
+            return response()->json(['message' =>"User found",'user_name'=>$check->first_name.' '.$check->last_name, 'identification_type'=>$check->identification_type,'identification_number'=>$check->identification_num,'success' => true], 200);
+        }
+        else{
+            return response()->json(['message' =>"User not found",'success' => false], 404);
+        }
+    }
+    public function boarding_status(){
+        $type = "application/json";
+        $result = json_decode(file_get_contents("php://input"), true);
+        $check = user_infos::where('user_id',$result['user_id'])->first();
+        if (!empty($check)) {
+            user_infos::where('user_id','=',$result['user_id'])->update(['on_boarding_status'=>'1']);
+            return response()->json(['status'=>'1','success' => true], 200);
+        }
+        else{
+            return response()->json(['message' =>"Failed",'success' => false], 404);
+        }
+    }
+    public function reset_password_entrance(Request $req){
+        $user = Users::where('email',$req->email)->first();
+       
+        if(is_null($user)){
+          return response()->json(["message" => "User Not Found"], 201);  
+        }else{
+          UserEmails::passwordReset2($req->email);  
+          return response()->json(["message" => "Email Sent"], 200);
+        }
+    }
+    function update_password_entrance(Request $request){
+ 
+        $validator = \Validator::make($request->all(), [
+          'password' =>  'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/|min:8|max:191',
+          'email' => 'required',
+        ]);
+        if ($validator->fails()) {
+          $responseArr['message'] = $validator->errors();
+          return response()->json($responseArr);
+         
+        }
+        try{
+            $email=$request->email;
+            $password = $request->password;
+            $user_infos=DB::table('users')->select('email')->where('email',$request->email)->first();
+            if (empty($user_infos)) {
+                return ['code'=>'201','status'=>'failed','message'=>'Invalid EMAIL'];
+            }
+            if(!empty($user_infos)){
+                PasswordReset2::where('email','=',$request->email)->update([
+                    'password'=>$password
+                  ]);
+              $password = Hash::make($request->password);
+              Users::where('email','=',$request->email)->update([
+                'password'=>$password
+              ]);
+              return view("success");
+              
+            }
+        }catch(\Exception $e){
+            return response()->json(["status"=>"error", "code" => 201, "message"=> $e->getMessage()]);
+            
+        }
+        return view("success");
+    } 
     public function mobile_push_notification($message='', $player_id=''){
 		/* SEND NOTIFICATION */
 		$content = array(

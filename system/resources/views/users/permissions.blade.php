@@ -6,7 +6,7 @@
           <div class="col-xd-12 col-sm-10 ">
               <h2>Manager Permissions</h2><br>
           </div>
-          <div>
+          <div class = "alerti">
               @include('flashmessages')
           </div>
       </div>      

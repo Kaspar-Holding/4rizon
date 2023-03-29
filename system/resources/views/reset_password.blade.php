@@ -8,7 +8,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <!-- site metas -->
-      <title>Jynx Dashboard Login</title>
+      <title>4RIZON Dashboard Login</title>
       <meta name="keywords" content="">
       <meta name="description" content="">
       <meta name="author" content="">
@@ -60,17 +60,20 @@
                         <fieldset>
                            <div class="field" style="margin:0px!important; justify-content:center;">
                              
-                              <input  style="background:#e8f0fe!important; color:white !important" type="email" class="login-in" name="email" :value="old('email')" required class="{{ $errors->has('email') ? 'is-invalid' : '' }}"  placeholder="Enter Email" />
+                              <input  style="background:#e8f0fe!important; color:black; !important" type="email" class="login-in" name="email" :value="old('email')" required class="{{ $errors->has('email') ? 'is-invalid' : '' }}"  placeholder="Enter Email" />
                               <x-jet-input-error for="email"></x-jet-input-error>
                            </div>
                            <div class="field" style="justify-content:center;">
-                             
-                              <input style="background:#e8f0fe!important;" type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }} login-in" name="password" required autocomplete="current-password" placeholder="Enter Password" />
-                              <x-jet-input-error for="password"></x-jet-input-error>
+                              <input style="background:#e8f0fe!important;color:black;" type="password" class=" login-in" name="password" required autocomplete="current-password" placeholder="Enter Password" />
+                              {{-- <x-jet-input-error for="password">@php echo $message;@endphp</x-jet-input-error> --}}
                            </div>
-                          
+                           <div class="field" style="justify-content:center;">
+                             @php echo $message;@endphp
+                              <span style="font-size:10px;color:red;margin-left:30rem" class="login-in"></span>
+                            
+                           </div>
+
                            <div class="field margin_0" style="justify-content:center;">
-                             
                               <center><button type="submit" class="main_bt">Submit</button></center>
                            </div>
                         </fieldset>

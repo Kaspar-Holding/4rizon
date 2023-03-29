@@ -23,54 +23,31 @@
  <div class="sidebar_blog_2">
     
     <ul class="list-unstyled components">
+      @if( Auth::user()->role == "super admin")
       <li class="active">
        <a style="padding-top:20px; padding-bottom:20px;" href="{{ route('dashboard') }}" class="nav-link {{ request()->is('/') ? 'active' : 'link-dark' }}" aria-current="page"><i class="fa fa-home nav-img"></i> <span>Dashboard</span></a>
        </li>
-       <li>
-        <a href="#element0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img class="nav-img" src="{{ asset('new/images/icons/chart.png')}}"/><span class="nav-span">Notifications</span></a>
-        <ul class="collapse list-unstyled" id="element0">
-            <li><a href="{{ route('notif_list') }}"> <span class="nav-span">All Notifications</span></a></li>
-       <li><a href="{{ route('admin_msg_list') }}"><span class="nav-span">Admin Notifications</span></a></li>
-        </ul>
-      </li>
-       
-       <li class=""><a href="{{ route('survey_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/chart.png')}}"/> <span class="nav-span">Survey</span></a></li>
-        <li><a href="{{ route('event_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/event.png')}}"/><span class="nav-span">Events</span></a></li>
-      <li>
-        <a href="#element1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img class="nav-img" src="{{ asset('new/images/icons/event.png')}}"/><span class="nav-span">Merchandise</span></a>
-        <ul class="collapse list-unstyled" id="element1">
-            <li><a href="{{ route('item_list') }}"><span class="nav-span">Items</span></a></li>
-            <li><a href="{{ route('item_category_list') }}"><span class="nav-span">Item Category</span></a></li>
-            <li><a href="{{ route('item_element_list') }}"><span class="nav-span">Item Elemets</span></a></li>
-        </ul>
-      </li>
-       <li>
-        <a href="#element2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/><span class="nav-span">Bookings</span></a>
-        <ul class="collapse list-unstyled" id="element2">
-            <li><a href="{{ route('users_event_attend_list') }}"><span class="nav-span">All Bookings</span></a></li>
-            <li><a href="{{ route('vip_pkg_list') }}"><span class="nav-span">Vip Booth Package</span></a></li>
-            <li><a href="{{ route('vip_booking_list') }}"><span class="nav-span">Vip Booth Bookings</span></a></li>
-        </ul>
-      </li>
-       <li><a href="{{ route('news_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/event.png')}}"/><span class="nav-span">News</span></a></li>
-       <li><a href="{{ route('splash_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/><span class="nav-span">Splash</span></a></li>
-       <li><a href="{{ route('gallery_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/><span class="nav-span">Gallery</span></a></li>
-       
-       <li><a href="{{ route('weekly_lineup_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/> <span class="nav-span">Weekly Lineup</span></a></li>
-     <li class="nav-item">
-        <a href="{{ route('admin_list') }}" class="nav-link {{ request()->is('admin_list') ? 'active' : 'link-dark' }}"><img class="nav-img" src="{{ asset('new/images/icons/admin.png')}}"/>
-          <span class="nav-span">Admin Users</span>
-        </a>
-      </li>
-      <li>
-        <a href="#element3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle {{ request()->is('users_list') ? 'active' : 'link-dark' }}"><img class="nav-img" src="{{ asset('new/images/icons/user.png')}}"/><span class="nav-span">Dj Management</span></a>
-        <ul class="collapse list-unstyled" id="element3">
-            <li><a href="{{ route('register_new_djuser') }}"> <span>Register New Dj User</span></a></li>
-            <li><a href="{{ route('admin_djlist') }}"> <span>All Dj Users</span></a></li>
-            <li><a href="{{ route('dj_questionnaire') }}"> <span>DJ Questionnaire</span></a></li>
-        </ul>
-      </li>
-      <li>
+      
+       <li class=""><a href="{{ route('admin_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/user.png')}}"/> <span class="nav-span">Admin Management</span></a></li>  @endif
+         @if( Auth::user()->role == "super admin" || Auth::user()->role == "admin"  )
+
+       <li class=""><a href="{{ route('admin_djlist') }}"><img class="nav-img" src="{{ asset('new/images/icons/user.png')}}"/> <span class="nav-span">Artist Management</span></a></li>
+         @endif
+       {{-- <li>
+         <li>
+      <a href="#element3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle {{ request()->is('users_list') ? 'active' : 'link-dark' }}"><img class="nav-img" src="{{ asset('new/images/icons/user.png')}}"/><span class="nav-span">Artist Management</span></a>
+      <ul class="collapse list-unstyled" id="element3">
+         <li data-toggle="collapse" data-target=".collapse.show"><a href="{{ route('register_new_djuser') }}"> <span>Register New Artist</span></a></li>
+         <li data-toggle="collapse" data-target=".collapse.show"><a href="{{ route('admin_djlist') }}"> <span>All Artists</span></a></li>
+         <li data-toggle="collapse" data-target=".collapse.show"><a href="{{ route('dj_questionnaire') }}"> <span>Artist Questionnaire</span></a></li>
+     </ul>
+    </li> --}}
+    @if( Auth::user()->role == "super admin" || Auth::user()->role == "general admin"  )
+
+    <li class=""><a href="{{ route('users_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/user.png')}}"/> <span class="nav-span">User Management</span></a></li>
+    @endif
+       {{-- <li>
+           <li>
         <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle {{ request()->is('users_list') ? 'active' : 'link-dark' }}"><img class="nav-img" src="{{ asset('new/images/icons/user.png')}}"/><span class="nav-span">Users Management</span></a>
         <ul class="collapse list-unstyled" id="element">
            <li><a href="{{ route('register_new_user') }}"> <span>Register New User</span></a></li>
@@ -90,7 +67,64 @@
            <li><a href="{{ route('denied_users') }}"> <span>Denied Users</span></a></li>
            <li><a href="{{ route('blocked_users') }}"> <span>Blocked Users</span></a></li>
         </ul>
-      </li>
+      </li> --}}
+      <li class=""><a href="{{ route('admin_msg_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/chart.png')}}"/> <span class="nav-span">Notifications</span></a></li>
+       {{-- <li>
+        <a href="#element0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img class="nav-img" src="{{ asset('new/images/icons/chart.png')}}"/><span class="nav-span">Notifications</span></a>
+        <ul class="collapse list-unstyled" id="element0">
+
+            <li><a href="{{ route('notif_list') }}"> <span class="nav-span">All Notifications</span></a></li>
+       <li><a href="{{ route('admin_msg_list') }}"><span class="nav-span">Admin Notifications</span></a></li>
+       <li><a href="{{ route('create_group') }}"><span class="nav-span">Create Group</span></a></li>
+
+        </ul>
+      </li> --}}
+       
+      @if( Auth::user()->role == "super admin" || Auth::user()->role == "admin"  )
+        <li><a href="{{ route('event_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/event.png')}}"/><span class="nav-span">Events</span></a></li>
+        @endif
+      <li class=""><a href="{{ route('item_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/event.png')}}"/> <span class="nav-span">Merchandise</span></a></li>
+      {{-- <li>
+        <a href="#element1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img class="nav-img" src="{{ asset('new/images/icons/event.png')}}"/><span class="nav-span">Merchandise</span></a>
+        <ul class="collapse list-unstyled" id="element1">
+            <li><a href="{{ route('item_list') }}"><span class="nav-span">Items</span></a></li>
+            <li><a href="{{ route('item_category_list') }}"><span class="nav-span">Item Category</span></a></li>
+            <li><a href="{{ route('item_element_list') }}"><span class="nav-span">Item Elemets</span></a></li>
+        </ul>
+      </li> --}}
+      @if( Auth::user()->role == "super admin" || Auth::user()->role == "general admin"  )
+
+      <li class=""><a href="{{ route('users_event_attend_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/> <span class="nav-span">Bookings</span></a></li> @endif
+       {{-- <li>
+        <a href="{{ route('users_event_attend_list') }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/><span class="nav-span">Bookings</span></a>
+        <ul class="collapse list-unstyled" id="element2">
+            <li><a href="{{ route('users_event_attend_list') }}"><span class="nav-span">All Bookings</span></a></li>
+            <li><a href="{{ route('users_transaction_list') }}"><span class="nav-span">Users Transactions</span></a></li>
+            <li><a href="{{ route('vip_pkg_list') }}"><span class="nav-span">Vip Booth Package</span></a></li>
+            <li><a href="{{ route('vip_booking_list') }}"><span class="nav-span">Vip Booth Bookings</span></a></li>
+        </ul>
+      </li> --}}
+       {{-- <li><a href="{{ route('news_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/event.png')}}"/><span class="nav-span">News</span></a></li> --}}
+       {{-- <li><a href="{{ route('splash_list') }}"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/><span class="nav-span">Splash</span></a></li> --}}
+       
+       <li>
+         <a href="#ele" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle {{Request::is('dj_questionnaire') || Request::is('news_list')|| Request::is('survey_list')|| Request::is('splash_list') || Request::is('weekly_lineup_list') ? 'collapse active':'collapsed link-light'}}"><img class="nav-img" src="{{ asset('new/images/icons/setting.png')}}"/><span class="nav-span">Settings</span></a>
+         <ul class="collapse list-unstyled {{Request::is('dj_questionnaire') || Request::is('news_list') || Request::is('survey_list') || Request::is('splash_list') || Request::is('weekly_lineup_list') ? 'show':''}}" id="ele">
+         @if( Auth::user()->role == "super admin" || Auth::user()->role == "admin"  )
+            <li><a href="{{ url('dj_questionnaire') }}" class="{{Request::is('dj_questionnaire') ? 'active':''}}"> <span>DJ Questionnaire</span></a></li> @endif
+            @if( Auth::user()->role == "super admin" || Auth::user()->role == "general admin"  )
+             <li><a href="{{ url('news_list') }}" class="{{Request::is('news_list') ? 'active':''}}"> <span>News</span></a></li>
+             <li><a href="{{ url('gallery_list') }}" class="{{Request::is('gallery_list') ? 'active':''}}"> <span>Gallery</span></a></li>
+             <li><a href="{{ url('survey_list') }}" class="{{Request::is('survey_list') ? 'active':''}}"><span>Survey</span></a></li> @endif
+             {{-- @if( Auth::user()->role == "super admin")
+             <li><a href="{{ url('splash_list') }}" class="{{Request::is('splash_list') ? 'active':''}}"> <span>Splash</span></a></li> @endif --}}
+             <li><a href="{{ url('weekly_lineup_list') }}" class="{{Request::is('weekly_lineup_list') ? 'active':''}}"> <span>Weekly Lineup</span></a></li>
+           
+         </ul>
+       </li>
+
+     
+  
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><img class="nav-img" src="{{ asset('new/images/icons/sharp.png')}}"/><span class="nav-span">Logout</span></a>
         <form method="POST" id="logout-form" action="{{ route('logout') }}">
             @csrf

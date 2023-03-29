@@ -29,6 +29,11 @@
                 </div>
                 <br>
                 <div>
+                  <label class="form-label">Event Price</label>
+                  <input type="text" name="event_price" class="form-control" required >
+                </div>
+                <br>
+                <div>
                   <label class="form-label">Event Short Description</label>
                   <textarea name="event_short_description" rows="4" class="form-control" required></textarea>
                 </div>

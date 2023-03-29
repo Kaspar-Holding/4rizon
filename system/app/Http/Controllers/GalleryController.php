@@ -16,6 +16,7 @@ use DB;
  
 class GalleryController extends Controller
 {
+    
     function gallery_list(){
     	$gallery_data = Gallery::all();
     	return view("gallery.list",['gallery_list'=>$gallery_data,]);

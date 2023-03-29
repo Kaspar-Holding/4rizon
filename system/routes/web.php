@@ -1,13 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DjAppController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DJQuestionnaireController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EntranceController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WeeklyLineupController;
@@ -17,7 +20,8 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\VipPkgController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\SplashController;
-
+use App\Models\Event;
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,16 +33,28 @@ use App\Http\Controllers\SplashController;
 |
 */
 Route::post('/update_password',[UserController::class, 'update_password'])->name('update_password');
-Route::get('/reset_password',[UserController::class, 'reset_password'])->name('reset_password');
+Route::get('/reset_password_entrance',[UserController::class, 'reset_password_entrance'])->name('reset_password_entrance');
+
+Route::post('/update_password_admin',[UserController::class, 'update_password_admin'])->name('update_password_admin');
+Route::get('/reset_password_admin',[UserController::class, 'reset_password_admin'])->name('reset_password_admin');
+Route::get('/r_pass',[UserController::class, 'r_pass'])->name('r_pass');
+Route::post('/update_forget_password_admin',[UserController::class, 'update_forget_password_admin'])->name('update_forget_password_admin');
 Route::get('/dj_reset_password',[UserController::class, 'dj_reset_password'])->name('dj_reset_password');
+Route::get('/payment_gateway',[WebsiteController::class, 'payment_gateway'])->name('payment_gateway');
+Route::get('/email_sent',[UserController::class, 'email_sent'])->name('email_sent');
+Route::get('/success',[UserController::class, 'success'])->name('success');
 
 Route::group(['middleware' =>[
     'auth:sanctum', 'verified'
 ]], function(){
     // Dashboard Routes
+
     Route::get('/dashboard', [DashboardController::class, 'get_data'])->name('dashboard');
     Route::get('/layout', [DashboardController::class, 'layout'])->name('layout');
     // User Routes
+    Route::get('/export-csv', [UserController::class, 'exportCSV'])->name('exportCSV');
+    Route::get('/export-djcsv', [UserController::class, 'exportdjCSV'])->name('exportdjCSV');
+   
     Route::get('/add_new_user', [UserController::class, 'add_new_user'])->name('add_new_user');
     Route::post('/add_user',[UserController::class, 'create'])->name('add_user');
     Route::get('/admin_list' ,  [UserController::class, 'admin_list'])->name('admin_list');
@@ -51,13 +67,18 @@ Route::group(['middleware' =>[
     Route::get('/active_users' ,  [UserController::class, 'active_users'])->name('active_users');
     Route::get('/active_users_list/{fromdate}/{todate}' ,  [UserController::class, 'active_users_list'])->name('active_users_list');
     Route::get('/inactive_users' ,  [UserController::class, 'inactive_users'])->name('inactive_users');
+    Route::get('/users_record' ,  [UserController::class, 'users_record'])->name('users_record');
     Route::get('/denied_users' ,  [UserController::class, 'denied_users'])->name('denied_users');
     Route::get('/blocked_users' ,  [UserController::class, 'blocked_users'])->name('blocked_users');
     Route::get('/inactives_users/{fromdate}/{todate}' ,  [UserController::class, 'inactives_users'])->name('inactives_users');
     Route::get('/invalid_users' ,  [UserController::class, 'invalid_users'])->name('invalid_users');
     Route::get('/invalid_users_lists/{fromdate}/{todate}' ,  [UserController::class, 'invalid_users_lists'])->name('invalid_users_lists');
     Route::get('/view_user_details/{id}', [UserController::class, 'view_user_details'])->name('view_user_details');
+    Route::post('/multiple_approve', [UserController::class, 'multiple_approve'])->name('multiple_approve');
+    Route::post('/multiple_approve_dj', [UserController::class, 'multiple_approve_dj'])->name('multiple_approve_dj');
+    Route::get('/delete_user_details/{id}' ,  [UserController::class, 'delete_user_details'])->name('delete_user_details');
     Route::post('/user_status_update', [UserController::class, 'user_status_update'])->name('user_status_update');
+    Route::get('/approve_dj_user/{id}', [DJAppController::class, 'approve_djuser'])->name('approve_dj_user');
     Route::get('/approve_user/{id}', [UserController::class, 'approve_user'])->name('approve_user');
     Route::get('/deny_user/{id}', [UserController::class, 'deny_user'])->name('deny_user');
     Route::get('/block_user/{id}', [UserController::class, 'block_user'])->name('block_user');
@@ -65,16 +86,21 @@ Route::group(['middleware' =>[
     Route::get('/register_new_user', [UserController::class, 'register_new_user'])->name('register_new_user');
     Route::post('/save_user',[UserController::class, 'save_user'])->name('save_user');
     Route::get('/fetch_dj_dha_profile/{id}', [UserController::class, 'fetch_dj_dha_profile'])->name('fetch_dj_dha_profile');
+    Route::get('/edit_user_details/{id}' ,  [UserController::class, 'edit_user_details'])->name('edit_user_details');
+    Route::post('/update_user_db', [UserController::class, 'update_user_db'])->name('update_user_db');
 
     
     
     //DJ Routes
     Route::get('/register_new_djuser', [DjAppController::class, 'register_new_djuser'])->name('register_new_djuser');
     Route::post('/save_djuser',[DjAppController::class, 'save_djuser'])->name('save_djuser');
-    
+
     Route::get('/admin_djlist' ,  [DjAppController::class, 'admin_djlist'])->name('admin_djlist');
     Route::get('/dj_event_attend_list' ,  [DjAppController::class, 'dj_event_attend_list'])->name('dj_event_attend_list');
     Route::get('/edit_djadmin_details/{id}' ,  [DjAppController::class, 'edit_djadmin_details'])->name('edit_djadmin_details');
+    Route::get('/artistResponse/{id}' ,  [DjAppController::class, 'artistResponse'])->name('artistResponse');
+
+    Route::get('/view_djadmin_details/{id}' ,  [DjAppController::class, 'view_djadmin_details'])->name('view_djadmin_details');
     Route::get('/delete_djadmin_details/{id}' ,  [DjAppController::class, 'delete_djadmin_details'])->name('delete_djadmin_details');
     Route::post('/update_djadmin_user', [DjAppController::class, 'update_djadmin_user'])->name('update_djadmin_user');
     
@@ -103,11 +129,14 @@ Route::group(['middleware' =>[
     Route::post('/update_answer', [SurveyController::class, 'update_answer'])->name('update_answer');
     // Event Routes
     Route::get('/users_event_attend_list' ,  [EventController::class, 'users_event_attend_list'])->name('users_event_attend_list');
+    Route::get('/users_transaction_list' ,  [EventController::class, 'users_transaction_list'])->name('users_transaction_list');
     Route::get('/users_events_attend_lists/{fromdate}/{todate}' ,  [EventController::class, 'users_events_attend_lists'])->name('users_events_attend_lists');
     Route::get('/view_user_event_details/{id}', [EventController::class, 'view_user_event_details'])->name('view_user_event_details');
     Route::get('/event_list' ,  [EventController::class, 'event_list'])->name('event_list');
     Route::get('/add_new_event', [EventController::class, 'add_new_event'])->name('add_new_event');
     Route::post('/create_event', [EventController::class, 'create_event'])->name('create_event');
+    Route::post('/payment', [EventController::class, 'payment'])->name('payment');
+
     Route::get('/edit_event/{id}', [EventController::class, 'edit_event'])->name('edit_event');
     Route::post('/update_event', [EventController::class, 'update_event'])->name('update_event');
     Route::get('/delete_event/{id}', [EventController::class, 'delete_event'])->name('delete_event');
@@ -165,6 +194,7 @@ Route::group(['middleware' =>[
     
     // Admin Msg Routes
     Route::get('/admin_msg_list', [AdminNotificationController::class, 'admin_msg_list'])->name('admin_msg_list');
+    Route::get('/create_group', [AdminNotificationController::class, 'create_group'])->name('create_group');
     Route::get('/notif_list', [AdminNotificationController::class, 'notif_list'])->name('notif_list');
      Route::get('/delivery_new_notifications', [AdminNotificationController::class, 'delivery_new_notifications'])->name('delivery_new_notifications');
     Route::get('/event_new_notifications', [AdminNotificationController::class, 'event_new_notifications'])->name('event_new_notifications');
@@ -177,6 +207,8 @@ Route::group(['middleware' =>[
     Route::get('/store_all_notifications', [AdminNotificationController::class, 'store_all_notifications'])->name('store_all_notifications');
     Route::get('/dj_all_notifications', [AdminNotificationController::class, 'dj_all_notifications'])->name('dj_all_notifications');
     Route::get('/add_admin_msg', [AdminNotificationController::class, 'add_admin_msg'])->name('add_admin_msg');
+    Route::post('/create_dj_admin_group', [AdminNotificationController::class, 'create_dj_admin_group'])->name('create_dj_admin_group');
+    Route::post('/create_admin_group', [AdminNotificationController::class, 'create_admin_group'])->name('create_admin_group');
     Route::post('/create_admin_msg', [AdminNotificationController::class, 'create_admin_msg'])->name('create_admin_msg');
     Route::post('/create_dj_admin_msg', [AdminNotificationController::class, 'create_dj_admin_msg'])->name('create_dj_admin_msg');
     Route::get('/delete_admin_msg/{id}', [AdminNotificationController::class, 'delete_admin_msg'])->name('delete_admin_msg');
@@ -225,16 +257,36 @@ Route::get('/', [WebsiteController::class, 'get_data'])->name('home');
 Route::get('/homepage', [WebsiteController::class, 'get_data_homepage'])->name('homepage');
 Route::get('/about-us', [WebsiteController::class, 'get_about_us'])->name('about-us');
 Route::get('/book-event', [WebsiteController::class, 'get_book_event'])->name('book-event');
+Route::get('/register_success', [WebsiteController::class, 'register_success'])->name('register_success');
 Route::get('/contact-us', [WebsiteController::class, 'get_contact_us'])->name('contact-us');
+Route::post('/web_registration', [WebsiteController::class, 'web_registration'])->name('web_registration');
+Route::post('/web_email_verify', [WebsiteController::class, 'web_email_verify'])->name('web_email_verify');
+Route::post('/otpSuccess', [WebsiteController::class, 'otpSuccess'])->name('otpSuccess');
+Route::get('/resend_otp', [WebsiteController::class, 'resend_otp'])->name('resend_otp');
+
+
+Route::get('/register', [WebsiteController::class, 'register'])->name('register');
 Route::get('/event-page', [WebsiteController::class, 'get_event_page'])->name('event-page');
 Route::get('/gallery1', [WebsiteController::class, 'get_gallery1'])->name('gallery1');
 Route::get('/club', [WebsiteController::class, 'get_club'])->name('club_special');
 Route::get('/privacy_policy', [WebsiteController::class, 'privacy_policy'])->name('privacy_policy');
 Route::get('/terms', [WebsiteController::class, 'terms'])->name('terms');
+
 Route::get('/booth', [WebsiteController::class, 'get_booth'])->name('booth');
 Route::get('/gallery', [WebsiteController::class, 'get_gallery'])->name('gallery');
 Route::get('/club_events', [WebsiteController::class, 'get_clubevent'])->name('club_events');
-
+Route::any('/search',function(){
+    $q = Request::get ( 'q' );
+    $startDate = Carbon::today();
+    $endDate = Carbon::today()->addDays(7);
+    $event_data = Event::whereBetween('event_date', [$startDate, $endDate])->get();
+    $event = Event::where('event_name','LIKE','%'.$q.'%')->orWhere('event_date','LIKE','%'.$q.'%')->get();
+    // echo json_encode($event);die();
+    if(count($event) > 0)
+        return view('event-page',['event_list'=>$event,]);
+    else return view ('event-page',['event_list'=>$event_data,'q' => $q]);
+   
+});
 
 Route::get('/show-map',[DashboardController::class,'showMap'])->name('show-map');
 

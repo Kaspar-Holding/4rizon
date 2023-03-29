@@ -37,12 +37,14 @@
                   <input type="password" name="user_password" class="form-control">
                 </div>
                 <br>
+                
                 <div>
                     <label class="form-label">User Role</label>
                     <select name="user_role" class="form-control" required>
                         <option>-- Select --</option>
-                        <option value="admin" @if($user['role'] == 'admin') selected @endif>Super Admin</option>
-                        <option value="manager" @if($user['role'] == 'manager') selected @endif>Admin</option>
+                        <option value="super admin" @if($user->role == 'super admin') selected @endif>Super Admin</option>
+                        <option value="admin" @if($user->role == 'admin') selected @endif>Admin</option>
+                        <option value="general admin" @if($user->role == 'general admin') selected @endif>General Admin</option>
                     </select>
                 </div>
                 <br>

@@ -14,7 +14,7 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+                    <div class = "alerti">
                         @include('flashmessages')
                     </div>
                   <div class="full graph_head">
@@ -51,10 +51,11 @@
                                     <a href="edit_weekly_lineup/{{$weekly_lineup['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 
                                     </a>
+                                    @if( Auth::user()->role == "super admin")
                                     <a href="delete_weekly_lineup/{{$weekly_lineup['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
                                       <i class="fa fa-trash"></i> 
                                     </a>
-                                   
+                                   @endif
                                 </td>
                               </tr>
                               <?php $count = $count+1;?>

@@ -64,19 +64,106 @@
     color: #aaa;
   }
 }
+#myInput {
+  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 60px; /* Add some space below the input */
+}
+
+#myUL {
+  /* Remove default list styling */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd; /* Add a border to all links */
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6; /* Grey background color */
+  padding: 12px; /* Add some padding */
+  text-decoration: none; /* Remove default text underline */
+  font-size: 18px; /* Increase the font-size */
+  color: black; /* Add a black text color */
+  display: block; /* Make it into a block element to fill the whole list */
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee; /* Add a hover effect to all links, except for headers */
+}
+#myUL{
+  visibility : hidden;
+}
+.nav-menu-2{
+  font-size: medium;
+    font-weight: bold;
+}
+.brand {
+    position: relative;
+    left: 8%;
+    bottom: 8px;
+    text-align: justify;
+}
+.nav-menu{
+  padding:0%;
+  background-color: black;
+  margin-top: 60px;
+  margin-right:110px;
+}
+#navbar {
+  overflow: hidden;
+  
+}
+
+/* Navbar links */
+#navbar a {
+  float: left;
+  display: block;
+  /* color: #f2f2f2; */
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+    top: -40px;
+    width: 45%;
+    right: 95px;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+.button{
+  margin-top : 0px !important;
+}
   </style>
 </head>
 <body class="body-2">
   <div class="main-section wf-section">
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-2 w-nav">
-      <div class="w-container">
-        <a href="#" class="w-nav-brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-6"></a>
-         <nav role="navigation" class="nav-menu-2 w-nav-menu">
-          <a href="{{ route('homepage') }}" aria-current="page" class="nav-link-3 w-nav-link">Home</a>
+      <div class="">
+        <a href="#" class="w-nav-brand brand"><img src="images/LOGO-01-1.svg" loading="lazy" alt="" class="image-6" style="    margin-left: 0px; filter: contrast(6.5);"></a>
+         <nav role="navigation" id = "navbar" class="nav-menu w-nav-menu" style="font-weight:bold;">
+          <a href="{{ route('homepage') }}" class="nav-link-3 w-nav-link">Home</a>
           <a href="{{ route('event-page') }}" class="nav-link-3 w-nav-link w--current">Events</a>
           <a href="{{ route('gallery1') }}" class="nav-link-2 w-nav-link">Gallery</a>
           <a href="{{ route('about-us') }}" class="nav-link-2 w-nav-link">About Us</a>
-          <a href="{{ route('contact-us') }}" class="nav-link-3 w-nav-link">Contact</a>
+          <a href="{{ route('contact-us') }}" class="nav-link-3 w-nav-link">Contact Us</a>
+          <a href="{{ route('register') }}" class="nav-link-3 w-nav-link">Register</a>
           <a href="{{ route('book-event') }}" class="nav-link-3 button w-nav-link">Book Event</a>
         </nav>
         <div class="menu-button-2 w-nav-button">
@@ -94,27 +181,27 @@
     <div class="container-6 w-container">
       <div>
         <div class="row">
-          <div class="col-lg-6">
-              <div class="form-group has-search" style="display: flex;
-    flex-direction: row-reverse;">
-             
-              <input type="text" class="form-control" placeholder="Search"  style="padding-left: 0.67em!important">
-               <span class="fa fa-search form-control-feedback"></span>
-              
+          <div class="col-lg-5">
+          <form action="/search" method="POST" role="search">
+            {{ csrf_field() }}
+            <div class="input-group">
+                <input type="text" class="form-control" name="q"
+                    placeholder="Search events"> <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default" style = "height:32px;">
+                        <i  class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
-          </div>
+        </form>
+            </div>
+          </div> 
           <div class="col-lg-6">
-           
-        <div class="ui calendar" id="rangestart">
-          <div class="ui input left icon" style="width:100%">
-            
-            <input type="text" placeholder="Select Date" style="padding-left: 0.67em!important">
-            <i class="calendar icon" style="right: 1px;
-    left: auto;"></i>
-          </div>
+          @if(isset($q))
+            <div><b>
+           The Search results for your query "<i> {{ $q }} </i>" not found 
+</b> </div>
+            @endif
         
-      </div>
-          </div>
         </div>
         <div class="w-layout-grid grid-14">
           <div id="w-node-_9a8c6244-0816-b407-bda3-415b577fda87-e30a8bda" class="div-block-24"></div>
@@ -122,20 +209,24 @@
         </div>
         <div class="div-block-26">
           <div class="w-layout-grid grid-15">
+            @if(isset($event_list))
+          
             @foreach ($event_list as $event)
+           
                 <div id="w-node-_63f0f9a8-7dc0-ac4c-1892-a756653ae65e-e30a8bda">
                   <div class="w-layout-grid grid-16" style="margin-bottom:40px;">
-                    <div id="w-node-_346e9f91-eb85-6676-fc75-91adb38748b7-e30a8bda"><img src="image/{{$event['event_image']}}" loading="lazy"  sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, 604.9999389648438px" alt="" style="width:500px;height:500px;"></div>
+                    <div id="w-node-_346e9f91-eb85-6676-fc75-91adb38748b7-e30a8bda"><img src="image/{{$event['event_image']}}" loading="lazy"  sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, 604.9999389648438px" alt="" style="width:360px;height:250px;"></div>
                     <div id="w-node-abe0d26a-7e21-ffd5-2fad-088e6ed55d82-e30a8bda">
                       <h3 class="heading-16">{{$event['event_name']}}</h3>
                       <p class="paragraph-7">{{ date('l d M Y', strtotime($event['event_date']))}}</p>
                       <div class="div-block-27">
-                        <a href="#" class="link">Book Event</a>
+                        <a href="{{ route('book-event') }}" class="link">Book Event</a>
                       </div>
                     </div>
                   </div>
                 </div>
               @endforeach
+              @endif
           </div>
         </div>
       </div>
@@ -164,25 +255,29 @@
                 <h6 class="heading-13">contact@4rizon.com</h6>
               </div>
             </div>
+             <div class="" style = "display : flex;">
+                  <a href="https://www.instagram.com/4rizon_za/" class="w-inline-block"><img src="images/insta.jpg" loading="lazy" alt=""></a>
+               
+                    <a href="https://www.facebook.com/4rizonza" class="w-inline-block"><img style = "height: 42px; width: 41px; margin-top: 11px; margin-right: 95px;" src="images/facebook.jpg" loading="lazy" alt=""></a>
+              
+                </div>
           </div>
           <div id="w-node-_7c2092a7-786e-3fce-4a55-b867e09686d2-b5a84b13">
             <h1 class="heading-10">Working Hours</h1>
             <div class="div-block-19">
-              <h6 class="heading-11">Will be opening Soon</h6>
+              <h6 class="heading-11">Will be opening soon</h6>
             </div>
-            <div class="div-block-18">
-              <h6 class="heading-12">Will be opening Soon</h6>
-            </div>
+           
           </div>
           <div id="w-node-_2672fe8e-b26c-a35f-71f8-2191f43ed520-b5a84b13">
             <div class="w-layout-grid grid-26">
               <div id="w-node-ae45a09d-c61f-c5ed-b0e0-ba62358da8b6-b5a84b13">
                 <h2 class="heading-19 heading-20">Download Our App</h2>
-                <p class="paragraph-10">Download the 4rizon Application on the App store and the Playstore for some exciting new features and earn some perks!</p>
+                <p class="paragraph-10" style = "font-size : 12px;">Download the 4rizon Application on the App store and the Playstore for some exciting new features and earn some perks!</p>
                 <div class="div-block-41">
-                  <a href="#" class="w-inline-block"><img src="images/Group-6.png" loading="lazy" alt=""></a>
+                  <a href="https://apps.apple.com/us/app/4rizon/id6443894348" class="w-inline-block"><img src="images/Group-6.png" loading="lazy" alt=""></a>
                   <div class="div-block-40">
-                    <a href="#" class="w-inline-block"><img src="images/Group-7.png" loading="lazy" alt=""></a>
+                    <a href="https://play.google.com/store/apps/details?id=com.frizon.customer" class="w-inline-block"><img src="images/Group-7.png" loading="lazy" alt=""></a>
                   </div>
                 </div>
               </div>
@@ -191,7 +286,7 @@
           </div>
         </div>
         <div id="w-node-fc1b37b1-f0df-ac54-e1ec-7dec7fbe4d1a-b5a84b13">
-          <h3 class="heading-14">Copyright 4rizon Bar, lounge &amp; Musical Entertainment. 2022</h3>
+          <h3 class="heading-14" style = "margin-top :60px;">© Copyright 4rizon Bar, Lounge &amp; Musical Entertainment. 2022</h3>
         </div>
       </div>
     </div>
@@ -254,9 +349,50 @@ $('#example14').calendar({
   inline: true
 });
 $('#example15').calendar();
+
   </script>
+  <script>
+    function myFunction() {
+      // Declare variables
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById('myInput');
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName('li');
+    
+      // Loop through all list items, and hide those who don't match the search query
+      for (i = 0; i < li.length; i++) {
+        ul.visibility = true;
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+    </script>
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=636417981c03ca1b09a84b12" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="new/js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+    <script>
+    window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+    </script>
 </body>
 </html>

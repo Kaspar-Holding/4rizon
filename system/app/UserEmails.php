@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 // use SendGrid\Mail\Mail;
 use Mail;
 use App\Models\PasswordReset;
+use App\Models\PasswordReset2;
+use App\Models\user_infos;
+use App\Models\Conatct;
+use App\Models\Users;
 
 class UserEmails extends Model
 {
@@ -32,7 +36,58 @@ class UserEmails extends Model
         $message->to($to_email, $to_name)
         ->subject("Reset Password");
         $message->from("4rizontech@gmail.com","4rizon Contact");});
-}
+    }
+    public static function passwordReset2($useremail){
+        $password = PasswordReset2::where('email','=',$useremail)->pluck('password');
+        $to_name = $useremail;
+        $to_email = $useremail;
+        $data = array("useremail"=>$useremail);
+        Mail::send("forget2", $data, function($message) use ($to_name, $to_email) {
+        $message->to($to_email, $to_name)
+        ->subject("Reset Password");
+        $message->from("4rizontech@gmail.com","4rizon Contact");});
+    }
+    public static function passwordResetAdmin($useremail){
+        $to_name = $useremail;
+        $to_email = $useremail;
+        $data = array("useremail"=>$useremail);
+        Mail::send("forgot3", $data, function($message) use ($to_name, $to_email) {
+        $message->to($to_email, $to_name)
+        ->subject("Reset Password");
+        $message->from("4rizontech@gmail.com","4rizon Contact");});
+    }
+
+    public static function welcomeEmail($useremail){
+        $to_name = $useremail;
+        $to_email = $useremail;
+        $data = array("useremail"=>$useremail);
+        Mail::send("welcomeMail", $data, function($message) use ($to_name, $to_email) {
+        $message->to($to_email, $to_name)
+        ->subject("Welcome to 4rizon");
+        $message->from("4rizontech@gmail.com","4rizon Contact");});
+
+        // self::sendEmail($email);
+    }
+
+    public static function notifications($useremail){
+        $password = user_infos::where('email','=',$useremail)->pluck('email');
+        $to_name = $useremail;
+        $to_email = $useremail;
+        $data = array("useremail"=>$useremail);
+        Mail::send("notifications", $data, function($message) use ($to_name, $to_email) {
+        $message->to($to_email, $to_name)
+        ->subject("User Approved");
+        $message->from("4rizontech@gmail.com","4rizon Contact");});
+    }
+    public static function contact($name,$email,$messagee){
+    $to_name = "Misbah Ayaz";
+    $to_email = "misbah.ayaz@kasparholdings.com";
+    $data = array("name"=>$name,"email"=>$email,"messagee"=>$messagee);
+    Mail::send("contact", $data, function($message) use ($to_name, $to_email) {
+    $message->to('contact@4rizon.com', $to_name)
+    ->subject("Conatct Us");
+    $message->from("4rizontech@gmail.com","4rizon Contact");});
+    }
     public static function sendEmail($email){
         $sendgrid = new \SendGrid(self::apiKey1);
         try {

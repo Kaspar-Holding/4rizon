@@ -34,6 +34,15 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
+      <style>
+         .invalid-feedback {
+            display:block !important;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 80%;
+            color: #dc3545;
+         }
+      </style>
    </head>
    <body class="inner_page">
       <div class="full_container">
@@ -54,21 +63,34 @@
                             {{ session('status') }}
                         </div> 
                     @endif
+                    
                      <form method="POST" action="{{ route('login') }}" class="login_section">
                         @csrf
                         <h1 class="center login_heading" style="color:#145DBB; font-size:49px; line-height:140%; padding-bottom:40px;">Sign In To 4RIZON</h1>
+                     
                         <fieldset>
+                          
                            <div class="field" style="margin:0px!important; justify-content:center;">
                              
-                              <input  style="background:#e8f0fe!important; color:white !important" type="email" class="login-in" name="email" :value="old('email')" required class="{{ $errors->has('email') ? 'is-invalid' : '' }}"  placeholder="Enter Email" />
-                              <x-jet-input-error for="email"></x-jet-input-error>
+                              <input  style="background:#e8f0fe!important; color:#145DBB !important" type="email" class="login-in" name="email" :value="old('email')" required class="{{ $errors->has('email') ? 'is-invalid' : '' }}"  placeholder="Enter Email" /><br>
                            </div>
                            <div class="field" style="justify-content:center;">
-                             
-                              <input style="background:#e8f0fe!important;" type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }} login-in" name="password" required autocomplete="current-password" placeholder="Enter Password" />
+                              <input style="background:#e8f0fe !important; color:#145DBB ;" type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }} login-in" name="password" required autocomplete="current-password" placeholder="Enter Password" />
+                              <!-- @if ($errors->has('email'))
+                        <span class="invalid-feedback">
+                           <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                     @endif -->
                               <x-jet-input-error for="password"></x-jet-input-error>
                            </div>
-                           <h3 class="center forget_pass" style="color:#024CAA;line-height:42px;">Forgot Password?</h3>
+                           <div class="field" style="margin:0px!important; justify-content:center; text-align:center;">
+                              @if ($errors->has('email'))
+                                 <span for="email" class="invalid-feedback">{{ $errors->first('email') }}</span>
+                               @endif
+                           </div>
+                           <a href="{{route('r_pass')}}" class="center forget_pass " style="color:#024CAA;line-height:42px;border: none;
+                           background: white;margin:auto;  cursor:pointer;">Forgot Password?</a>
+                        
                            <!--<div class="field" style="margin:0px!important;">-->
                            <!--   <label class="label_field hidden">hidden label</label>-->
                               <!--<label class="form-check-label"><input type="checkbox" class="form-check-input" name="remember"> Remember Me</label>-->
@@ -131,5 +153,12 @@
       </script>
       <!-- custom js -->
       <script src="{{ asset('js/custom.js')}}"></script>
+      <script>
+         $(document).ready(function(){
+            $("#btn").click(function(){
+            $(".notification").html('<p><center><b>Reset Email has been sent to your email.</b></center></p>');
+            });
+         });
+      </script> 
    </body>
 </html>

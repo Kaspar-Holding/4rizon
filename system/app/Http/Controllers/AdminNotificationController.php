@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\DjUser;
 use App\Models\user_infos;
+use App\Models\UserGroup;
+use App\Models\DjGroup;
 use App\Models\AdminNotification;
 use Illuminate\Support\Str;
 use DB;
@@ -74,33 +76,107 @@ class AdminNotificationController extends Controller
     	return view("notification.dj_all_notifications",['notif_list'=>$notification_data,]);
     }
     function add_admin_msg(){
-    	return view("notification.add");
+        $users = UserGroup::select('group_name')->distinct()->get();
+        $djusers = DjGroup::select('group_name')->distinct()->get();
+    	return view("notification.add",['usergroups'=>$users, 'djgroups'=>$djusers]);
     }
+    function create_group(){
+        $users = user_infos::get();
+        $dj_users = DjUser::get();
+    	return view("notification.create_group",['users'=>$users, 'djusers'=>$dj_users]);
+    }
+    function create_admin_group(Request $req){
+        $name = $req->group_name;
+        $usersList = $req->user;
+        $count_array = count($usersList);
+        for($i=0; $i<$count_array; $i++){
+            $users = new UserGroup;
+            $user_id = $usersList[$i];
+            $users->user_id            = $user_id;
+            $users->group_name  = $name;
+            $users->save();
+        }
+        return redirect('/create_group')->with('success','Group Created Successfully!');
+
+    }
+    function create_dj_admin_group(Request $req){
+        $name = $req->group_name;
+        $usersList = $req->user;
+        $count_array = count($usersList);
+        for($i=0; $i<$count_array; $i++){
+            $users = new DjGroup;
+            $user_id = $usersList[$i];
+            $users->dj_id            = $user_id;
+            $users->group_name  = $name;
+            $users->save();
+        }
+        return redirect('/create_group')->with('success','Group Created Successfully!');
+
+    }
+   
     function create_admin_msg(Request $req){
-        $usersList = user_infos::where('user_status',1)->get();
-        foreach($usersList as $user){
+
+        $usersList = $req->user;
+
+        foreach($usersList as $list){
+            $group = UserGroup::where('group_name','=',$list)->get();
+        $count_array = count($group);
+        // echo json_encode($count_array);die();
+
+		foreach($group as $g){
+            
             $users = new AdminNotification;
-            $users->user_id            = $user->user_id;
+            $user_id = $g['user_id'];
+            $users->user_id            = $user_id;
             $users->notification_type  = "3";
             $users->admin_msg          = $req->admin_msg   ;
             $users->save();
             $messages = $req->admin_msg;
-            $this->mobile_push_notification($messages,$user->player_id);
+                    $user = user_infos::where('user_id',$user_id)->get();
+                    foreach($user as $u){
+                         $this->mobile_push_notification($messages,$u['player_id']);
+                    }
+        }
         }
             return redirect('/admin_msg_list')->with('success','Admin Notification Created Successfully!');
     }
     function create_dj_admin_msg(Request $req){
-        $djUsersList = DjUser::get();
-        foreach($djUsersList as $dj){
-            $djs = new AdminNotification;
-            $djs->dj_id            = $dj->id;
-            $djs->notification_type  = "5";
-            $djs->admin_msg          = $req->admin_msg   ;
-            $djs->save();
+
+        $usersList = $req->user;
+
+        foreach($usersList as $list){
+            $group = DjGroup::where('group_name','=',$list)->get();
+        $count_array = count($group);
+
+		foreach($group as $g){
+            
+            $users = new AdminNotification;
+            $user_id = $g['dj_id'];
+            $users->user_id            = $user_id;
+            $users->notification_type  = "5";
+            $users->admin_msg          = $req->admin_msg   ;
+            $users->save();
+            $messages = $req->admin_msg;
+                    $user = DjUser::where('id',$user_id)->get();
+                    foreach($user as $u){
+                         $this->mobile_push_notification($messages,$u['player_id']);
+                    }
         }
-        
+        }
             return redirect('/admin_msg_list')->with('success','Admin Notification Created Successfully!');
     }
+    // function create_dj_admin_msg(Request $req){
+    //     $djUsersList = DjUser::get();
+    //     foreach($djUsersList as $dj){
+    //         $djs = new AdminNotification;
+    //         $djs->dj_id            = $dj->id;
+    //         $djs->notification_type  = "5";
+    //         $djs->admin_msg          = $req->admin_msg   ;
+    //         $djs->save();
+    //     }
+        
+    //         return redirect('/admin_msg_list')->with('success','Admin Notification Created Successfully!');
+    // }
     public function delete_admin_msg($id) {
         if(AdminNotification::where('id', $id)->exists()) {
             $AdminNotification= AdminNotification::where('id', $id)->delete();

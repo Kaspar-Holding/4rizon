@@ -273,11 +273,12 @@ You represent and warrant that You are the registered End User associated with t
 
 For general inquiries, complaints, questions or claims concerning the Licensed Application, please contact:<br>
 <br> 
+<u>ANURANJANAM ENTERPRISE (PTY) LTD</u><br>
+<u>support@4rizon.co.ae</u><br>
+<u>+27 66 230 4022</u><br>
+{{-- __________, __________ __________<br>
 __________<br>
-__________<br>
-__________, __________ __________<br>
-__________<br>
-__________<br>
+__________<br> --}}
 <br>
 <br>
 12. TERMINATION<br>
@@ -289,7 +290,7 @@ The licence is valid until terminated by 4RIZON (Pty) Ltd or by You. Your rights
 <br>
 4RIZON (Pty) Ltd represents and warrants that 4RIZON (Pty) Ltd will comply with applicable third-party terms of agreement when using Licensed Application.<br>
 <br>
-In Accordance with Section 9 of the 'Instructions for Minimum Terms of Developer's End-User Licence Agreement', both Apple and Google and their subsidiaries shall be third-party beneficiaries of this End User Licence Agreement and — upon Your acceptance of the terms and conditions of this Licence Agreement, both Apple and Google will have the right (and will be deemed to have accepted the right) to enforce this End User Licence Agreement against You as a third-party beneficiary thereof.<br>
+In Accordance with Section 9 of the 'Instructions for Minimum Terms of Developer's End-User Licence Agreement', both Apple and Google and their subsidiaries shall be third-party beneficiaries of this End User Licence Agreement and upon Your acceptance of the terms and conditions of this Licence Agreement, both Apple and Google will have the right (and will be deemed to have accepted the right) to enforce this End User Licence Agreement against You as a third-party beneficiary thereof.<br>
 <br>
 <br>
 14. INTELLECTUAL PROPERTY RIGHTS<br>
@@ -482,9 +483,9 @@ If You are of the view that your rights have been infringed through the unlawful
 <br>
 Please either contact Us on the Sites or address your communications to:<br>
 <br>
-Email address: ……………………………………….<br>
+Email address: support@4rizon.co.ae<br>
 <br>
-Contact number: ………………………………………<br>
+Contact number: +27 66 230 4022<br>
 <br>
 We will investigate the complaint on receipt of a complete and properly formulated complaint notice and will take appropriate action where necessary. Such action may include, but is not limited to, removing the offending Content from the Sites and/or suspension or termination of the offending registrant or third party. We reserve Our rights to take further action should any offensive language or defamatory comments be directed to 4RIZON or the 4RIZON Associates or the brand in general.<br>
 <br>
@@ -533,15 +534,23 @@ It is your responsibility to acquire and maintain, at your own expense, the comp
 ECT ACT<br>
 Access to the Content on or through this Website and this Website itself are classified as "electronic transactions" in terms of the ECT Act and therefore You have the rights detailed in Chapter VII of the ECT Act and We must disclose the following information:<br>
 <br>
-Our full name: ……………………………………………………….(Pty) Ltd<br>
-Registration number: …………………………………………<br>
-Street address: <br>
-Postal address: …………………………………………<br>
-Physical address for receipt of legal service: …………………………………………<br>
+Our full name: ANURANJANAM ENTERPRISE (PTY) LTD<br>
+Registration number: 2021 / 871019 / 07<br>
+{{-- Street address: <br> --}}
+Address: POSTNET SUITE 052
+PRIVATE BAG X 11
+HALFWAY HOUSE MIDRAND
+GAUTENG
+1685<br>
+Physical address for receipt of legal service: 128 BLOCK 12
+THE WHISKENS BALLWIN PROPERTIES
+MIDRAND
+GAUTENG
+1685<br>
 Attention: Company Secretary<br>
-Main business: …………………………………………<br>
-Website address: …………………………………………<br>
-Official email address: …………………………………………<br>
+{{-- Main business: …………………………………………<br> --}}
+Website address: www.4rizon.com<br>
+Official email address: support@4rizon.co.ae<br>
 <br>
 SOCIAL MEDIA TERMS AND CONDITIONS<br>
 These Social Terms apply to all Communications which originate from or reference 4RIZON, their affiliates or subsidiaries. These Terms and Conditions are to be read in conjunction with the General Website Terms and Conditions. Your Communications access, use and/or consumption is subject to these Social Terms. If you do not agree to be bound by these Social Terms you should not access, use and/or consume the Communications or any other form of communication these Social Terms govern.<br>

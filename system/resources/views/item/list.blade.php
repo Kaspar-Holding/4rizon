@@ -3,18 +3,24 @@
 @section('content')
     <div class="container-fluid">
         <div class="row column_title">
-            <div class="col-md-12">
+            <div class="col-md-8">
                <div class="page_title">
-                  <h2>Item Lists</h2>
+                  <h2>Merchandise</h2>
                </div>
             </div>
+            <div class="col-md-4">
+               <div style="margin-top:35px">
+               <a href="{{ route('item_category_list') }}" class="btn btn-inverse my-button btn-outline-primary">Item Category</a>
+               <a href="{{ route('item_element_list') }}" class="btn btn-inverse my-button btn-outline-primary">Element List</a>
+               </div>
+           </div>
         </div>
          <!-- row -->
         <div class="row">
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+                    <div class = "alerti">
                         @include('flashmessages')
                     </div>
                   <div class="full graph_head">

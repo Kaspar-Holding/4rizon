@@ -14,7 +14,8 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+               <div class = "alert">
+
                         @include('flashmessages')
                     </div>
                   <div class="full graph_head">
@@ -23,9 +24,12 @@
                             <div class="col-sm-9">
                                 <h2>DJ_Questionnaire Lists</h2>
                             </div>
+                            @if( Auth::user()->role == "super admin")
+
                             <div class="col-sm-3">
                                 <a href="{{ route('add_new_dj_questionnaire') }}" class="btn my-button btn-inverse btn-outline-primary">Add New DJ Questionnaire</a>
                             </div>
+                            @endif
                         </div>
                      </div>
                   </div>
@@ -37,7 +41,9 @@
                                  <th>#</th>
                                  <th>DJ_Questionnaire Name</th>
                                  <th>Questions</th>
-                                 <th>Action</th>
+                                       @if( Auth::user()->role == "super admin")
+
+                                 <th>Action</th> @endif
                               </tr>
                            </thead>
                            <tbody>
@@ -48,7 +54,9 @@
                                 <td class="text-capitalize">{{$DJ_Questionnaire['questionnaire_name']}}</td>
                                 <td class="text-capitalize"><a href="view_dj_questionnaire_questions/{{$DJ_Questionnaire['id']}}" class="btn eye-icon btn-sm btn-inverse btn-outline-primary">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
-                                    </a></td>                               
+                                    </a></td>  
+                                          @if( Auth::user()->role == "super admin")
+                             
                                 <td>
                                     <a href="edit_dj_questionnaire/{{$DJ_Questionnaire['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 
@@ -57,7 +65,7 @@
                                       <i class="fa fa-trash"></i> 
                                     </a>
                                    
-                                </td>
+                                </td> @endif
                               </tr>
                               <?php $count = $count+1;?>
                               @endforeach

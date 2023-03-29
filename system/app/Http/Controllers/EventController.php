@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\DjUser;
@@ -11,8 +11,11 @@ use App\Models\Event;
 use App\Models\EventAttend;
 use App\Models\AdminNotification;
 use App\Models\Bookings;
+use App\Models\Guest;
+use App\Models\Dj_Event;
 use App\Models\Notifications;
 use App\Models\user_infos;
+use App\Models\Transaction;
 use Illuminate\Support\Str;
 use DB;
  
@@ -24,7 +27,13 @@ class EventController extends Controller
     }
     function users_event_attend_list(){
         $event_data = Bookings::all();
+       
         return view("event.attendList",['event_list'=>$event_data,]);
+    }
+   
+    function users_transaction_list(){
+        $event_data = Transaction::all();
+        return view("event.transactions",['event_list'=>$event_data,]);
     }
     function users_events_attend_lists($fromdate,$todate){
         if($fromdate == $todate){
@@ -36,12 +45,23 @@ class EventController extends Controller
     }
     function edit_event($id){
     	$event = Event::find($id);
-        $dj = DjUser::all();
-    	return view("event.edit",['event'=>$event,'dj_list'=>$dj]);
+        $start = $event->event_start_time;
+        $end = $event->event_end_time;
+
+        $dj = DjUser::where('dj_status','1')->get();
+        $intervals = CarbonInterval::hours(1)->toPeriod($start, $end);
+        
+        // $dj_event = Dj_Event::where('event_id',$id)->get();
+        $dj_event = DB::table('dj_event')
+            ->select('dj_event.event_id','dj_event.going_status','djusers.first_name','djusers.last_name')
+            ->join('djusers', 'djusers.id', '=', 'dj_event.dj_id')->where('dj_event.event_id','=',$id)
+            ->get();
+    	return view("event.edit",['event'=>$event,'dj_list'=>$dj,'djs'=>$dj_event,'intervals'=>$intervals]);
     }
     function view_user_event_details($id){
     	$event = Bookings::find($id);
-    	return view("event.viewDetails",['event'=>$event,]);
+        $guests = Guest::where('booking_id','=',$event->booking_id)->where('status','=',0)->get();
+    	return view("event.viewDetails",['event'=>$event,'guests'=>$guests]);
     }
     function add_new_event(){
     	return view("event.add");
@@ -65,6 +85,7 @@ class EventController extends Controller
         $event->stage_2  = $req->stage_2;
         $event->stage_3  = $req->stage_3;
         $event->special  = $req->special;
+        $event->pkg_price  = $req->event_price;
         $event->save();
         $getLastEvent = Event::where('event_name',$req->event_name)->first();
         $notification = new Notifications;
@@ -76,9 +97,60 @@ class EventController extends Controller
         $notification->save();
         return redirect('/event_list')->with('success','Event Created Successfully!');
     }
+    function payment(Request $req){
+       
+        $booking_data = Bookings::where('booking_id','=',$req->booking_id)->first();
+        $transaction = Transaction::where('booking','=',$req->booking_id)->first();
+        if(empty($transaction)){
+            $event = new Transaction;
+            $event->amount         = $req->price;
+            $event->booking =$booking_data->booking_id;
+            $event->user = $booking_data->user_id;
+            $event->event = $booking_data->event_id;
+            $event->save();
+            Bookings::where('booking_id','=',$req->booking_id)->update([
+                'payment_status'=>1
+              ]);
+            return redirect('/users_event_attend_list')->with('success','Payment Done');  
+        }
+        else{
+            return redirect('/users_event_attend_list')->with('success','Payment Already Made');
+        }
+    }
     function update_event(Request $req){ 
+        $artistList = $req->artist;
+        
+        if(!empty($artistList)){
+            foreach($artistList as $list){
+                $assigned = Dj_Event::where('dj_id','=',$list)->where('event_id','=',$req->id)->first();
+                if(empty($assigned)){
+
+                $dj_event = new Dj_Event;
+                $dj_event->event_id = $req->id;
+                $dj_event->dj_id = $list;
+                $dj_event->save();
+                $push_message = "Event Request";
+                $message = " Event Request";
+                $dj = DjUser::where('djusers.id','=',$list)->first(); 
+                if(isset($dj)){
+                    $event                             = Event::find($req->id);
+                    $this->mobile_push_notificationdj($push_message,$dj->device_id);  
+                    $djs = new Notifications;
+                    $djs->dj_id            = $dj->id;
+                    $djs->event_id         = $req->id;
+                    $djs->event_name        = $event->event_name;
+                    $djs->notification_type  = "5";
+                    $djs->admin_msg          = "You have been assigned a $event->event_name on $event->event_date."   ;
+                    $djs->save();
+                
+                }
+            }
+            }
+        }
+        
         $event                             = Event::find($req->id);
         $event->event_name                 = $req->event_name;
+        $event->pkg_price                 = $req->event_price;
         $event->event_short_description    = $req->event_short_description;
         $event->event_description          = $req->event_description   ;
         if ($req->hasFile('event_image')) {
@@ -87,26 +159,14 @@ class EventController extends Controller
             $event->event_image = $eventPic;
         }
         $event->event_date  = $req->event_date;
-        $event->dj_id  = $req->dj_id;
+        // $event->dj_id  = $list;
+
         $event->stage_1  = $req->stage_1;
         $event->stage_2  = $req->stage_2;
         $event->stage_3  = $req->stage_3;
         $event->special  = $req->special;
         $event->save();
-        $push_message = "Event Request";
-        $message = " Event Request";
-        $dj = DjUser::where('djusers.id','=',$req->dj_id)->first(); 
-        if(isset($dj)){
-
-            $this->mobile_push_notificationdj($push_message,$dj->device_id);  
-            $djs = new Notifications;
-            $djs->dj_id            = $dj->id;
-            $djs->event_id         = $req->id;
-            $djs->event_name        = $event->event_name;
-            $djs->notification_type  = "5";
-            $djs->admin_msg          = "You have been assigned a $event->event_name"   ;
-            $djs->save();
-        } 
+        
         
         return redirect('/event_list')->with('success','Event Details Updated Successfully!');
     }
@@ -136,6 +196,7 @@ class EventController extends Controller
         if (!empty($check)) {
             return response()->json(['message' => "Already Going",'error' => true,'code'=>'201'], 201);
         }else{
+            $return_code = str::random(30);
             $eventDetails = Event::find($req->event_id);
             $event = new Bookings;
             $event->booking_type   = "1";
@@ -143,6 +204,8 @@ class EventController extends Controller
             $event->user_id        = $req->user_id;
             $event->status         = $req->status;
             $event->going_status   = $req->status;
+            $event->booking_id   = $return_code;
+
             $event->save();
             $userFind = user_infos::where('user_id',$req->user_id)->first();
             $messages = "Event Booking Created";
@@ -182,9 +245,37 @@ class EventController extends Controller
         $event->save();
         return response()->json(['message' => "User Exits From The Pub", 'success' => true], 200);
     }
+      function invitation_status(Request $req){
+        $result = json_decode(file_get_contents("php://input"), true);
+        $status = $result['status'];
+        $user_id = $result['user_id'];
+        $booking_id = $result['booking_id'];
+        $host = Guest::where('booking_id','=',$booking_id)->where('user_id','=',$user_id)->first();
+        $host_id = $host->host_id;
+
+        if($status == 1){
+            Guest::where('booking_id','=',$booking_id)->where('user_id','=',$user_id)->update([
+                'status'=> $status
+              ]);
+              $userFind = user_infos::where('user_id',$user_id)->first();
+              $name = $userFind->first_name;
+              $message = $name." has rejected your invitation";
+              $hostFind = user_infos::where('user_id',$host_id)->first();
+              if (!is_null($hostFind->player_id)){
+                $this->mobile_push_notification($message,$hostFind->player_id);
+              }
+        }
+         if($status == 2){
+            Guest::where('booking_id','=',$booking_id)->where('user_id','=',$user_id)->update([
+                'status'=> $status
+              ]);
+             
+        }
+        return response()->json(['message' => "status updated", 'success' => true], 200);
+    }
     function event_list_api($id){
         $date = \Carbon\Carbon::today()->subDays(7);
-        $event_data = Event::where('created_at','>=',$date)->get();
+        $event_data = Event::where('event_date','>=',$date)->get();
         $bookings   = Bookings::where('user_id',$id)->get();
         if(!empty($bookings)){
             return response()->json(['event_list' =>$event_data,'booking_list' =>$bookings,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);

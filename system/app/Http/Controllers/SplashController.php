@@ -74,10 +74,10 @@ class SplashController extends Controller
     // api's
     function splash_list_api(){
         $splash_data = Splash::all();
-        return response()->json(['splash_list' =>$splash_data,'image_url'=>'https://www.4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['splash_list' =>$splash_data,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     function single_splash_api($id){
         $splash = Splash::find($id);
-        return response()->json(['splash' =>$splash,'image_url'=>'https://www.4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['splash' =>$splash,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
 }

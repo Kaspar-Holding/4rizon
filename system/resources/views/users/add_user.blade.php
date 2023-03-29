@@ -40,8 +40,9 @@
                   <label class="form-label">User Role</label>
                   <select name="user_role" class="form-control" required>
                     <option>-- Select --</option>
-                    <option value="admin">Super Admin</option>
-                    <option value="manager">Admin</option>
+                    <option value="super admin">Super Admin</option>
+                    <option value="admin">Admin</option>
+                      <option value="general admin">General Admin</option>
                   </select>
                 </div>
                 <br>

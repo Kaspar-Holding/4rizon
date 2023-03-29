@@ -2,7 +2,7 @@
     <div style='max-width:600px;margin:0 auto'>
         <div style='background-color:#254C5A;font:14px sans-serif;color:#686f7a;border-top:4px solid #5AC8ED;margin-bottom:20px;border-bottom: 4px solid #5AC8ED;'>
             <div class='border-bottom:1px solid #f2f3f5;padding:20px 30px'>
-                <img src="https://www.4rizon.com/image/Logo.png" alt='4rizon' style='max-width:115px;display:block;margin: 10px 29px;'>
+                <img src="https://admin.4rizon.com/image/Logo.png" alt='4rizon' style='max-width:115px;display:block;margin: 10px 29px;'>
             </div>
             <div style='padding:20px 30px;color:#fff'>
                 <div style='font-size:16px;line-height:1.5em;border-bottom:1px solid #f2f3f5;padding-bottom:10px;margin-bottom:20px'>
@@ -14,6 +14,6 @@
         </div>
         <div style='font:11px sans-serif;color:#3e3e3e'>
             Delivered by www.4rizon.com - All Rights Reserved.
-        </div>
+        </div> 
     </div>
 </div>

@@ -43,7 +43,11 @@
                 <div class="row"style="margin-top:10px;" >
                   <div class="col-md-6">
                     <label class="form-label">Phone Number</label>
-                    <input type="text" pattern="^\+[1-9]{1}[0-9]{3,14}$"   name="phone_number" class="form-control" required >
+                    <input type="text" pattern="[-+]?\d*"   name="phone_number" class="form-control" required >
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Picture</label>
+                    <input type="file" name="picture" class="form-control" required >
                   </div>
                 </div>
                 <div class="row"style="margin-top:10px;" >
@@ -71,9 +75,13 @@
                 <div class="row" style="margin-top:10px;">
                   <div class="col-md-6">
                     <label class="form-label">Gender</label>
-                    <select name="gender" id="cars"  class="form-control" required >
+                    <select name="gender" id="cars"  class="form-control" Value = "Select" required >
+                    <option value="">Select</option>
+
                       <option value="male">Male</option>
                       <option value="female">Female</option>
+                      <option value="Rather Not Say">Rather Not Say</option>
+
                     </select>
                   </div>
                   <div class="col-md-6">

@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('pageTitle','User Detail')
 @section('content')
+<style>
+    h2{
+        font-size: 24px !important;
+    }
+    h5{
+        font-size : 14px !important;
+        color:#d8dfe5!important; 
+    }
+    </style>
     @foreach ($users as $user)
     <div class="container-fluid">
         <div class="row column_title">
@@ -15,17 +24,18 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div class="full graph_head">
+                    <div class="full graph_head" style=" margin-bottom:20px !important;">
                          <div class="heading1 margin_0">
-                            <h2>{{ $user['first_name'] }} {{$user['last_name']}} Details</h2>
+                            <div class = "alerti">
+                                @include('flashmessages')
+                            </div>
+                            <h2>{{ $user['first_name'] }} {{$user['last_name']}}'s Profile</h2>
                          </div>
                     </div>
-        
+        @foreach($users as $user)
                     <form class="container-fluid" action="{{ route('user_status_update')}}" method="post">
                         @csrf
-                        <div>
-                            @include('flashmessages')
-                        </div>
+                        
 
                         <div class="row p-3">
                             <div class="col-6">
@@ -115,8 +125,8 @@
                                 @if ($user['user_status'] == "0")
                                     <h5>New Registration</h5>
                                 @elseif ($user['user_status'] == "1")
-                                    <h5>Active</h5>
-                                @elseif ($user['user_status'] == "2")
+                                    <h5>Verified</h5>
+                                @elseif ($user['user_status'] == "3")
                                     <h5>Denied</h5>
                                 @elseif ($user['user_status'] == "-1")
                                     <h5>Blocked</h5>
@@ -126,7 +136,7 @@
                         </div>
                         <hr>
                         @if ( $user->identification_type == 1)
-                            <div class="full graph_head">
+                            <div class="full graph_head" style=" margin-bottom:20px !important;">
                                 <div class="heading1 margin_0">
                                     <h2>DHA Detail</h2>
                                 </div>
@@ -192,6 +202,8 @@
                                     <div class="col-12">
                                         <div class="d-flex justify-content-center">
                                             <a href="{{route('fetch_dha_profile',$user->user_id)}}" type="submit" class="btn btn-primary link-light col-sm-4">Fetch DHA Information</a>
+                                            <br>
+                                         
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +211,7 @@
                                 <hr>
                             @endif
                         @endif
-                        <div class="d-flex justify-content-center">
+                        <!-- <div class="d-flex justify-content-center">
                             <a href="{{route('approve_user',$user->user_id)}}" type="submit" class="btn btn-primary link-light col-sm-4">Approve</a> &nbsp;
                             {{-- <button type="submit" class="btn btn-primary link-light col-sm-4">Approve</button> --}}
                         </div>
@@ -207,8 +219,9 @@
                         <div class="d-flex justify-content-center">
                             <a href="{{route('deny_user',$user->user_id)}}" type="submit" class="btn btn-warning link-light col-sm-4">Deny</a> &nbsp;
                             <a href="{{route('block_user',$user->user_id)}}" type="submit" class="btn btn-danger link-light col-sm-4">Block</a>
-                        </div>
+                        </div> -->
                     </form>
+
                     <!--@if ($user->user_status == "0")-->
                     <!--    <div class="d-flex justify-content-center">-->
                     <!--        <a href="/deny_user/{{$user->user_id}}" type="submit" class="btn btn-warning link-light col-sm-4">Deny</a> &nbsp;-->
@@ -216,6 +229,7 @@
                     <!--    </div>-->
                     <!--@endif-->
                     <br>
+                    @endforeach
                 </div>
             </div>
         </div>

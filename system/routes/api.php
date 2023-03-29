@@ -2,9 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Cache\RateLimiting\Limit;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DjAppController;
+use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\DJQuestionnaireController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\EventController;
@@ -18,7 +20,7 @@ use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\VipPkgController;
 use App\Http\Controllers\SplashController;
 use App\Http\Controllers\CouponController;
-
+use App\Http\Controllers\ContactController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +31,13 @@ use App\Http\Controllers\CouponController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+RateLimiter::for('uploads', function (Request $request) {
+    return $request->user()
+                ? Limit::none()
+                : Limit::perMinute(100);
+});
+
+Route::post('/payment_gateway' , [WebsiteController::class, 'payment_gateway'])->name('payment_gateway');
 
 Route::group(['middleware' =>[
     'auth:sanctum', 'verified'
@@ -39,11 +48,23 @@ Route::group(['middleware' =>[
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::post('/register_user' , [UserController::class, 'register_user'])->name('register_user');
+    Route::post('/boarding_status' , [EntranceController::class, 'boarding_status'])->name('boarding_status');
+    Route::post('/payment_gateway2' , [UserController::class, 'payment_gateway2'])->name('payment_gateway2');
+    Route::post('/payment_gateway' , [WebsiteController::class, 'payment_gateway'])->name('payment_gateway');
+    Route::post('/chargeApi' , [UserController::class, 'chargeApi'])->name('chargeApi');
+    Route::post('/save_token' , [UserController::class, 'save_token'])->name('save_token');
+    Route::post('/find_user' , [EntranceController::class, 'find_user'])->name('find_user');
+    Route::post('/register_user' , [UserController::class, 'register_user'])->name('register_user');
+    Route::post('/registered_users' , [UserController::class, 'registered_users'])->name('registered_users');
+    Route::post('/registered_users_status' , [UserController::class, 'registered_users_status'])->name('registered_users_status');
+    Route::post('/add_vaccination' , [UserController::class, 'add_vaccination'])->name('add_vaccination');
+    Route::post('/get_vaccination' , [UserController::class, 'get_vaccination'])->name('get_vaccination');
     Route::post('/login_user' ,  [UserController::class, 'user_login'])->name('login_user');
     Route::post('/user_delete' ,  [UserController::class, 'user_delete'])->name('user_delete');
-     Route::post('/email_verify_mail' , [UserController::class, 'email_verify_mail'])->name('email_verify_mail');
+    Route::post('/verify_user' ,  [UserController::class, 'verify_user'])->name('verify_user');
+   
+    Route::post('/email_verify_mail' , [UserController::class, 'email_verify_mail'])->name('email_verify_mail');
+  
     Route::post('/register_test_user' , [UserController::class, 'register_test_user'])->name('register_test_user');
     Route::post('/email_verification' ,  [UserController::class, 'email_verification'])->name('email_verification');
     Route::post('/test_login_user' ,  [UserController::class, 'test_login_user'])->name('test_login_user');
@@ -53,11 +74,12 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::get('/user_select_list_api' ,  [UserController::class, 'user_select_list_api'])->name('user_select_list_api');
     Route::post('/edit_user/{id}' ,  [UserController::class, 'edit_user'])->name('edit_user');
     Route::post('/update_user' ,  [UserController::class, 'update_user'])->name('update_user');
+    Route::post('/web_registration', [WebsiteController::class, 'web_registration'])->name('web_registration');
     Route::post('/check_user' ,  [UserController::class, 'check_user'])->name('check_user');
     Route::post('/delete_user/{id}' ,  [UserController::class, 'deleteUser'])->name('delete_user');
     Route::post('/update_status' ,  [UserController::class, 'update_status'])->name('update_status');
     Route::post('/wallet_points' ,  [UserController::class, 'wallet_points'])->name('wallet_points');
-    
+    Route::post('/create_contact', [ContactController::class, 'create_contact'])->name('create_contact');
     Route::get('/dj_questionnaire' ,  [DJQuestionnaireController::class, 'dj_questionnaire_api'])->name('dj_questionnaire_list_api');
     Route::get('/get_dj_questionnaire_questions' ,  [DJQuestionnaireController::class, 'get_dj_questionnaire_questions'])->name('get_dj_questionnaire_questions');
     Route::get('/survey_list_api' ,  [SurveyController::class, 'survey_list_api'])->name('survey_list_api');
@@ -69,10 +91,11 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::post('/share_reward' ,  [UserController::class, 'share_reward'])->name('share_reward');
     
     Route::post('/update_password_api' ,  [UserController::class, 'update_password_api'])->name('update_password_api');
+    Route::post('/update_password',[UserController::class, 'update_password'])->name('update_password');
     Route::post('/update_forget_password_api' ,  [UserController::class, 'update_forget_password_api'])->name('update_forget_password_api');
 
     Route::post('/dj_forget_password_api' ,  [UserController::class, 'dj_forget_password_api'])->name('dj_forget_password_api');
-    
+    Route::post('/notification' ,  [UserController::class, 'notification'])->name('notification');
     Route::post('/create_qr_code_event' ,  [EventController::class, 'create_qr_code_event'])->name('create_qr_code_event');
     Route::post('/user_going_to_event' ,  [EventController::class, 'user_going_to_event'])->name('user_going_to_event');
     Route::post('/user_event_attend' ,  [EventController::class, 'user_event_attend'])->name('user_event_attend');
@@ -81,6 +104,8 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::get('/single_event_api/{id}' ,  [EventController::class, 'single_event_api'])->name('single_event_api');
     Route::get('/get_bookings/{id}' ,  [EventController::class, 'get_bookings'])->name('get_bookings');
     Route::post('/remove_booking' ,  [EventController::class, 'remove_booking'])->name('remove_booking'); 
+    Route::post('/invitation_status' ,  [EventController::class, 'invitation_status'])->name('invitation_status'); 
+
     
     Route::post('/manual_user_check', [EntranceController::class, 'manual_user_check'])->name('manual_user_check');
     Route::post('/manual_user_details', [EntranceController::class, 'manual_user_details'])->name('manual_user_details');
@@ -140,14 +165,21 @@ Route::post('/register_user' , [UserController::class, 'register_user'])->name('
     Route::post('/update_vip_booth_booking_status_api' ,  [VipPkgController::class, 'update_vip_booth_booking_status_api'])->name('update_vip_booth_booking_status_api');
     
     Route::post('/register_djuser' , [DjAppController::class, 'register_djuser'])->name('register_djuser');
+    Route::post('/register_djuser_question' , [DjAppController::class, 'register_djuser_question'])->name('register_djuser_question');
+    Route::post('/registered_djusers_status' , [DjAppController::class, 'registered_djusers_status'])->name('registered_djusers_status');
     Route::post('/login_djuser' , [DjAppController::class, 'login_djuser'])->name('login_djuser');
     Route::post('/dj_delete' , [DjAppController::class, 'dj_delete'])->name('dj_delete');
+    Route::post('/verify_dj' , [DjAppController::class, 'verify_dj'])->name('verify_dj');
     Route::get('/music_genre' , [DjAppController::class, 'music_genre'])->name('music_genre');
     Route::get('/dj_agreement' , [DjAppController::class, 'dj_agreement'])->name('dj_agreement');
     Route::post('/dj_agreement_status_on' , [DjAppController::class, 'dj_agreement_status_on'])->name('dj_agreement_status_on');
     Route::post('/dj_agreement_status_check' , [DjAppController::class, 'dj_agreement_status_check'])->name('dj_agreement_status_check');
     Route::post('/dj_event_list_api' , [DjAppController::class, 'dj_event_list_api'])->name('dj_event_list_api');
     Route::post('/update_password' ,  [DjAppController::class, 'update_password'])->name('update_password');
+    Route::post('/reset_password' ,  [DjAppController::class, 'reset_password'])->name('reset_password');
+    Route::post('/reset_password_entrance' ,  [EntranceController::class, 'reset_password_entrance'])->name('reset_password_entrance');
+    Route::post('/update_password_entrance' ,  [EntranceController::class, 'update_password_entrance'])->name('update_password_entrance');
+    Route::post('/view_djadmin_details' ,  [DjAppController::class, 'view_djadmin_details'])->name('view_djadmin_details');
     Route::post('/dj_update_password' ,  [DjAppController::class, 'dj_update_password'])->name('dj_update_password');
 
     Route::post('/accept_event' ,  [DjAppController::class, 'accept_event'])->name('accept_event');

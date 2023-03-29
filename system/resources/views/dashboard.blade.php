@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('pageTitle','Dashboard')
 @section('content');
+<style>
+   .col-lg-2{
+      padding : 3px !important;
+   }
+   .container-fluid{
+      padding-left : 15px !important;
+      padding-right : 13px !important;
+   }
+   </style>
                   <div class="container-fluid" style="padding-left:30px;">
                   <div class="row seacrh_container marginTop" style="margin:0px;">
                    <div class="col-md-12" style="padding-left:0px">
@@ -49,7 +58,7 @@
                   </div>
                      <div class="row2  column1">
                         
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-2">
                             <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
                            <div class="full counter_section row margin_bottom_30">
                               <div class="icons row col-sm-12">
@@ -60,31 +69,144 @@
                               <div class="counter_no col-sm-12">
                                  <div>
                                     <p class="total_no">{{ count($registered_users) }}</p>
-                                    <p class="head_couter">Registered Users</p>
+                                    <p class="head_couter">All Users</p>
                                  </div>
                               </div>
                            </div>
                            </a>
                         </div>
+                        <div class="col-md-6 col-lg-2">
+                           <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                          <div class="full counter_section row margin_bottom_30">
+                             <div class="icons row col-sm-12">
+                                <div class="couter_icon col-sm-6"> 
+                                <i class="fa fa-user"></i>
+                                </div>
+                             </div>
+                             <div class="counter_no col-sm-12">
+                                <div>
+                                   <p class="total_no">{{count($users_app) }}</p>
+                                   <p class="head_couter">Via App</p>
+                                </div>
+                             </div>
+                          </div>
+                          </a>
+                       </div>
+                       <div class="col-md-6 col-lg-2">
+                        <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                       <div class="full counter_section row margin_bottom_30">
+                          <div class="icons row col-sm-12">
+                             <div class="couter_icon col-sm-6"> 
+                             <i class="fa fa-user"></i>
+                             </div>
+                          </div>
+                          <div class="counter_no col-sm-12">
+                             <div>
+                                <p class="total_no">{{ count($users_web) }}</p>
+                                <p class="head_couter">Via Web</p>
+                             </div>
+                          </div>
+                       </div>
+                       </a>
+                    </div>
+                        <div class="col-md-6 col-lg-2">
+                           <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                          <div class="full counter_section row margin_bottom_30">
+                             <div class="icons row col-sm-12">
+                                <div class="couter_icon col-sm-6"> 
+                                <i class="fa fa-user"></i>
+                                </div>
+                             </div>
+                             <div class="counter_no col-sm-12">
+                                <div>
+                                   <p class="total_no">{{ count($users_verify) }}</p>
+                                   <p class="head_couter">Active Users</p>
+                                </div>
+                             </div>
+                          </div>
+                          </a>
+                       </div>
+                       <div class="col-md-6 col-lg-2">
+                        <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                       <div class="full counter_section row margin_bottom_30">
+                          <div class="icons row col-sm-12">
+                             <div class="couter_icon col-sm-6"> 
+                             <i class="fa fa-user"></i>
+                             </div>
+                          </div>
+                          <div class="counter_no col-sm-12">
+                             <div>
+                                <p class="total_no">{{ count($users_reject) }}</p>
+                                <p class="head_couter">Denied Users</p>
+                             </div>
+                          </div>
+                       </div>
+                       </a>
+                    </div>
+                    <div class="col-md-6 col-lg-2">
+                     <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                    <div class="full counter_section row margin_bottom_30">
+                       <div class="icons row col-sm-12">
+                          <div class="couter_icon col-sm-6"> 
+                          <i class="fa fa-user"></i>
+                          </div>
+                       </div>
+                       <div class="counter_no col-sm-12">
+                          <div>
+                             <p class="total_no">{{ count($users_pending) }}</p>
+                             <p class="head_couter">Pending Users</p>
+                          </div>
+                       </div>
+                    </div>
+                    </a>
+                 </div>
+             
                         
-                        <div class="col-md-6 col-lg-3">
-                            <a href="@if(request()->get('from_date') || request()->get('to_date'))inactives_users/{{$from_date}}/{{$to_date}} @else {{ route('inactive_users') }} @endif">
-                        <div class="full counter_section row margin_bottom_30">
+                        {{-- <div class="col-md-6 col-lg-3">
+                            <a href="@if(request()->get('from_date') || request()->get('to_date'))users_record/{{$from_date}}/{{$to_date}} @else {{ route('users_record') }} @endif">
+                           <div class="full counter_section row margin_bottom_30" style="height : 162px;">
                               <div class="icons row col-sm-12">
-                                 <div class="couter_icon col-sm-6"> 
+                                 <div class="couter_icon col-sm-3"> 
                                  <i class="fa fa-user"></i>
+                                 </div>
+                                 <div class = "col-sm-6">
+                                    <h5 style="margin-top:20px; color:aliceblue !important;" class="head_couter">Registrations</h5>
                                  </div>
                               </div>
                               <div class="counter_no col-sm-12">
                                  <div>
-                                    <p class="total_no">{{ count($pending_users) }}</p>
-                                    <p class="head_couter">Pending Approvals</p>
+                                    <p class="head_couter">Via App: &nbsp; &nbsp;<b>  {{count($users_app) }}</b>  </p>
+                                    <p class="head_couter">Via Web:&nbsp; &nbsp;<b> {{ count($users_web) }}</b> </p>
+                                 
                                  </div>
                               </div>
                            </div>
                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
+                        </div> --}}
+                        {{-- <div class="col-md-6 col-lg-3">
+                           <a href="@if(request()->get('from_date') || request()->get('to_date'))users_record/{{$from_date}}/{{$to_date}} @else {{ route('users_record') }} @endif">
+                       <div class="full counter_section row margin_bottom_30">
+                             <div class="icons row col-sm-12">
+                                <div class="couter_icon col-sm-3"> 
+                                <i class="fa fa-user"></i>
+                                </div>
+                                <div class = "col-sm-6">
+                                   <h5 style="margin-top:20px; color:aliceblue !important;" class="head_couter">Users</h5>
+                                </div>
+                             </div>
+                             <div class="counter_no col-sm-12">
+                                <div>
+                                 
+                                   <p class="head_couter">Active:  &nbsp;&nbsp; &nbsp; &nbsp;<b>  {{ count($users_verify) }}</b> </p>
+                                   <p class="head_couter">Denied:&nbsp;&nbsp; &nbsp; <b>   {{ count($users_reject) }}</b> </p>
+                                   <p class="head_couter">Pending: &nbsp; <b>  {{ count($users_pending) }}</b></p>
+                                   <p class="head_couter">Blocked: &nbsp;&nbsp; <b>  {{ count($users_blocked) }}</b></p>
+                                </div>
+                             </div>
+                          </div>
+                          </a>
+                       </div> --}}
+                        {{-- <div class="col-md-6 col-lg-3">
                             <a href="@if(request()->get('from_date') || request()->get('to_date'))users_events_attend_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_event_attend_list') }} @endif">
                         <div class="full row counter_section margin_bottom_30">
                               <div class="icons row col-sm-12">
@@ -100,10 +222,10 @@
                               </div>
                            </div>
                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
+                        </div> --}}
+                        {{-- <div class="col-md-6 col-lg-3">
                             <a href="@if(request()->get('from_date') || request()->get('to_date'))total_points_collects/{{$from_date}}/{{$to_date}} @else {{ route('total_points_collected') }} @endif">
-                        <div class="full row counter_section margin_bottom_30">
+                           <div class="full row counter_section margin_bottom_30">
                               <div class="icons row col-sm-12">
                                  <div class="couter_icon col-sm-6"> 
                                  <i class="fa fa-user"></i>
@@ -117,155 +239,113 @@
                               </div>
                            </div>
                            </a>
-                        </div>
+                        </div> --}}
                         
                      </div>
                      <div class="row2 column1" >
-                        <div class="col-md-6 col-lg-3">
-                        <div class="full row counter_section margin_bottom_30">
-                              <div class="icons row col-sm-12">
-                                 <div class="couter_icon col-sm-6"> 
-                                 <i class="fa fa-user"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no col-sm-12">
-                                 <div>
-                                    <p class="total_no">0</p>
-                                    <p class="head_couter">Total App Donwloads</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <a href="@if(request()->get('from_date') || request()->get('to_date'))invalid_users_lists/{{$from_date}}/{{$to_date}} @else {{ route('invalid_users') }} @endif">
-                        <div class="full counter_section row margin_bottom_30">
-                              <div class="icons row col-sm-12">
-                                 <div class="couter_icon col-sm-6"> 
-                                 <i class="fa fa-user"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no col-sm-12">
-                                 <div>
-                                    <p class="total_no">{{ count($invalid_users) }}</p>
-                                    <p class="head_couter">Invalid Users</p>
-                                 </div>
-                              </div>
-                           </div>
-                           </a>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <a href="@if(request()->get('from_date') || request()->get('to_date'))total_points_redeem/{{$from_date}}/{{$to_date}} @else {{ route('total_points_redeemed') }} @endif">
-                        <div class="full row counter_section margin_bottom_30">
-                              <div class="icons row col-sm-12">
-                                 <div class="couter_icon col-sm-6"> 
-                                 <i class="fa fa-user"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no col-sm-12">
-                                 <div>
-                                    <p class="total_no">{{ $points_redeem }}</p>
-                                    <p class="head_couter">Total Points Redeemed</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        </a>
-                        <div class="col-md-6 col-lg-3">
-                                <a href="@if(request()->get('from_date') || request()->get('to_date'))active_users_list/{{$from_date}}/{{$to_date}} @else {{ route('active_users') }} @endif">
-                        <div class="full row counter_section margin_bottom_30">
-                              <div class="icons col-sm-12 row">
-                                 <div class="couter_icon col-sm-6"> 
-                                 <i class="fa fa-user"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no col-sm-12">
-                                 <div>
-                                    <p class="total_no">{{ count($valid_users) }}</p>
-                                    <p class="head_couter">Valid Users</p>
-                                 </div>
-                              </div>
-                           </div>
-                           </a>
-                        </div>
+                        <div class="col-md-6 col-lg-2">
+                           <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                          <div class="full counter_section row margin_bottom_30">
+                             <div class="icons row col-sm-12">
+                                <div class="couter_icon col-sm-6"> 
+                                <i class="fa fa-user"></i>
+                                </div>
+                             </div>
+                             <div class="counter_no col-sm-12">
+                                <div>
+                                   <p class="total_no">{{ count($bookings) }}</p>
+                                   <p class="head_couter">All Bookings</p>
+                                </div>
+                             </div>
+                          </div>
+                          </a>
+                       </div>
+                       <div class="col-md-6 col-lg-2">
+                          <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                         <div class="full counter_section row margin_bottom_30">
+                            <div class="icons row col-sm-12">
+                               <div class="couter_icon col-sm-6"> 
+                               <i class="fa fa-user"></i>
+                               </div>
+                            </div>
+                            <div class="counter_no col-sm-12">
+                               <div>
+                                  <p class="total_no">{{ count($paid) }}</p>
+                                  <p class="head_couter">Confirmed</p>
+                               </div>
+                            </div>
+                         </div>
+                         </a>
+                      </div>
+                      <div class="col-md-6 col-lg-2">
+                       <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                      <div class="full counter_section row margin_bottom_30">
+                         <div class="icons row col-sm-12">
+                            <div class="couter_icon col-sm-6"> 
+                            <i class="fa fa-user"></i>
+                            </div>
+                         </div>
+                         <div class="counter_no col-sm-12">
+                            <div>
+                               <p class="total_no">{{ count($payment_pending) }}</p>
+                               <p class="head_couter">Pending</p>
+                            </div>
+                         </div>
+                      </div>
+                      </a>
+                   </div>
+                   <div class="col-md-6 col-lg-2">
+                    <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                   <div class="full counter_section row margin_bottom_30">
+                      <div class="icons row col-sm-12">
+                         <div class="couter_icon col-sm-6"> 
+                         <i class="fa fa-user"></i>
+                         </div>
+                      </div>
+                      <div class="counter_no col-sm-12">
+                         <div>
+                            <p class="total_no">{{ count($qr_success) }}</p>
+                            <p class="head_couter">Entries</p>
+                         </div>
+                      </div>
+                   </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-lg-2">
+                 <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+                <div class="full counter_section row margin_bottom_30">
+                   <div class="icons row col-sm-12">
+                      <div class="couter_icon col-sm-6"> 
+                      <i class="fa fa-user"></i>
+                      </div>
+                   </div>
+                   <div class="counter_no col-sm-12">
+                      <div>
+                         <p class="total_no">{{ count($qr_pending) }}</p>
+                         <p class="head_couter">Pending Entries</p>
+                      </div>
+                   </div>
+                </div>
+                </a>
+             </div>
+             <div class="col-md-6 col-lg-2">
+              <a href="@if(request()->get('from_date') || request()->get('to_date'))users_lists/{{$from_date}}/{{$to_date}} @else {{ route('users_list') }} @endif">
+             <div class="full counter_section row margin_bottom_30">
+                <div class="icons row col-sm-12">
+                   <div class="couter_icon col-sm-6"> 
+                   <i class="fa fa-user"></i>
+                   </div>
+                </div>
+                <div class="counter_no col-sm-12">
+                   <div>@foreach($app_share as $share)
+                      <p class="total_no">{{ $share['count_share'] }}</p>@endforeach
+                      <p class="head_couter">Total App Share</p>
+                   </div>
+                </div>
+             </div>
+             </a>
+          </div>
                      </div>
-                     <!-- <div class="row column1 social_media_section">
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full socile_icons fb margin_bottom_30">
-                              <div class="social_icon">
-                                 <i class="fa fa-facebook"></i>
-                              </div>
-                              <div class="social_cont">
-                                 <ul>
-                                    <li>
-                                       <span><strong>35k</strong></span>
-                                       <span>Friends</span>
-                                    </li>
-                                    <li>
-                                       <span><strong>128</strong></span>
-                                       <span>Feeds</span>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full socile_icons tw margin_bottom_30">
-                              <div class="social_icon">
-                                 <i class="fa fa-twitter"></i>
-                              </div>
-                              <div class="social_cont">
-                                 <ul>
-                                    <li>
-                                       <span><strong>584k</strong></span>
-                                       <span>Followers</span>
-                                    </li>
-                                    <li>
-                                       <span><strong>978</strong></span>
-                                       <span>Tweets</span>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full socile_icons linked margin_bottom_30">
-                              <div class="social_icon">
-                                 <i class="fa fa-linkedin"></i>
-                              </div>
-                              <div class="social_cont">
-                                 <ul>
-                                    <li>
-                                       <span><strong>758+</strong></span>
-                                       <span>Contacts</span>
-                                    </li>
-                                    <li>
-                                       <span><strong>365</strong></span>
-                                       <span>Feeds</span>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full socile_icons google_p margin_bottom_30">
-                              <div class="social_icon">
-                                 <i class="fa fa-google-plus"></i>
-                              </div>
-                              <div class="social_cont">
-                                 <ul>
-                                    <li>
-                                       <span><strong>450</strong></span>
-                                       <span>Followers</span>
-                                    </li>
-                                    <li>
-                                       <span><strong>57</strong></span>
-                                       <span>Circles</span>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
-                        </div>
-                     </div> -->
                      <!-- graph -->
                      <div class="row column2 graph margin_bottom_30">
                         <div class="col-md-l2 col-lg-12">
@@ -341,30 +421,30 @@
                            </div>
                            </div>
                            <div class="col-sm-4 my-col">
-                           <div class="white_shd"> 
-                              <div class="loader row">
-                                 <progress id="send" value="60" max="100"></progress>
-                                 <progress id="recv" value="80" max="100"></progress>
-                                 <button style="font-size:13px;" class="start-btn" id="btn">Total Codes <br/> Generated <br/> <span style="color: #6BEAEC; padding-top:5px;">42459</span></button>
-                              </div>
-                              <div class="row box-row1" style="margin-top:40px;">
-                                 <div class="col-sm-1"></div>
-                                 <div class="col-sm-8">
-                                 <p class="fp"><span class="online_animation-red"></span> Total Codes Scanned For Entery</p>
+                              <div class="white_shd"> 
+                                 <div class="loader row">
+                                    <progress id="send" value="{{ count($pending_artist) }}" max="{{ count($registered_users) }}"></progress>
+                                    <progress id="recv" value="{{ count($valid_artist) }}" max="{{ count($registered_users) }}"></progress>
+                                    <button style="font-size:13px;" class="start-btn" id="btn">Total Artists <span style="color: #6BEAEC; padding-top:5px;">{{ count($registered_artist) }}</span></button>
                                  </div>
-                                 <div class="col-sm-1 fp" style="color: #6BEAEC; padding-top:5px;">14658</div>
-                                 <div class="col-sm-2"></div>
-                              </div>
-                              <div class="row  box-row1 load">
-                                 <div class="col-sm-1"></div>
-                                 <div class="col-sm-8">
-                                 <p  class="fp"><span class="online_animation-blue"></span> Total Codes Scanned To Exit</p>
+                                 <div class="row  box-row1" style="margin-top:40px;">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-8">
+                                    <p class="fp"><span class="online_animation-red"></span> Total New Artist</p>
+                                    </div>
+                                    <div class="col-sm-1 fp" style="color: #6BEAEC; padding-top:5px;">{{ count($pending_artist) }}</div>
+                                    <div class="col-sm-2"></div>
                                  </div>
-                                 <div class="col-sm-1 fp" style="color: #6BEAEC; padding-top:5px;">14658</div>
-                                 <div class="col-sm-2"></div>
+                                 <div class="row  box-row1 load">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-8">
+                                    <p  class="fp"><span class="online_animation-blue"></span> Total Active Artist</p>
+                                    </div>
+                                    <div class="col-sm-1 fp" style="color: #6BEAEC; padding-top:5px;">{{ count($valid_artist) }}</div>
+                                    <div class="col-sm-2"></div>
+                                 </div>
                               </div>
-                           </div>
-                           </div>
+                              </div>
                            <div class="col-md-l2 col-lg-12">
                               <div class=" full row">
                                  <div class="full graph_head">
@@ -392,8 +472,11 @@
                                                          @foreach ($events as $event_id)
                                                          <tr>
                                                             <td class="text-capitalize">{{$count}}</td>
-                                                           <td class="text-capitalize">{{$event_id['id']}}</td>
-                                                           <td class="text-capitalize">sad</td>
+                                                           <td class="text-capitalize">{{$event_id['event_name']}}</td>
+                                                           @php 
+                                                           
+                                                            $booking_count = \App\Models\Bookings::where('event_id','=',$event_id['id'])->get(); @endphp
+                                                           <td class="text-capitalize">{{count($booking_count)}}</td>
                                                           
                                                            
                                                          </tr>

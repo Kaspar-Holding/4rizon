@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
    <head>
@@ -39,6 +40,26 @@
       <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
       <link rel="stylesheet" href=" https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js" type="text/css" media="all">
       <link rel="stylesheet" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
+      <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+      <style>
+         .dataTables_wrapper .dataTables_filter input {
+        border-radius: 11px !important;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        color: aliceblue !important;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_pag{
+        color: aliceblue !important;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: aliceblue !important;
+    }
+    .dataTables_wrapper .dataTables_length select {
+    /* border: 1px solid #aaa; */
+    border-radius: 20px !important;
+    color: cornflowerblue !important;
+    }
+        </style>
    </head> 
   
    <body class="dashboard dashboard_1">
@@ -48,7 +69,7 @@
                 <div id="content">
                     @include('header')
                     <div class="midde_cont">
-                   
+                        <a href="{{ URL::previous() }}" style = "color : aliceblue; background : transparent; border-color: transparent;" class="btn btn-warning"> <i class="fa fa-angle-double-left"></i> Back</a>
                         @yield('content')
                         
                     </div>
@@ -77,6 +98,7 @@
       <!-- <script src="{{ asset('new/js/analyser.js')}}"></script> -->
       <!-- nice scrollbar -->
       <script src="{{ asset('new/js/perfect-scrollbar.min.js')}}"></script>
+      <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
       <script>
          var ps = new PerfectScrollbar('#sidebar');
       </script>
@@ -153,6 +175,87 @@
                 $('#txtDate').attr('min', maxDate);
             });
         </script>
+        <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+     
+        } );
+        </script>
+        <script>
+            function exportTasks(_this) {
+               let _url = $(_this).data('href');
+               window.location.href = _url;
+            }
+         </script>
+         <script>
+	$(document).ready(function() {
+		$('.select2[multiple]').select2({
+    width: '100%',
+    closeOnSelect: false
+})
+
+    
+});
+	</script>
+    <script>
+    $('#selectAll').click(function(e){
+    var table= $(e.target).closest('table');
+    $('td input:checkbox',table).prop('checked',this.checked);
+});
+
+      </script>
+    <script>
+        $('.users').on('change',function(){
+    var value = $(this).val();
+    location.href = value; //or .php, etc. This will go to a page called en.html
+    });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('dropdown-menu.mega-dropdown-menu').on('click', function (event) {
+                event.stopPropogation();
+            });
+        });
+      
+        </script>
+    <script>
+    $(document).ready(function(){
+        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+            $('#ele a[href="' + activeTab + '"]').tab('show');
+        }
+    });
+     </script> 
+     <script>
+     $("document").ready(function(){
+    setTimeout(function(){
+       $("div.alerti").remove();
+    }, 1000 ); // 2 secs
+
+});
+     </script> 
+     <script>   
+                $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+            })
+</script> 
+<script>   
+    $('#myModal').on('shown.bs.modal', function () {
+$('#myInput').trigger('focus')
+})
+</script> 
+<script> 
+$('#multiconfirm-modal').on('show.bs.modal', function(e) {
+    debugger;
+    var checkedValues = $('.record:checked').map(function(){ return this.value; }).get();
+    //put the ids in the hidden input as a comma separated string
+    $('#hidden_checkedinput').val(checkedValues.join(','));
+  });
+</script> 
+	</body>
 </body>
             
 </html>

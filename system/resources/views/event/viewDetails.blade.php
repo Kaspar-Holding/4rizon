@@ -190,6 +190,22 @@
                 </div>
                 <div class="full graph_head">
                     <div class="heading1 margin_0">
+                      <h2>Guest List</h2>
+                    </div>
+                </div>
+                @foreach($guests as $guest)
+                <div class="row p-3">
+                    <div class="col-6">
+                        <h5>Guest Name:</h5>
+                    </div>
+                    <div class="col-6">
+                        <h5><a style = "color:#666bff;" href="../view_user_details/{{$guest['user_id']}} 
+                        ">{{ $guest['first_name'] }} {{$guest['last_name']}}</a></h5>
+                    </div>
+                </div>
+                @endforeach
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
                       <h2>User Event Detail</h2>
                     </div>
                 </div>

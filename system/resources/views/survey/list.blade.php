@@ -14,7 +14,7 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+                    <div class = "alerti">
                         @include('flashmessages')
                     </div>
                   <div class="full graph_head">
@@ -22,10 +22,11 @@
                         <div class="row">
                             <div class="col-sm-9">
                                 <h2>Survey Lists</h2>
-                            </div>
+                            </div>       @if( Auth::user()->role == "super admin" )
+
                             <div class="col-sm-3">
                                 <a href="{{ route('add_new_survey') }}" class="btn my-button btn-inverse btn-outline-primary">Add New Survey</a>
-                            </div>
+                            </div> @endif
                         </div>
                      </div>
                   </div>
@@ -51,13 +52,15 @@
                                 <td class="text-capitalize"><a href="view_survey_questions/{{$survey['id']}}" class="btn eye-icon btn-sm btn-inverse btn-outline-primary">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     </a></td>                               
-                                <td>
+                                <td> 
                                     <a href="edit_survey/{{$survey['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 
                                     </a>
+                                    @if( Auth::user()->role == "super admin")
                                     <a href="delete_survey/{{$survey['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
                                       <i class="fa fa-trash"></i> 
                                     </a>
+                                    @endif
                                    
                                 </td>
                               </tr>

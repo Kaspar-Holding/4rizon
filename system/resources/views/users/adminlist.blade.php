@@ -14,7 +14,7 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div>
+                    <div class = "alerti">
                         @include('flashmessages')
                     </div>
                   <div class="full graph_head">
@@ -51,19 +51,23 @@
                                 <td class="text-capitalize">{{$user['name']}}</td>
                                 <td class="text-capitalize">{{$user['email']}}</td>
                                 <td class="text-capitalize">
-                                    @if($user->role == "admin")
+                                    @if($user->role == "super admin")
                                         Super Admin
-                                    @else
+                                    @elseif($user->role == "admin")
                                         Admin
+                                         @else
+                                        General Admin
                                     @endif
                                 </td>
                                 <td>
                                     <a href="edit_admin_details/{{$user['id']}}" class="btn btn-sm btn-blue  btn-inverse btn-outline-primary">
                                          <i class="fa fa-pencil"></i> 
                                     </a>
+                                    @if( Auth::user()->role == "super admin")
                                     <a href="delete_admin_details/{{$user['id']}}" class="btn btn-sm btn-red btn-inverse btn-outline-danger">
                                     <i class="fa fa-trash"></i> 
                                     </a>
+                                    @endif
                                    
                                 </td>
                               </tr>

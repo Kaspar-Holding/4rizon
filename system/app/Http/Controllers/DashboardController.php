@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\user_infos;
+use App\Models\DjUser;
 use App\Models\AccessCtrl;
 use App\Models\EventAttend;
 use App\Models\Event;
 use App\Models\Bookings;
+use App\Models\AppShare;
 use App\Models\user_wallets;
 use App\Models\Purchase;
+use App\Models\Survey_Status;
 use App\Models\ClubCapacity;
 use DB;
  
@@ -94,8 +97,27 @@ class DashboardController extends Controller
             $total_qr_exit    = Bookings::whereNotNull('exit_at')->get();
             $points           = user_wallets::sum('user_wallets.available_points');
             $points_redeem    = Purchase::sum('purchase.item_price');
+         
             
         }
+        if($get_from_date_value =="" && $get_to_date_value==""){
+        $users_app = user_infos::where('web_status',0)->get();
+        $users_web = user_infos::where('web_status',1)->get();
+        $users_verify = user_infos::where('user_status',1)->get();
+        $users_reject = user_infos::where('user_status',3)->get();
+        $users_pending = user_infos::where('web_status',0)->get();
+        $users_blocked = user_infos::where('web_status',-1)->get();
+        $bookings = Bookings::all();
+        $paid = Bookings::where('payment_status','=','1')->get();
+        $payment_pending = Bookings::where('payment_status','=','0')->get();
+        $qr_success = Bookings::where('qr_code_status','=','1')->get();
+        $qr_pending = Bookings::where('qr_code_status','=','0')->get();
+        $app_share = AppShare::all();
+        $registered_artist      = DjUser::all();
+        $valid_artist      = DjUser::where('dj_status',1)->get();
+        $pending_artist      = DjUser::where('dj_status',0)->get();
+        $survey_status = Survey_Status::all();
+    }
             $times            = Carbon::now()->format('Y-');
             $january = user_infos::whereBetween('updated_at', [$times.'01-'.'01',$times.'01-'.'31'])->count();
             $feburary = user_infos::whereBetween('updated_at', [$times.'02-'.'01',$times.'02-'.'31'])->count();
@@ -109,7 +131,9 @@ class DashboardController extends Controller
             $october = user_infos::whereBetween('updated_at', [$times.'10-'.'01',$times.'10-'.'31'])->count();
             $november = user_infos::whereBetween('updated_at', [$times.'11-'.'01',$times.'11-'.'31'])->count();
             $december = user_infos::whereBetween('updated_at', [$times.'12-'.'01',$times.'12-'.'31'])->count();
-        return view("dashboard",['registered_users'=>$registered_users,'events'=>$event,'pending_users'=>$pending_users,'invalid_users'=>$invalid_users,'valid_users'=>$valid_users,'qr_scans'=>$qr_scans,'total_qr'=>$total_qr,'total_qr_exit'=>$total_qr_exit,'points'=>$points,'points_redeem'=>$points_redeem,'january'=>$january,'feburary'=>$feburary,'march'=>$march,'april'=>$april,'may'=>$may,'june'=>$june,'july'=>$july,'august'=>$august,'september'=>$september,'october'=>$october,'november'=>$november,'december'=>$december,'from_date'=>$get_from_date_value, 'to_date'=>$get_to_date_value]);
+          
+           
+        return view("dashboard",['registered_users'=>$registered_users,'events'=>$event,'pending_users'=>$pending_users,'invalid_users'=>$invalid_users,'valid_users'=>$valid_users,'qr_scans'=>$qr_scans,'total_qr'=>$total_qr,'total_qr_exit'=>$total_qr_exit,'points'=>$points,'points_redeem'=>$points_redeem,'january'=>$january,'feburary'=>$feburary,'march'=>$march,'april'=>$april,'may'=>$may,'june'=>$june,'july'=>$july,'august'=>$august,'september'=>$september,'october'=>$october,'november'=>$november,'december'=>$december,'from_date'=>$get_from_date_value, 'to_date'=>$get_to_date_value,'users_app'=>$users_app,'users_web'=>$users_web,'users_verify'=>$users_verify,'users_reject'=>$users_reject,'users_pending'=>$users_pending,'users_blocked'=>$users_blocked,'bookings'=>$bookings,'paid'=>$paid,'payment_pending'=>$payment_pending,'qr_success'=>$qr_success,'qr_pending'=>$qr_pending,'app_share'=>$app_share,'survey'=>$survey_status,'valid_artist'=>$valid_artist,'pending_artist'=>$pending_artist,'registered_artist'=>$registered_artist]);
     }
     function get_data_count_api(){
         $get_from_date_value        = \request()->get('from_date');

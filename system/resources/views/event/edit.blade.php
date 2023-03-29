@@ -1,6 +1,42 @@
 @extends('layouts.app')
 @section('pageTitle','Edit Event')
 @section('content')
+
+<style>
+  .select2-results__options[aria-multiselectable="true"] li {
+  padding-left: 30px;
+  position: relative
+}
+
+.select2-results__options[aria-multiselectable="true"] li:before {
+  position: absolute;
+  left: 8px;
+  opacity: .6;
+  top: 6px;
+  font-family: "FontAwesome";
+  content: "\f0c8";
+}
+
+.select2-results__options[aria-multiselectable="true"] li[aria-selected="true"]:before {
+  content: "\f14a";
+}
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: rgba(13, 45, 80, 1) !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: rgba(13, 45, 80, 1);
+}
+.select2-container--default .select2-selection--multiple{
+  background-color: rgba(13, 45, 80, 1);
+  border-radius: 9.6px;
+}
+/* not required css */
+
+.row
+{
+padding: 10px;
+}
+</style>
     <div class="container-fluid">
         <div class="row column_title">
           <div class="col-md-12">
@@ -26,6 +62,11 @@
                 <div>
                   <label class="form-label">Event Name</label>
                   <input type="text" name="event_name" class="form-control" value="{{ $event->event_name }}" >
+                </div>
+                <br>
+                <div>
+                  <label class="form-label">Event Price</label>
+                  <input type="text" name="event_price" class="form-control" value="{{ $event->event_price }}" >
                 </div>
                 <br>
                 <div>
@@ -76,25 +117,88 @@
                   <label class="form-label">Stage 3</label>
                   <input type="text" name="stage_3" class="form-control" value="{{ $event->stage_3 }}">
                 </div>
-                <br>
+                <br> 
                 <div>
                   <label class="form-label">Special</label>
                   <input type="text" name="special" class="form-control" value="{{ $event->special }}">
                 </div>
                 <br>
                 <div>
-                  <label class="form-label">DJ Name</label>
-                  <select type="text" name="dj_id" class="form-control"> 
-                    @if(!empty($event->dj->id))
-                    <option value="{{ $event->dj->id }}"> {{ $event->dj->first_name }} </option> 
-                    @else
-                    <option value=""> Not Assigned </option> 
-                    @endif
-                    @foreach($dj_list as $dj)
-                    <option value="{{ $dj->id }}"> {{ $dj->first_name }} </option> 
+                  <label class="form-label">Assign Artist</label>
+                  
+                  <select name="artist[]" id="artist" multiple="multiple"  class="form-control select2" >
+                    {{-- <option readonly> Assign Artist </option> --}}
+                    @foreach($dj_list as $artist)
+                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
                     @endforeach
                   </select>
                 </div>
+                <br>
+                <div class = "row">
+                <div class = "col-md-2">
+                  <label class="form-label">Time Slot</label>
+                  <select name="time" id="time" class="form-control" >
+                    @foreach ($intervals as $date) 
+                    <option value="{{$date->format('H:i')}}">{{$date->format('H:i')}}</option>
+                      
+                      @endforeach
+                
+                  </select>
+                </div>
+                <div class = "col-md-2">
+                  <label class="form-label">Platform 1</label>
+                  <select name="artist" id="artist" class="form-control" >
+                    @foreach($dj_list as $artist)
+                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                    @endforeach
+                
+                  </select>
+                </div>
+                <div class = "col-md-2">
+                  <label class="form-label">Platform 2</label>
+                  <select name="artist" id="artist" class="form-control" >
+                    @foreach($dj_list as $artist)
+                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                    @endforeach
+                
+                  </select>
+                </div>
+                <div class = "col-md-2">
+                  <label class="form-label">Platform 3</label>
+                  <select name="artist" id="artist" class="form-control" >
+                    @foreach($dj_list as $artist)
+                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                    @endforeach
+                
+                  </select>
+                </div>
+                <div class="col-md-2" style="margin-top:20px; padding-left:30px;">
+                  <a class="btn btn-primary ">Add</a>
+                </div>
+              </div>
+                <div class="full graph_head">
+                  <div class="heading1 margin_0">
+                    <h2>Djs Event Detail</h2>
+                  </div>
+              </div>
+              <div class="row p-3">
+                @foreach($djs as $dj_event)
+                  <div class="col-6">
+                      <h5>{{$dj_event->first_name}} {{$dj_event->last_name}}</h5>
+                  </div>
+                  <div class="col-6">
+                    
+                      @if($dj_event->going_status == "2")
+                          <h5>Requested</h5>
+                      @elseif($dj_event->going_status == "1")
+                          <h5>Approved</h5>
+                      @elseif($dj_event->going_status == "0")
+                          <h5>Denied</h5>
+                      @endif
+                  
+                  </div>
+                  @endforeach
+              </div>
                 <br>
                 <div class="row" style="margin-top:10px; padding-left:30px;">
                   <button type="submit" class="btn btn-primary col-md-2 my-button link-light col-sm-4">Update</button>

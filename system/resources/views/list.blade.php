@@ -7,7 +7,7 @@
             <div class="col-xd-12 col-sm-7">
                 <h3>Users Lists</h3><br>
             </div> 
-            <div>
+            <div class = "alerti">
                 @include('flashmessages')
             </div>
         </div>

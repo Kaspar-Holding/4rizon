@@ -14,13 +14,12 @@
             <!-- table section -->
           <div class="col-md-12">
             <div class="white_shd full margin_bottom_30">
-              <div class="full graph_head">
-                <div class="heading1 margin_0">
-                  <h2></h2>
-                </div>
-              </div>
-              <form class="container-fluid" action="{{route('update_djadmin_user')}}" method="POST" style="padding:30px; padding-bottom:40px;">
+             
+              <form class="container-fluid" action="{{route('update_djadmin_user')}}" method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;">
                 @csrf
+                <div class = "alerti">
+                  @include('flashmessages')
+              </div>
                 <div>
                     <label class="form-label">First Name</label>
                     <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}" >
@@ -40,23 +39,76 @@
                 <br>
                 <div>
                     <label class="form-label">Phone Number</label>
-                    <input type="text" pattern="^\+[1-9]{1}[0-9]{3,14}$" name="phone_number" class="form-control" value="{{ $user->phone_number }}" >
+                    <input type="text" pattern="[-+]?\d*" name="phone_number" class="form-control" value="{{ $user->phone_number }}" >
                   </div>
                   <br>
                 <div>
                   <label class="form-label">Change Password</label>
                   <input type="password" id="upass" name="user_password" class="form-control">
                   <i class="fa fa-eye btn icon-control" style="color:black; cursor:pointer;position: relative;
-    left: 79rem;
-    bottom: 2rem;" id="toggleBtn" onclick="toggePassword()"></i>
+                      left: 79rem;
+                      bottom: 2rem;" id="toggleBtn" onclick="toggePassword()"></i>
                 </div>
                 <br>
                 <div>
+                  <label class="form-label">Representation</label>
+                  <input type="text" name="representation" class="form-control" value="{{ $user->representation }}" >
+                </div>
+                <br>
+                <div>
+                  <label class="form-label">Genre</label>
+                  <input type="text" name="music_genre" class="form-control" value="{{ $user->music_genre }}" >
+                </div>
+                <br>
+               
+                <div>
+                  <label class="form-label">Dj Name</label>
+                  <input type="text" name="dj_name" class="form-control" value="{{ $user->dj_name }}" >
+                </div>
+                <br>
+                <div>
+                  <label class="form-label">Identification Type</label>
+                  <select name="identification_type"   class="form-control" required >
+                    <option value = "{{$user->identification_type}}"> @if ($user->identification_type == 1)South African ID
+                        
+                    @else
+                        Passport
+                    @endif </option>
+                    
+                    <option value="1">South African ID</option>
+                    <option value="2">Passport</option>
+                    
+                  </select>
+                </div>
+                <br>
+                <div>
+                  <label class="form-label">Identification Number</label>
+                  <input type="text" name="identification_number" class="form-control" value=" @if($user->identification_type == 1){{$user->southAfrican_id}}
+                  @else {{$user->passport_id}}
+                  @endif">
+                </div>
+                <br>
+                <input type="text" name="admin_image" value = "{{$user->profile_image}}" class="form-control" hidden>
+                @if($user->profile_image != "")
+                <div>
+                  <label class="form-label">Image</label>
+                  
+                  <img src="{{asset('image/'.$user->profile_image)}}" style="width: 20%;">
+                </div>
+                <br>@endif
+                <div>
+                  <label class="form-label">Change  Image</label>
+                  <input type="file" name="user_image" class="form-control">
+                </div>
+                <br>
+                
+                <div>
                   <label class="form-label">DJ Status</label>
                   <select name="dj_status" class="form-control" required>
-                    <option>Select Status</option>
-                    <option value="1" @if($user['dj_status'] == '1') selected @endif>Approved</option>
-                    <option value="0" @if($user['dj_status'] == '0') selected @endif>Not Approved</option>
+                    <option value = "{{$user['dj_status']}}">Select Status</option>
+                    <option value="-1" @if($user['dj_status'] == '-1') selected @endif>Blocked</option>
+                    @if($user['dj_status'] == '-1')
+                    <option value="0">Unblock</option>@endif
                   </select>
                 </div>
                 @if ( $user->identification_type == 1)

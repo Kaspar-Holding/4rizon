@@ -52,7 +52,7 @@
                 <div>
                   <label class="form-label">Gallery Images</label>
                   @foreach($gallery_images as $image)
-                  <img src="{{asset('image/'.$image->image)}}" style="width: 10%;">
+                  <img src="{{asset('image/'.$image->image)}}" style="width: 10%;"> 
                   @endforeach
                 </div>
                 <br>

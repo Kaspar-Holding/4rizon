@@ -123,59 +123,91 @@ padding: 10px;
                   <input type="text" name="special" class="form-control" value="{{ $event->special }}">
                 </div>
                 <br>
-                <div>
+                <div class="row" style="margin-top:10px; padding-left:30px;">
+                  <button type="submit" class="btn btn-primary col-md-2 my-button link-light col-sm-4">Update</button>
+                </div>
+                
+              </form>
+                {{-- <div>
                   <label class="form-label">Assign Artist</label>
                   
                   <select name="artist[]" id="artist" multiple="multiple"  class="form-control select2" >
                     {{-- <option readonly> Assign Artist </option> --}}
-                    @foreach($dj_list as $artist)
-                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
-                    @endforeach
-                  </select>
-                </div>
+                    {{-- @ foreach($dj_list as $artist) --}}
+                    {{-- < option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option> --}}
+                    {{-- @endforeach --}}
+                  {{-- </select> --}}
+                {{-- </div> --}}
                 <br>
-                <div class = "row">
-                <div class = "col-md-2">
-                  <label class="form-label">Time Slot</label>
-                  <select name="time" id="time" class="form-control" >
-                    @foreach ($intervals as $date) 
-                    <option value="{{$date->format('H:i')}}">{{$date->format('H:i')}}</option>
-                      
-                      @endforeach
+                <form class="container-fluid"  method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;" id="dj_form">
+                  @csrf
+                  <input type="hidden" name="id" value="{{ $event->id }}">
+                  <div class = "row">
+                    <div class = "col-md-2">
+                      <label class="form-label">Time Slot</label>
+                      <select name="time" id="time" class="form-control" >
+                        @foreach ($intervals as $date) 
+                        <option value="{{$date->format('H:i')}}">{{$date->format('H:i')}}</option>
+                          
+                          @endforeach
+                    
+                      </select>
+                    </div>
+                    <div class = "col-md-2">
+                      <label class="form-label">Platform 1</label>
+                      <select name="artist1" id="artist1" class="form-control" >
+                        <option>Select one</option>
+                        @foreach($dj_list as $artist)
+                        <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                        @endforeach
+                    
+                      </select>
+                    </div>
+                    <div class = "col-md-2">
+                      <label class="form-label">Platform 2</label>
+                      <select name="artist2" id="artist2" class="form-control" >
+                        <option>Select one</option>
+                        @foreach($dj_list as $artist)
+                        <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                        @endforeach
+                    
+                      </select>
+                    </div>
+                    <div class = "col-md-2">
+                      <label class="form-label">Platform 3</label>
+                      <select name="artist3" id="artist3" class="form-control" >
+                        <option>Select one</option>
+                        @foreach($dj_list as $artist)
+                        <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                        @endforeach
+                    
+                      </select>
+                    </div>
+                    <div class="col-md-2" style="margin-top:20px; padding-left:30px;">
+                      <button id='submit' type="submit" class='btn btn-primary addDj'>Add</button>
+                    </div>
+                  </div>
+                </form>
                 
-                  </select>
+                <div class="row p-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Time Slot</label>
+                    <div id="timeslot"></div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Platform 1</label>
+                    <div id="d1"></div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Platform 2</label>
+                    <div id="d2"></div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Platform 3</label>
+                    <div id="d3"></div>
+                  </div>
                 </div>
-                <div class = "col-md-2">
-                  <label class="form-label">Platform 1</label>
-                  <select name="artist" id="artist" class="form-control" >
-                    @foreach($dj_list as $artist)
-                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
-                    @endforeach
-                
-                  </select>
-                </div>
-                <div class = "col-md-2">
-                  <label class="form-label">Platform 2</label>
-                  <select name="artist" id="artist" class="form-control" >
-                    @foreach($dj_list as $artist)
-                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
-                    @endforeach
-                
-                  </select>
-                </div>
-                <div class = "col-md-2">
-                  <label class="form-label">Platform 3</label>
-                  <select name="artist" id="artist" class="form-control" >
-                    @foreach($dj_list as $artist)
-                    <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
-                    @endforeach
-                
-                  </select>
-                </div>
-                <div class="col-md-2" style="margin-top:20px; padding-left:30px;">
-                  <a class="btn btn-primary ">Add</a>
-                </div>
-              </div>
+                  {{-- <br>
                 <div class="full graph_head">
                   <div class="heading1 margin_0">
                     <h2>Djs Event Detail</h2>
@@ -197,17 +229,14 @@ padding: 10px;
                       @endif
                   
                   </div>
-                  @endforeach
+                  @endforeach --}}
               </div>
-                <br>
-                <div class="row" style="margin-top:10px; padding-left:30px;">
-                  <button type="submit" class="btn btn-primary col-md-2 my-button link-light col-sm-4">Update</button>
-                </div>
                 
-              </form>
+                
             </div>
           </div>
         </div>
       </div>
     </div>
+    
 @stop

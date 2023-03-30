@@ -16,6 +16,7 @@ use App\Models\Dj_Event;
 use App\Models\Notifications;
 use App\Models\user_infos;
 use App\Models\Transaction;
+use App\Models\DjTime;
 use Illuminate\Support\Str;
 use DB;
  
@@ -169,6 +170,24 @@ class EventController extends Controller
         
         
         return redirect('/event_list')->with('success','Event Details Updated Successfully!');
+    }
+    public function dj_time_allocation(Request $req){
+     
+        $dj_time = new DjTime;
+        $dj_time->event_id = $req->id;
+        $dj_time->artist1 = $req->artist1;
+        $dj_time->artist2 = $req->artist2;
+        $dj_time->artist3 = $req->artist3;
+        $dj_time->time    = $req->time;
+        $dj_time->save();
+        $dj1 = DjUser::where('id','=',$req->artist1)->get();
+        $dj2 = DjUser::where('id','=',$req->artist2)->get();
+        $dj3 = DjUser::where('id','=',$req->artist3)->get();
+        $data['artist1'] = $dj1;
+        $data['artist2'] = $dj2;
+        $data['artist3'] = $dj3; 
+        $data['time'] = $req->time;
+        return response()->json($data);
     }
     public function delete_event ($id) {
         if(Event::where('id', $id)->exists()) {

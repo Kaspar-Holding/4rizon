@@ -57,6 +57,7 @@ Route::group(['middleware' =>[
    
     Route::get('/add_new_user', [UserController::class, 'add_new_user'])->name('add_new_user');
     Route::post('/add_user',[UserController::class, 'create'])->name('add_user');
+
     Route::get('/admin_list' ,  [UserController::class, 'admin_list'])->name('admin_list');
     Route::get('/edit_admin_details/{id}' ,  [UserController::class, 'edit_admin_details'])->name('edit_admin_details');
     Route::get('/delete_admin_details/{id}' ,  [UserController::class, 'delete_admin_details'])->name('delete_admin_details');
@@ -139,6 +140,7 @@ Route::group(['middleware' =>[
 
     Route::get('/edit_event/{id}', [EventController::class, 'edit_event'])->name('edit_event');
     Route::post('/update_event', [EventController::class, 'update_event'])->name('update_event');
+    Route::post('/dj_time_allocation', [EventController::class, 'dj_time_allocation'])->name('dj_time_allocation');
     Route::get('/delete_event/{id}', [EventController::class, 'delete_event'])->name('delete_event');
     // WeeklyLineup Routes
     Route::get('/weekly_lineup_list' ,  [WeeklyLineupController::class, 'weekly_lineup_list'])->name('weekly_lineup_list');

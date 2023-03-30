@@ -102,11 +102,11 @@
       <script>
          var ps = new PerfectScrollbar('#sidebar');
       </script>
-
+    
       <!-- custom js -->
       <script src="{{ asset('new/js/custom.js')}}"></script>
       <script src="{{ asset('new/js/chart_custom_style1.js')}}"></script>
-      
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script type="text/javascript">
         $(document).ready(function (){
           $('.btn-copy').click(function (){
@@ -255,6 +255,61 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
     $('#hidden_checkedinput').val(checkedValues.join(','));
   });
 </script> 
+<script type="text/javascript">
+    // funciton getArtist(artist1){
+    //     console.log("in artist func");
+    //     if(artist1!=''){
+    //         alert(artist1);
+    //         // $("artist2 option[value='"+artist1+"']").hide();
+    //         // $("artist2 option[value!='"+artist1+"']").show();
+    //     }
+    // }
+    $(document).ready(function(){
+    
+    var previousOption = null;
+    $('select').on('change', function(){
+    const selectedOption = $(this).find('option:selected').val();
+    $(`[value="${previousOption}"]:disabled`).attr('disabled', false);
+    previousOption = null;
+    $(`[value="${selectedOption}"]:not(:selected)`).attr('disabled', true);
+    })
+    $('select').on('click', function(){
+    previousOption = $(this).find('option:selected').val();
+    });
+});
+</script>
+<script type="text/javascript">
+ window.addEventListener('click', function(e){
+                        if (document.getElementById('submit').contains(e.target)){
+                            e.preventDefault();
+                            var data=$('#dj_form').serialize();
+                            console.log($("#dj_form").serialize());
+                            $.ajax({
+                                url:"{{url('api/dj_time_allocation')}}",
+                                type:'post',
+                                data:data,
+                                success:function(response){
+                                    console.log(response);
+                                    
+                                        $('#timeslot').append("<p>"+response.time+"</p>");
+                                   
+                                    $.each(response.artist1, function (key, value) {
+                                        $('#d1').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                                    })
+                                    $.each(response.artist2, function (key, value) {
+                                        $('#d2').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                                    })
+                                    $.each(response.artist3, function (key, value) {
+                                        $('#d3').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                                    })
+                                }
+                            }); 
+                            
+                        } 
+                    })
+   
+   
+</script>
 	</body>
 </body>
             

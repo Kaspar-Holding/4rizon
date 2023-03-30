@@ -889,7 +889,8 @@ public function save_token(Request $req){
     }
   }
   }
-  function create(Request $req){
+  function create(Request $req){ 
+    
     $users_data        = User::where('email','=',$req->user_email)->get();
     if (sizeof($users_data) > 0){
         return redirect('/admin_list')->with('error','Email already exists!');

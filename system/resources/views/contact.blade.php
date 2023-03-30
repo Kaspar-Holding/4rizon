@@ -9,12 +9,12 @@
                     <p><a style='text-decoration:none;color:#fff'>Name: <strong>{{$name}}</strong>,</a></p>
                     <p> Email: {{$email}}</p>
                     <p>Message: {{$messagee}}</p>
-                    <p><a style='text-decoration:none;color:#000'><strong>Note:</strong> Contact us <strong><a href='https://4rizon.com' target='_blank'>Here</a></strong> immediately if you did not make this request.</a></p>
+                    <p><a style='text-decoration:none;color:#000'><strong>Note:</strong> Contact us <strong><a href='https://admin.4rizon.com' target='_blank'>Here</a></strong> immediately if you did not make this request.</a></p>
                 </div>
             </div>
         </div>
         <div style='font:11px sans-serif;color:#3e3e3e'>
-            Delivered by www.4rizon.com - All Rights Reserved.
+            Delivered by admin.4rizon.com - All Rights Reserved.
         </div>
     </div>
 </div>

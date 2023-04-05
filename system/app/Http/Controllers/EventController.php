@@ -46,18 +46,74 @@ class EventController extends Controller
     }
     function edit_event($id){
     	$event = Event::find($id);
-        $start = $event->event_start_time;
-        $end = $event->event_end_time;
-
+        // $start = $event->event_start_time;
+        // $end = $event->event_end_time;
+        // $start = date("g:i A", strtotime($event->event_start_time." UTC"));
+        $start = date('h:i A', strtotime($event->event_start_time));
+        $end = date("h:i A", strtotime($event->event_end_time));
         $dj = DjUser::where('dj_status','1')->get();
+        $dj_time = Dj_Event::where('event_id',$id)->get('time');
         $intervals = CarbonInterval::hours(1)->toPeriod($start, $end);
+        // $time = array();
+    
+        // $final_time = array();
+       
+        // foreach($dj_time as $dt){
+        //     $t1 = date("h:i A", strtotime($dt['time']));
+           
+        //     foreach($intervals as $i){
+        //         $t2 = array();
+        //         $previous = $t2;
+        //         $t2 = date("h:i A", strtotime($i));
+                
+        //         if($t2 != $previous){
+        //             array_push($time,$t2);
+        //         }
+                
+        //     }
         
+        //     if($time != $t1){
+        //         array_push($final_time,$time);
+        //     }
+        // }
+        // $p = array();
+        // $p = $final_time;
+    //    $final_time = $final_time['time'];
+        // echo json_encode($p);die();
+        $info = Dj_Event::where('event_id',$id)->get();
+       
+        $data1 = [];
+        $data = [];
+        foreach($info as $infos){
+        $artist1 = DjUser::where('id','=',$infos['artist1'])->first();
+        // echo json_encode($artist1);die();
+        $data1['artist1'] = $artist1->first_name;
+        $artist2 = DjUser::where('id',$infos['artist2'])->first();
+        $data1['artist2'] = $artist2->first_name;
+        $artist3 = DjUser::where('id',$infos['artist3'])->first();
+        $data1['artist3'] = $artist3->first_name;
+        $data1['time'] = $infos['time'];
+        $data1['status'] = $infos['going_status'];
+        $data1['id'] = $infos['id'];
+        array_push($data,$data1);
+        }
+       
         // $dj_event = Dj_Event::where('event_id',$id)->get();
-        $dj_event = DB::table('dj_event')
-            ->select('dj_event.event_id','dj_event.going_status','djusers.first_name','djusers.last_name')
-            ->join('djusers', 'djusers.id', '=', 'dj_event.dj_id')->where('dj_event.event_id','=',$id)
-            ->get();
-    	return view("event.edit",['event'=>$event,'dj_list'=>$dj,'djs'=>$dj_event,'intervals'=>$intervals]);
+        // $dj_event = DB::table('dj_event')
+        //     ->select('dj_event.event_id','dj_event.going_status','djusers.first_name','djusers.last_name')
+        //     ->join('djusers', 'djusers.id', '=', 'dj_event.dj_id')->where('dj_event.event_id','=',$id)
+        //     ->get();
+    	return view("event.edit",['event'=>$event,'dj_list'=>$dj,'intervals'=>$intervals,'data'=>$data,'start_time'=>$start,'end_time'=>$end]);
+    }
+    function delete_timeslot($id){
+        $event= Dj_Event::where('id', $id)->first();
+        $event_id = $event->event_id;
+        $delete= Dj_Event::where('id', $id)->delete();
+    	
+        $data['success'] = "deleted";
+        return redirect('/edit_event/'.$event_id);
+
+       
     }
     function view_user_event_details($id){
     	$event = Bookings::find($id);
@@ -68,8 +124,8 @@ class EventController extends Controller
     	return view("event.add");
     }
     function create_event(Request $req){
-        $startTime = date("g:i A", strtotime($req->event_start_time." UTC"));
-        $endTime = date("g:i A", strtotime($req->event_end_time." UTC"));
+        // $startTime = date("g:i A", strtotime($req->event_start_time." UTC"));
+        // $endTime = date("g:i A", strtotime($req->event_end_time." UTC"));
         $event = new Event;
         $event->event_name         = $req->event_name;
         $event->event_short_description        = $req->event_short_description;
@@ -79,9 +135,10 @@ class EventController extends Controller
             $req->event_image->move(public_path('image'), $eventPic);
             $event->event_image = $eventPic;
         }
-        $event->event_date  = $req->event_date;
-        $event->event_start_time  = $startTime;
-        $event->event_end_time    = $endTime;
+
+        $event->event_date  = date("d/m/Y", strtotime($req->event_start_time));
+        $event->event_start_time  =$req->event_start_time;
+        $event->event_end_time    = $req->event_end_time;
         $event->stage_1  = $req->stage_1;
         $event->stage_2  = $req->stage_2;
         $event->stage_3  = $req->stage_3;
@@ -94,7 +151,7 @@ class EventController extends Controller
         $notification->event_id            = $getLastEvent->id;
         $notification->event_name          = $req->event_name;
         $notification->event_description   = $req->event_short_description;
-        $notification->event_date       = $req->event_date;
+        $notification->event_date       = date("d/m/Y", strtotime($req->event_start_time));
         $notification->save();
         return redirect('/event_list')->with('success','Event Created Successfully!');
     }
@@ -119,39 +176,13 @@ class EventController extends Controller
         }
     }
     function update_event(Request $req){ 
-        $artistList = $req->artist;
-        
-        if(!empty($artistList)){
-            foreach($artistList as $list){
-                $assigned = Dj_Event::where('dj_id','=',$list)->where('event_id','=',$req->id)->first();
-                if(empty($assigned)){
-
-                $dj_event = new Dj_Event;
-                $dj_event->event_id = $req->id;
-                $dj_event->dj_id = $list;
-                $dj_event->save();
-                $push_message = "Event Request";
-                $message = " Event Request";
-                $dj = DjUser::where('djusers.id','=',$list)->first(); 
-                if(isset($dj)){
-                    $event                             = Event::find($req->id);
-                    $this->mobile_push_notificationdj($push_message,$dj->device_id);  
-                    $djs = new Notifications;
-                    $djs->dj_id            = $dj->id;
-                    $djs->event_id         = $req->id;
-                    $djs->event_name        = $event->event_name;
-                    $djs->notification_type  = "5";
-                    $djs->admin_msg          = "You have been assigned a $event->event_name on $event->event_date."   ;
-                    $djs->save();
-                
-                }
-            }
-            }
-        }
+      
         
         $event                             = Event::find($req->id);
         $event->event_name                 = $req->event_name;
         $event->pkg_price                 = $req->event_price;
+        $event->event_start_time                 = $req->event_start_time;
+        $event->event_end_time                 = $req->event_end_time;
         $event->event_short_description    = $req->event_short_description;
         $event->event_description          = $req->event_description   ;
         if ($req->hasFile('event_image')) {
@@ -159,7 +190,8 @@ class EventController extends Controller
             $req->event_image->move(public_path('image'), $eventPic);
             $event->event_image = $eventPic;
         }
-        $event->event_date  = $req->event_date;
+        $event->event_date  = $event->event_date  = date("Y-m-d", strtotime($req->event_start_time));
+        // echo json_encode($event->event_date);die();
         // $event->dj_id  = $list;
 
         $event->stage_1  = $req->stage_1;
@@ -172,21 +204,34 @@ class EventController extends Controller
         return redirect('/event_list')->with('success','Event Details Updated Successfully!');
     }
     public function dj_time_allocation(Request $req){
-     
-        $dj_time = new DjTime;
+        
+        $dj_time = new Dj_Event;
+       
         $dj_time->event_id = $req->id;
         $dj_time->artist1 = $req->artist1;
         $dj_time->artist2 = $req->artist2;
         $dj_time->artist3 = $req->artist3;
         $dj_time->time    = $req->time;
+        
         $dj_time->save();
-        $dj1 = DjUser::where('id','=',$req->artist1)->get();
-        $dj2 = DjUser::where('id','=',$req->artist2)->get();
-        $dj3 = DjUser::where('id','=',$req->artist3)->get();
-        $data['artist1'] = $dj1;
-        $data['artist2'] = $dj2;
-        $data['artist3'] = $dj3; 
-        $data['time'] = $req->time;
+        
+       
+        $info = Dj_Event::where('event_id',$req->id)->get();
+        $data1 = [];
+        $data = [];
+        foreach($info as $infos){
+        $artist1 = DjUser::where('id',$infos['artist1'])->first();
+        $data1['artist1'] = $artist1->first_name;
+        $artist2 = DjUser::where('id',$infos['artist2'])->first();
+        $data1['artist2'] = $artist1->first_name;
+        $artist3 = DjUser::where('id',$infos['artist3'])->first();
+        $data1['artist3'] = $artist1->first_name;
+        $data1['time'] = $infos['time'];
+        $data1['status'] = $infos['going_status'];
+        array_push($data,$data1);
+        }
+       
+        
         return response()->json($data);
     }
     public function delete_event ($id) {
@@ -296,14 +341,31 @@ class EventController extends Controller
         $date = \Carbon\Carbon::today()->subDays(7);
         $event_data = Event::where('event_date','>=',$date)->get();
         $bookings   = Bookings::where('user_id',$id)->get();
-        if(!empty($bookings)){
-            return response()->json(['event_list' =>$event_data,'booking_list' =>$bookings,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        
+        $bookings1 = Guest::where('user_id',$id)->orWhere('host_id',$id)->orderBy('guest_id','DESC')->first();
+        // $bookings1 = Guest::where('host_id',$id)->orderBy('guest_id','DESC')->first();
+        $bookingsRecord = Guest::where('booking_id',$bookings1->booking_id)->get();
+        $status = $bookings1->status;
+        if(!empty($bookings1)){
+            $bookingsVip   = Bookings::where('booking_id',$bookings1->booking_id)->get();
+            foreach($bookingsVip as $vip){
+                // $guest = $vip['guest_lists'];
+                $vip['guest_list_status'] = $bookingsRecord;
+                // echo json_encode($vip);die();
+            }
         }
-        return response()->json(['event_list' =>$event_data,'booking_list' =>[],'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        $merged = $bookings->merge($bookingsVip);
+
+        $result = $merged->all();
+        if(!empty($bookings)){
+            return response()->json(['event_list' =>$event_data,'booking_list' =>$result,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
+        }
+        
+        return response()->json(['event_list' =>$event_data,'booking_list' =>[],'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     function single_event_api($id){
         $event = Event::find($id);
-         return response()->json(['event' =>$event,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+         return response()->json(['event' =>$event,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     function get_bookings($id){
       

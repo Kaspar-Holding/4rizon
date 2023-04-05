@@ -107,7 +107,7 @@
     //     // 'Access-Control-Allow-Origin': '*', 
     //     // 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS', 
     //     // 'Access-Control-Allow-Headers': 'append,delete,entries,foreach,get,has,keys,set,values,Authorization', 
-    //     // 'Origin': 'https://4rizon.com',
+    //     // 'Origin': 'https://admin.4rizon.com',
        
     //   })
     //   .then(function (response) {
@@ -123,7 +123,7 @@
       console.log(token);
           $.ajax({
             type: "POST",
-            url: 'https://4rizon.com/api/payment_gateway2',
+            url: 'https://admin.4rizon.com/api/payment_gateway2',
             data: {token,price},
             success: function(response) {
             console.log(response);

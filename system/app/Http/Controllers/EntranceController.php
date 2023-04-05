@@ -38,7 +38,7 @@ class EntranceController extends Controller
     
     public function manual_event_list(){
     	$event_data = Event::all();
-        return response()->json(['event_list' =>$event_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['event_list' =>$event_data,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     public function find_user(){
         $type = "application/json";

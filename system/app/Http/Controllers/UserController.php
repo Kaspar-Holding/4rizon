@@ -308,12 +308,12 @@ public function save_token(Request $req){
                         // $user_infos->remember_token=str::random(50);
                         // DB::table('user_infos')->where('user_id',$user_infos->user_id)->update(['remember_token'=>$user_infos->remember_token]);
                         // $sendT = UserEmails::signUpEmail($request->email, $user_infos->user_id);
-                        return ['code'=>'200','Status'=>'success','image_url'=>'https://4rizon.com/image/','user_info'=>$user_infos]; 
+                        return ['code'=>'200','Status'=>'success','image_url'=>'https://admin.4rizon.com/image/','user_info'=>$user_infos]; 
                     }elseif($user_infos->user_type == '2'){
                       $user_infos->remember_token=str::random(50);
                         DB::table('user_infos')->where('user_id',$user_infos->user_id)->update(['remember_token'=>$user_infos->remember_token]);
                         // $sendT = UserEmails::signUpEmail($request->email, $user_infos->user_id);
-                        return ['code'=>'200','Status'=>'success','image_url'=>'https://4rizon.com/image/','user_info'=>$user_infos]; 
+                        return ['code'=>'200','Status'=>'success','image_url'=>'https://admin.4rizon.com/image/','user_info'=>$user_infos]; 
                         // return ['code'=>'201','status'=>'failed','message'=>'Your Account Is Invalid Due To Email Verification.'];
                     }elseif($user_infos->user_status == '-1'){
                         return ['code'=>'201','status'=>'failed','message'=>'Your Account Is Blocked By Admin.'];
@@ -321,7 +321,7 @@ public function save_token(Request $req){
                       // $user_infos->remember_token=str::random(50);
                       // DB::table('user_infos')->where('user_id',$user_infos->user_id)->update(['remember_token'=>$user_infos->remember_token]);
                       // $sendT = UserEmails::signUpEmail($request->email, $user_infos->user_id);
-                      return ['code'=>'200','Status'=>'success','image_url'=>'https://4rizon.com/image/','user_info'=>$user_infos]; 
+                      return ['code'=>'200','Status'=>'success','image_url'=>'https://admin.4rizon.com/image/','user_info'=>$user_infos]; 
                   }
                   }  
                 else{
@@ -1561,7 +1561,7 @@ public function save_token(Request $req){
         ]);
     }
     
-    return response()->json(['message' =>"Profile Updated Successfully!",'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+    return response()->json(['message' =>"Profile Updated Successfully!",'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
   }
   function update_profile_picture(Request $req){
      $result = json_decode(file_get_contents("php://input"), true);
@@ -1584,7 +1584,7 @@ public function save_token(Request $req){
      user_infos::where('user_id','=',$result['id'])->update([ 
       'picture'=> $pic
     ]);
-    return response()->json(['message' =>"Profile Picture Updated Successfully!",'image_url'=>'https://4rizon.com/image/'.$pic, 'success' => true], 200);
+    return response()->json(['message' =>"Profile Picture Updated Successfully!",'image_url'=>'https://admin.4rizon.com/image/'.$pic, 'success' => true], 200);
   }
   public function login_admin_user(Request $request){
       

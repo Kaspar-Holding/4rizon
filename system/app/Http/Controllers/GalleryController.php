@@ -122,12 +122,12 @@ class GalleryController extends Controller
     		}
     	}
         
-        return response()->json(['gallery_list' =>$gallery_final_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['gallery_list' =>$gallery_final_data,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     function single_gallery_api($id){
         $gallery = Gallery::find($id);
         $value1 = GalleryImage::where("gallery_id",$gallery->unique_id)->get();
-        return response()->json(['gallery' =>$gallery,'gallery_images'=>$value1,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['gallery' =>$gallery,'gallery_images'=>$value1,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     
     /** Mobile Push Notification Function **/

@@ -12,7 +12,7 @@
                     <a target='_blank' style='font-size:16px;color:#ffffff;text-decoration:none;border-radius:2px;background-color:#5AC8ED;border-top:12px solid #5AC8ED;border-bottom:12px solid #5AC8ED;border-right:18px solid #5AC8ED;border-left:18px solid #5AC8ED;display:inline-block'>
                         {{$link}}
                     </a>
-                    <p style="color:#fff"><a style='text-decoration:none;color:#fff'><strong>Note:</strong> Contact us <strong><a href='https://4rizon.com' target='_blank'>Here</a></strong> immediately if you did not authorize this registration.</a></p>
+                    <p style="color:#fff"><a style='text-decoration:none;color:#fff'><strong>Note:</strong> Contact us <strong><a href='https://admin.4rizon.com' target='_blank'>Here</a></strong> immediately if you did not authorize this registration.</a></p>
                 </div>
             </div>
         </div>

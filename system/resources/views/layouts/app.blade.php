@@ -59,6 +59,12 @@
     border-radius: 20px !important;
     color: cornflowerblue !important;
     }
+    .timeCss{
+  background: rgb(13 45 80);
+  border-radius: 5px;
+  padding: 9px;
+  color:rgb(69 161 243 / 54%);
+}
         </style>
    </head> 
   
@@ -106,7 +112,7 @@
       <!-- custom js -->
       <script src="{{ asset('new/js/custom.js')}}"></script>
       <script src="{{ asset('new/js/chart_custom_style1.js')}}"></script>
-      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      {{-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> --}}
       <script type="text/javascript">
         $(document).ready(function (){
           $('.btn-copy').click(function (){
@@ -301,7 +307,9 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
                                     })
                                     $.each(response.artist3, function (key, value) {
                                         $('#d3').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                                       
                                     })
+                                    $('#delete').append("<a href='/delete_timeslot/"+response.info+"' class='btn btn-primary'>Delete</a>");
                                 }
                             }); 
                             

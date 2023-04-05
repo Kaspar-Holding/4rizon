@@ -8,8 +8,8 @@
             <div style='padding:20px 30px;color:#fff'>
                 <div style='font-size:16px;line-height:1.5em;border-bottom:1px solid #f2f3f5;padding-bottom:10px;margin-bottom:20px'>
                     <p><a style='text-decoration:none;color:#fff'>Welcome <strong>{{$useremail}}</strong>,</a></p>
-                    <p><a style='text-decoration:none;color:aqua !important' href='https://4rizon.com/reset_password_admin'>Reset Your Account password here</a></p>
-                    <p style="color:#fff"><a style='text-decoration:none;color:#fff'><strong>Note:</strong> Contact us <strong><a href='https://4rizon.com' target='_blank' style="color:aqua !important">Here</a></strong> immediately if you did not authorize this request.</a></p>
+                    <p><a style='text-decoration:none;color:aqua !important' href='https://admin.4rizon.com/reset_password_admin'>Reset Your Account password here</a></p>
+                    <p style="color:#fff"><a style='text-decoration:none;color:#fff'><strong>Note:</strong> Contact us <strong><a href='https://admin.4rizon.com' target='_blank' style="color:aqua !important">Here</a></strong> immediately if you did not authorize this request.</a></p>
                 </div>
             </div>
         </div>

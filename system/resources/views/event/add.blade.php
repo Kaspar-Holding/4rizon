@@ -55,13 +55,13 @@
                 <br>
                 <div>
                   <label class="form-label">Event Start Time</label>
-                  <input type="time" id="fromtime" name="event_start_time"  class="form-control" required >
+                  <input type="datetime-local" id="fromtime" name="event_start_time"  class="form-control" required >
                  
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Event End Time</label>
-                  <input type="time" id="totime" name="event_end_time" onchange="Compare()" class="form-control"  required >
+                  <input type="datetime-local" id="totime" name="event_end_time" onchange="Compare()" class="form-control"  required >
                   <span id="error"></span>
                 </div>
                 <br>

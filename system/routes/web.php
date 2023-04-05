@@ -57,7 +57,7 @@ Route::group(['middleware' =>[
    
     Route::get('/add_new_user', [UserController::class, 'add_new_user'])->name('add_new_user');
     Route::post('/add_user',[UserController::class, 'create'])->name('add_user');
-
+    Route::get('/delete_timeslot/{id}', [EventController::class, 'delete_timeslot'])->name('delete_timeslot');
     Route::get('/admin_list' ,  [UserController::class, 'admin_list'])->name('admin_list');
     Route::get('/edit_admin_details/{id}' ,  [UserController::class, 'edit_admin_details'])->name('edit_admin_details');
     Route::get('/delete_admin_details/{id}' ,  [UserController::class, 'delete_admin_details'])->name('delete_admin_details');

@@ -8,7 +8,7 @@
                 <div style='font-size:16px;line-height:1.5em;border-bottom:1px solid #f2f3f5;padding-bottom:10px;margin-bottom:20px'>
                     <p><a style='text-decoration:none;color:#fff'>Welcome <strong>{{$useremail}}</strong>,</a></p>
                     <p><a style='text-decoration:none;color:#fff'>Your account is successfully registered.</a></p>
-                    <p style="color:#fff"><a style='text-decoration:none;color:#fff'><strong>Note:</strong> Contact us <strong><a href='https://4rizon.com' target='_blank'>Here</a></strong> immediately if you did not authorize this registration.</a></p>
+                    <p style="color:#fff"><a style='text-decoration:none;color:#fff'><strong>Note:</strong> Contact us <strong><a href='https://admin.4rizon.com' target='_blank'>Here</a></strong> immediately if you did not authorize this registration.</a></p>
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@
   content: "\f0c8";
 }
 
+
 .select2-results__options[aria-multiselectable="true"] li[aria-selected="true"]:before {
   content: "\f14a";
 }
@@ -95,12 +96,14 @@ padding: 10px;
                 <br>
                 <div>
                   <label class="form-label">Event Start Time</label>
-                  <input type="time" name="event_start_time" class="form-control" value="{{ date("H:i", strtotime($event->event_start_time)) }}" >
+                  <input type="datetime-local" name="event_start_time" class="form-control" value="" ><br>
+                  <span style=" background: rgb(13 45 80);border-radius: 5px;padding: 9px;color:rgb(69 161 243 / 54%);"> Current Start Time {{$start_time}}</span>
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Event End Time</label>
-                  <input type="time" name="event_end_time" class="form-control" value="{{ date("H:i", strtotime($event->event_end_time)) }}" >
+                  <input type="datetime-local" name="event_end_time" class="form-control" value="" ><br>
+                  <span style=" background: rgb(13 45 80);border-radius: 5px;padding: 9px;color:rgb(69 161 243 / 54%);"> Current End Time {{$end_time}}</span>
                 </div>
                 <br>
                 <div>
@@ -147,10 +150,11 @@ padding: 10px;
                       <label class="form-label">Time Slot</label>
                       <select name="time" id="time" class="form-control" >
                         @foreach ($intervals as $date) 
-                        <option value="{{$date->format('H:i')}}">{{$date->format('H:i')}}</option>
+                        <option value="{{date("h:i A", strtotime($date))}}">{{date("h:i A", strtotime($date))}}</option>
                           
                           @endforeach
-                    
+                         
+                          {{-- <option value="09:00">09:00</option>  --}}
                       </select>
                     </div>
                     <div class = "col-md-2">
@@ -183,36 +187,65 @@ padding: 10px;
                     
                       </select>
                     </div>
+                    
                     <div class="col-md-2" style="margin-top:20px; padding-left:30px;">
                       <button id='submit' type="submit" class='btn btn-primary addDj'>Add</button>
                     </div>
                   </div>
                 </form>
                 
-                <div class="row p-3">
-                  <div class="col-md-3">
-                    <label class="form-label">Time Slot</label>
-                    <div id="timeslot"></div>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Platform 1</label>
-                    <div id="d1"></div>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Platform 2</label>
-                    <div id="d2"></div>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Platform 3</label>
-                    <div id="d3"></div>
-                  </div>
-                </div>
-                  {{-- <br>
+               
+                   <br>
                 <div class="full graph_head">
                   <div class="heading1 margin_0">
                     <h2>Djs Event Detail</h2>
                   </div>
               </div>
+            
+
+              <div class="row p-3" style="margin-left:30px;">
+                <div class="col-md-2">
+                  <label class="form-label">Time Slot</label>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Platform 1</label>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Platform 2</label>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Platform 3</label>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Status</label>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Delete</label>
+                </div>
+              </div>
+              @foreach($data as $d)
+              <div class="row p-3" style="margin-left:30px;">
+                <div class="col-md-2">
+                  <div style="color :aliceblue;" id="timeslot">{{$d['time']}}</div>
+                </div>
+                <div class="col-md-2">
+                  <div style="color :aliceblue;" id="artist1">{{$d['artist1']}}</div>
+                </div>
+                <div class="col-md-2">
+                  <div style="color :aliceblue;" id="artist2">{{$d['artist2']}}</div>
+                </div>
+                <div class="col-md-2">
+                  <div style="color :aliceblue;" id="artist3">{{$d['artist3']}}</div>
+                </div>
+                 <div class="col-md-2">
+                  <div style="color :aliceblue;" id="status">@if($d['status'] == 2) Pending @elseif($d['status'] == 1) Approved @else Denied @endif</div>
+                </div>
+                <div class="col-md-2">
+                  <div><a href="/delete_timeslot/{{$d['id']}}"  style="color :red; font-size:large;  margin-top:-10px;" class="btn btn-sm btn-green"><i class="fa fa-times" style="width:25px;"></i></a></div>
+                </div>
+              </div>
+              @endforeach
+                {{--
               <div class="row p-3">
                 @foreach($djs as $dj_event)
                   <div class="col-6">

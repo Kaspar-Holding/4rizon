@@ -44,7 +44,7 @@ class PurchaseController extends Controller
         $userFind = user_infos::where('user_id',$req->user_id)->first();
         $messages = "Item Purchased Successfully.";
         $this->mobile_push_notification($messages,$userFind->player_id);
-        return response()->json(['message' =>$message,'qr_code' =>$purchase_id,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['message' =>$message,'qr_code' =>$purchase_id,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     
     /** Mobile Push Notification Function **/

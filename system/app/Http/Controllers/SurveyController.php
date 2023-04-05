@@ -141,7 +141,7 @@ class SurveyController extends Controller
     // api's
     function survey_list_api(){
         $survey_data = Survey::all();
-        return response()->json(['survey_list' =>$survey_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['survey_list' =>$survey_data,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     function get_questions_against_survey($survey_id,$user_id){
         $check = Survey_Status::where('user_id',$user_id)->where('survey_id',$survey_id)->get();

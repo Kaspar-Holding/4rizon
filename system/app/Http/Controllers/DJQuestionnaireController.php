@@ -98,7 +98,7 @@ class DJQuestionnaireController extends Controller
     // api's
     function questionnaire_list_api(){
         $questionnaire_data = DJ_Questionnaire::all();
-        return response()->json(['questionnaire_list' =>$questionnaire_data,'image_url'=>'https://4rizon.com/image/', 'success' => true], 200);
+        return response()->json(['questionnaire_list' =>$questionnaire_data,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     function get_dj_questionnaire_questions(Request $req){
         $questions = DJQuestions::where('dj_questionnaire_id',12)->get();

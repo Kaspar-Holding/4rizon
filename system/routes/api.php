@@ -106,7 +106,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::post('/remove_booking' ,  [EventController::class, 'remove_booking'])->name('remove_booking'); 
     Route::post('/invitation_status' ,  [EventController::class, 'invitation_status'])->name('invitation_status'); 
     Route::post('/dj_time_allocation', [EventController::class, 'dj_time_allocation'])->name('dj_time_allocation');
-    
+    Route::post('/showData', [EventController::class, 'showData'])->name('showData');
     
     Route::post('/manual_user_check', [EntranceController::class, 'manual_user_check'])->name('manual_user_check');
     Route::post('/manual_user_details', [EntranceController::class, 'manual_user_details'])->name('manual_user_details');

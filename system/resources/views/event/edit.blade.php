@@ -38,7 +38,7 @@
 padding: 10px;
 }
 </style>
-    <div class="container-fluid">
+    <div onload="test()" class="container-fluid">
         <div class="row column_title">
           <div class="col-md-12">
             <div class="page_title">
@@ -91,18 +91,18 @@ padding: 10px;
                 </div>
                 <div>
                   <label class="form-label">Event Date</label>
-                  <input type="date" name="event_date"  class="form-control" value="{{ $event->event_date }}" >
+                  <input type="date" name="event_date"   id="event_date" class="form-control" value="{{ $event->event_date }}" >
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Event Start Time</label>
-                  <input type="datetime-local" name="event_start_time" class="form-control" value="" ><br>
+                  <input type="time" name="event_start_time" class="form-control" value="" ><br>
                   <span style=" background: rgb(13 45 80);border-radius: 5px;padding: 9px;color:rgb(69 161 243 / 54%);"> Current Start Time {{$start_time}}</span>
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Event End Time</label>
-                  <input type="datetime-local" name="event_end_time" class="form-control" value="" ><br>
+                  <input type="time" name="event_end_time" class="form-control" value="{{$event->event_start_time}}" ><br>
                   <span style=" background: rgb(13 45 80);border-radius: 5px;padding: 9px;color:rgb(69 161 243 / 54%);"> Current End Time {{$end_time}}</span>
                 </div>
                 <br>
@@ -131,138 +131,107 @@ padding: 10px;
                 </div>
                 
               </form>
-                {{-- <div>
-                  <label class="form-label">Assign Artist</label>
-                  
-                  <select name="artist[]" id="artist" multiple="multiple"  class="form-control select2" >
-                    {{-- <option readonly> Assign Artist </option> --}}
-                    {{-- @ foreach($dj_list as $artist) --}}
-                    {{-- < option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option> --}}
-                    {{-- @endforeach --}}
-                  {{-- </select> --}}
-                {{-- </div> --}}
-                <br>
-                <form class="container-fluid"  method="POST" enctype="multipart/form-data" style="padding:30px; padding-bottom:40px;" id="dj_form">
-                  @csrf
-                  <input type="hidden" name="id" value="{{ $event->id }}">
-                  <div class = "row">
-                    <div class = "col-md-2">
-                      <label class="form-label">Time Slot</label>
-                      <select name="time" id="time" class="form-control" >
-                        @foreach ($intervals as $date) 
-                        <option value="{{date("h:i A", strtotime($date))}}">{{date("h:i A", strtotime($date))}}</option>
-                          
-                          @endforeach
-                         
-                          {{-- <option value="09:00">09:00</option>  --}}
-                      </select>
-                    </div>
-                    <div class = "col-md-2">
-                      <label class="form-label">Platform 1</label>
-                      <select name="artist1" id="artist1" class="form-control" >
-                        <option>Select one</option>
-                        @foreach($dj_list as $artist)
-                        <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
-                        @endforeach
-                    
-                      </select>
-                    </div>
-                    <div class = "col-md-2">
-                      <label class="form-label">Platform 2</label>
-                      <select name="artist2" id="artist2" class="form-control" >
-                        <option>Select one</option>
-                        @foreach($dj_list as $artist)
-                        <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
-                        @endforeach
-                    
-                      </select>
-                    </div>
-                    <div class = "col-md-2">
-                      <label class="form-label">Platform 3</label>
-                      <select name="artist3" id="artist3" class="form-control" >
-                        <option>Select one</option>
-                        @foreach($dj_list as $artist)
-                        <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
-                        @endforeach
-                    
-                      </select>
-                    </div>
-                    
-                    <div class="col-md-2" style="margin-top:20px; padding-left:30px;">
-                      <button id='submit' type="submit" class='btn btn-primary addDj'>Add</button>
-                    </div>
-                  </div>
-                </form>
                 
-               
-                   <br>
-                <div class="full graph_head">
-                  <div class="heading1 margin_0">
-                    <h2>Djs Event Detail</h2>
-                  </div>
-              </div>
-            
-
-              <div class="row p-3" style="margin-left:30px;">
-                <div class="col-md-2">
-                  <label class="form-label">Time Slot</label>
+                <br>
+                <div class="col-lg-10">
+                  <form id="user_form" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="event_id" value="{{ $event->id }}">
+                  <table id="table" class="table table-bordered table-striped update">
+                      <thead>
+                      </thead>
+                      <tbody id="exampleid">
+                          <tr>
+                              <th>Time Slot</th>
+                              <th>Platform 1</th>
+                              <th>Platform 2</th>
+                              <th>Platform 3</th>
+                              {{-- <th>Action</th> --}}
+                          </tr>
+                          @php $count = 0  @endphp
+                          @foreach($intervals as $i)
+                          <tr>
+                            <input type="hidden" name="count" value="{{ $count }}">
+                            @php
+                            $time = date('h:i A', strtotime($i));
+                            $event_data = \App\Models\Dj_Event::where('event_id',$event->id)->where('time',$time)->first();
+                            // echo json_encode($event_data);die();
+                            @endphp
+                            
+                            <td>
+                              <input  name="time[]" value="{{date('h:i A', strtotime($i))}}" id="time" class="form-control txtedit" readonly/>
+                            </td>
+                            <td>
+                                <select name="artist1[]" id="artist1" class="form-control  txtedit" >
+                                  @if(!empty($event_data))
+                                    @if($event_data->artist1 == "")
+                                    <option selected value="">Select One</option>
+                                    @else
+                                    @php
+                                      $artist_data1 = \App\Models\DjUser::where('id',$event_data->artist1)->first();
+                                    @endphp
+                                    <option selected value="{{$artist_data1->id}}">
+                                      {{$artist_data1->first_name}} {{$artist_data1->last_name}}</option>
+                                      @endif
+                                  @else
+                                  <option selected value="">Select One</option>
+                                  @endif
+                                  @foreach($dj_list as $artist)
+                                  <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                                  @endforeach
+                                </select>
+                            </td>
+                            <td>
+                              <select name="artist2[]" id="artist2" class="form-control  txtedit" >
+                                @if(!empty($event_data))
+                                @if($event_data->artist2 == "")
+                                <option selected value="">Select One</option>
+                                @else
+                                @php
+                                  $artist_data2 = \App\Models\DjUser::where('id',$event_data->artist2)->first();
+                                @endphp
+                                <option selected value="{{$event_data->artist2}}">
+                                  {{$artist_data2->first_name}} {{$artist_data2->last_name}}</option>
+                                  @endif
+                              @else
+                              <option selected value="">Select One</option>
+                              @endif
+                                @foreach($dj_list as $artist)
+                                <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                                @endforeach
+                              </select>
+                            </td>
+                            <td>
+                              <select name="artist3[]" id="artist3" class="form-control txtedit" >
+                                @if(!empty($event_data))
+                                @if($event_data->artist3 == "")
+                                <option selected value="">Select One</option>
+                                @else
+                                @php
+                                  $artist_data3 = \App\Models\DjUser::where('id',$event_data->artist3)->first();
+                                @endphp
+                                <option selected value="{{$event_data->artist3}}">
+                                  {{$artist_data3->first_name}} {{$artist_data3->last_name}}</option>
+                                  @endif
+                              @else
+                              <option selected value="">Select One</option>
+                              @endif
+                               @foreach($dj_list as $artist)
+                                <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                                @endforeach
+                              </select>
+                            </td>
+                          </tr>
+                          @php $count++ @endphp
+                          @endforeach
+                          
+                      </tbody>
+                      <input type="hidden" id="hiddenrow" name="hiddenrow" value=""/>
+                  </table>
+                  <button id='submit' type="submit" class='btnAdd hidee'>Submit</button>
+                  </form>
                 </div>
-                <div class="col-md-2">
-                  <label class="form-label">Platform 1</label>
-                </div>
-                <div class="col-md-2">
-                  <label class="form-label">Platform 2</label>
-                </div>
-                <div class="col-md-2">
-                  <label class="form-label">Platform 3</label>
-                </div>
-                <div class="col-md-2">
-                  <label class="form-label">Status</label>
-                </div>
-                <div class="col-md-2">
-                  <label class="form-label">Delete</label>
-                </div>
-              </div>
-              @foreach($data as $d)
-              <div class="row p-3" style="margin-left:30px;">
-                <div class="col-md-2">
-                  <div style="color :aliceblue;" id="timeslot">{{$d['time']}}</div>
-                </div>
-                <div class="col-md-2">
-                  <div style="color :aliceblue;" id="artist1">{{$d['artist1']}}</div>
-                </div>
-                <div class="col-md-2">
-                  <div style="color :aliceblue;" id="artist2">{{$d['artist2']}}</div>
-                </div>
-                <div class="col-md-2">
-                  <div style="color :aliceblue;" id="artist3">{{$d['artist3']}}</div>
-                </div>
-                 <div class="col-md-2">
-                  <div style="color :aliceblue;" id="status">@if($d['status'] == 2) Pending @elseif($d['status'] == 1) Approved @else Denied @endif</div>
-                </div>
-                <div class="col-md-2">
-                  <div><a href="/delete_timeslot/{{$d['id']}}"  style="color :red; font-size:large;  margin-top:-10px;" class="btn btn-sm btn-green"><i class="fa fa-times" style="width:25px;"></i></a></div>
-                </div>
-              </div>
-              @endforeach
-                {{--
-              <div class="row p-3">
-                @foreach($djs as $dj_event)
-                  <div class="col-6">
-                      <h5>{{$dj_event->first_name}} {{$dj_event->last_name}}</h5>
-                  </div>
-                  <div class="col-6">
-                    
-                      @if($dj_event->going_status == "2")
-                          <h5>Requested</h5>
-                      @elseif($dj_event->going_status == "1")
-                          <h5>Approved</h5>
-                      @elseif($dj_event->going_status == "0")
-                          <h5>Denied</h5>
-                      @endif
-                  
-                  </div>
-                  @endforeach --}}
+          
               </div>
                 
                 
@@ -270,6 +239,6 @@ padding: 10px;
           </div>
         </div>
       </div>
-    </div>
+  </div>
     
 @stop

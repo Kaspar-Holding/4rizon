@@ -139,7 +139,10 @@ Route::group(['middleware' =>[
     Route::post('/payment', [EventController::class, 'payment'])->name('payment');
 
     Route::get('/edit_event/{id}', [EventController::class, 'edit_event'])->name('edit_event');
+    Route::post('/showData', [EventController::class, 'showData'])->name('showData');
     Route::post('/update_event', [EventController::class, 'update_event'])->name('update_event');
+    Route::post('/update_start_time', [EventController::class, 'update_start_time'])->name('update_start_time');
+    Route::post('/update_end_time', [EventController::class, 'update_end_time'])->name('update_end_time');
     Route::post('/dj_time_allocation', [EventController::class, 'dj_time_allocation'])->name('dj_time_allocation');
     Route::get('/delete_event/{id}', [EventController::class, 'delete_event'])->name('delete_event');
     // WeeklyLineup Routes

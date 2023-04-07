@@ -65,6 +65,9 @@
   padding: 9px;
   color:rgb(69 161 243 / 54%);
 }
+.hidee{
+            display:none;
+        }
         </style>
    </head> 
   
@@ -103,6 +106,7 @@
       <script src="{{ asset('new/js/utils.js')}}"></script>
       <!-- <script src="{{ asset('new/js/analyser.js')}}"></script> -->
       <!-- nice scrollbar -->
+       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="{{ asset('new/js/perfect-scrollbar.min.js')}}"></script>
       <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
       <script>
@@ -112,7 +116,7 @@
       <!-- custom js -->
       <script src="{{ asset('new/js/custom.js')}}"></script>
       <script src="{{ asset('new/js/chart_custom_style1.js')}}"></script>
-      {{-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> --}}
+     
       <script type="text/javascript">
         $(document).ready(function (){
           $('.btn-copy').click(function (){
@@ -137,6 +141,7 @@
         });
         $(document).ready(function() {
             $(".select_group").select2();
+            
         });
         $(document).ready(function () {
             $(".addmore").click(function () {
@@ -270,53 +275,96 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
     //         // $("artist2 option[value!='"+artist1+"']").show();
     //     }
     // }
-    $(document).ready(function(){
+//     $(document).ready(function(){
     
-    var previousOption = null;
-    $('select').on('change', function(){
-    const selectedOption = $(this).find('option:selected').val();
-    $(`[value="${previousOption}"]:disabled`).attr('disabled', false);
-    previousOption = null;
-    $(`[value="${selectedOption}"]:not(:selected)`).attr('disabled', true);
-    })
-    $('select').on('click', function(){
-    previousOption = $(this).find('option:selected').val();
+//     var previousOption = null;
+    
+//     $('.riexclusion').on('change', function(){
+       
+//     const selectedOption = $(this).find('option:selected').val();
+//     console.log(selectedOption);
+//     $(`[value="${previousOption}"]:disabled`).attr('disabled', false);
+//     previousOption = null;
+//     $(`[value="${selectedOption}"]:not(:selected)`).attr('disabled', true);
+//     })
+//     $('.riexclusion').on('click', function(){
+//     previousOption = $(this).find('option:selected').val();
+//     console.log(selectedOption);
+//     });
+// });
+</script>
+<script type="text/javascript">
+     $(document).ready(function() {
+        // Save data
+        $(".txtedit").focusout(function(){
+            var data=$('#user_form').serialize();
+            var dataJSON = JSON.stringify(data);
+            console.log(data);
+            $.ajax({
+                url:"{{url('api/showData')}}",
+                type:'post',
+                data:data,
+                success:function(response){
+               
+                    console.log(response);
+                }
+        });
+        });
+    
     });
-});
+</script>
+<script type="text/javascript">
+    $(function(){
+        var dtToday = new Date();
+        
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+            day = '0' + day.toString();
+        
+        var maxDate = year + '-' + month + '-' + day;
+
+        // or instead:
+        // var maxDate = dtToday.toISOString().substr(0, 10);
+
+     
+        $('#event_date').attr('min', maxDate);
+    });
 </script>
 <script type="text/javascript">
  window.addEventListener('click', function(e){
-                        if (document.getElementById('submit').contains(e.target)){
-                            e.preventDefault();
-                            var data=$('#dj_form').serialize();
-                            console.log($("#dj_form").serialize());
-                            $.ajax({
-                                url:"{{url('api/dj_time_allocation')}}",
-                                type:'post',
-                                data:data,
-                                success:function(response){
-                                    console.log(response);
-                                    
-                                        $('#timeslot').append("<p>"+response.time+"</p>");
-                                   
-                                    $.each(response.artist1, function (key, value) {
-                                        $('#d1').append("<p>"+value.first_name+" "+value.last_name+"</p>");
-                                    })
-                                    $.each(response.artist2, function (key, value) {
-                                        $('#d2').append("<p>"+value.first_name+" "+value.last_name+"</p>");
-                                    })
-                                    $.each(response.artist3, function (key, value) {
-                                        $('#d3').append("<p>"+value.first_name+" "+value.last_name+"</p>");
-                                       
-                                    })
-                                    $('#delete').append("<a href='/delete_timeslot/"+response.info+"' class='btn btn-primary'>Delete</a>");
-                                }
-                            }); 
-                            
-                        } 
-                    })
-   
-   
+    if (document.getElementById('submit').contains(e.target)){
+        e.preventDefault();
+        var data=$('#dj_form').serialize();
+        console.log($("#dj_form").serialize());
+        $.ajax({
+            url:"{{url('api/dj_time_allocation')}}",
+            type:'post',
+            data:data,
+            success:function(response){
+                console.log(response);
+                
+                    $('#timeslot').append("<p>"+response.time+"</p>");
+                
+                $.each(response.artist1, function (key, value) {
+                    $('#d1').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                })
+                $.each(response.artist2, function (key, value) {
+                    $('#d2').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                })
+                $.each(response.artist3, function (key, value) {
+                    $('#d3').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                    
+                })
+                $('#delete').append("<a href='/delete_timeslot/"+response.info+"' class='btn btn-primary'>Delete</a>");
+            }
+        }); 
+        
+    } 
+})
 </script>
 	</body>
 </body>

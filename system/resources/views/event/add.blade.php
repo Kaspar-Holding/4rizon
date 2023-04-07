@@ -55,13 +55,13 @@
                 <br>
                 <div>
                   <label class="form-label">Event Start Time</label>
-                  <input type="datetime-local" id="fromtime" name="event_start_time"  class="form-control" required >
+                  <input type="time" id="fromtime" name="event_start_time"  class="form-control" required >
                  
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Event End Time</label>
-                  <input type="datetime-local" id="totime" name="event_end_time" onchange="Compare()" class="form-control"  required >
+                  <input type="time" id="totime" name="event_end_time" onchange="Compare()" class="form-control"  required >
                   <span id="error"></span>
                 </div>
                 <br>
@@ -90,6 +90,68 @@
                 </div>
                
               </form>
+              <br>
+              <div class="col-lg-10">
+                <form id="user_form" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="event_id" value="0">
+                <table id="table" class="table table-bordered table-striped update">
+                    <thead>
+                    </thead>
+                    <tbody id="exampleid">
+                        <tr>
+                            <th>Time Slot</th>
+                            <th>Platform 1</th>
+                            <th>Platform 2</th>
+                            <th>Platform 3</th>
+                            {{-- <th>Action</th> --}}
+                        </tr>
+                        @php $count = 0 ; @endphp
+                        @for($i=0;$i<=8;$i++)
+                        <tr>
+                          <input type="hidden" name="count" value="{{ $count }}">
+                          @php
+                          $dj_list = \App\Models\DjUser::where('dj_status','1')->get();
+                          // echo json_encode($event_data);die();
+                          @endphp
+                          
+                          <td>
+                            <input type="time"  name="time[]" value="" id="time" class="form-control txtedit"/>
+                          </td>
+                          <td>
+                              <select name="artist1[]" id="artist1" class="form-control  txtedit" >
+                                <option>Select One</option>
+                                @foreach($dj_list as $artist)
+                                <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                                @endforeach
+                              </select>
+                          </td>
+                          <td>
+                            <select name="artist2[]" id="artist2" class="form-control  txtedit" >
+                              <option>Select One</option>
+                              @foreach($dj_list as $artist)
+                              <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                              @endforeach
+                            </select>
+                          </td>
+                          <td>
+                            <select name="artist3[]" id="artist3" class="form-control txtedit" >
+                              <option>Select One</option>
+                             @foreach($dj_list as $artist)
+                              <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
+                              @endforeach
+                            </select>
+                          </td>
+                        </tr>
+                        @php $count++ @endphp
+                        @endfor
+                        
+                    </tbody>
+                    <input type="hidden" id="hiddenrow" name="hiddenrow" value=""/>
+                </table>
+                <button id='submit' type="submit" class='btnAdd hidee'>Submit</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

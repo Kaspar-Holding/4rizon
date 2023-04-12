@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
    <head>
+    
       <!-- basic -->
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -106,9 +107,11 @@
       <script src="{{ asset('new/js/utils.js')}}"></script>
       <!-- <script src="{{ asset('new/js/analyser.js')}}"></script> -->
       <!-- nice scrollbar -->
-       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="{{ asset('new/js/perfect-scrollbar.min.js')}}"></script>
-      <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      
+      <script src="//cdn.datatables.net/3.2.1/js/jquery.dataTables.min.js"></script>
+
       <script>
          var ps = new PerfectScrollbar('#sidebar');
       </script>
@@ -116,7 +119,13 @@
       <!-- custom js -->
       <script src="{{ asset('new/js/custom.js')}}"></script>
       <script src="{{ asset('new/js/chart_custom_style1.js')}}"></script>
-     
+      {{-- <script type="text/javascript">
+        $("document").ready(function(){
+            setTimeout(function(){
+            $(".alert").remove();
+            }, 9000 ); // 5 secs
+        });
+      </script> --}}
       <script type="text/javascript">
         $(document).ready(function (){
           $('.btn-copy').click(function (){
@@ -215,6 +224,13 @@
 });
 
       </script>
+     <script>
+        $('#deleteAll').click(function(e){
+        var table= $(e.target).closest('table');
+        $('td input:checkbox',table).prop('checked',this.checked);
+    });
+    
+          </script>
     <script>
         $('.users').on('change',function(){
     var value = $(this).val();
@@ -242,12 +258,20 @@
      </script> 
      <script>
      $("document").ready(function(){
-    setTimeout(function(){
-       $("div.alerti").remove();
-    }, 1000 ); // 2 secs
+        setTimeout(function(){
+        $("div.alerti").remove();
+        }, 2000 ); // 2 secs
 
-});
+    });
      </script> 
+      <script>
+        $("document").ready(function(){
+           setTimeout(function(){
+           $("div.alertii").remove();
+           }, 10000 ); // 2 secs
+   
+       });
+        </script> 
      <script>   
                 $('#myModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
@@ -260,59 +284,25 @@ $('#myInput').trigger('focus')
 </script> 
 <script> 
 $('#multiconfirm-modal').on('show.bs.modal', function(e) {
-    debugger;
+    // debugger;
     var checkedValues = $('.record:checked').map(function(){ return this.value; }).get();
+   
     //put the ids in the hidden input as a comma separated string
     $('#hidden_checkedinput').val(checkedValues.join(','));
   });
 </script> 
-<script type="text/javascript">
-    // funciton getArtist(artist1){
-    //     console.log("in artist func");
-    //     if(artist1!=''){
-    //         alert(artist1);
-    //         // $("artist2 option[value='"+artist1+"']").hide();
-    //         // $("artist2 option[value!='"+artist1+"']").show();
-    //     }
-    // }
-//     $(document).ready(function(){
-    
-//     var previousOption = null;
-    
-//     $('.riexclusion').on('change', function(){
+<script> 
+    $('#multiconfirm-modal1').on('show.bs.modal', function(e) {
+        // debugger;
        
-//     const selectedOption = $(this).find('option:selected').val();
-//     console.log(selectedOption);
-//     $(`[value="${previousOption}"]:disabled`).attr('disabled', false);
-//     previousOption = null;
-//     $(`[value="${selectedOption}"]:not(:selected)`).attr('disabled', true);
-//     })
-//     $('.riexclusion').on('click', function(){
-//     previousOption = $(this).find('option:selected').val();
-//     console.log(selectedOption);
-//     });
-// });
-</script>
-<script type="text/javascript">
-     $(document).ready(function() {
-        // Save data
-        $(".txtedit").focusout(function(){
-            var data=$('#user_form').serialize();
-            var dataJSON = JSON.stringify(data);
-            console.log(data);
-            $.ajax({
-                url:"{{url('api/showData')}}",
-                type:'post',
-                data:data,
-                success:function(response){
-               
-                    console.log(response);
-                }
-        });
-        });
-    
-    });
-</script>
+        var checkedValues = $('.record1:checked').map(function(){ return this.value; }).get();
+    //    alert(checkedValues);
+        //put the ids in the hidden input as a comma separated string
+        $('#hidden_checkedinput1').val(checkedValues.join(','));
+      });
+    </script>
+
+
 <script type="text/javascript">
     $(function(){
         var dtToday = new Date();
@@ -333,6 +323,28 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
      
         $('#event_date').attr('min', maxDate);
     });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       // Save data
+       $(".txtedit").focusout(function(){
+           var data=$('#user_form').serialize();
+           var dataJSON = JSON.stringify(data);
+           console.log(data);
+           $.ajax({
+               url:"{{url('api/showData')}}",
+               type:'post',
+               data:data,
+               success:function(response){
+              
+                   console.log(response);
+               }
+       });
+       });
+   
+   });
 </script>
 <script type="text/javascript">
  window.addEventListener('click', function(e){
@@ -366,6 +378,7 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
     } 
 })
 </script>
+
 	</body>
 </body>
             

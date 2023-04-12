@@ -31,6 +31,9 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
+                  <div class = "alertii">
+                     @include('flashmessages')
+                  </div>
                   <div class="full graph_head">
                      <div class="heading1 margin_0"> 
                      </div>
@@ -39,15 +42,44 @@
                      @csrf
                   
                      <div class="row">
-                        <div class="col-md-9">
-
+                        <div class="col-md-8">
                         </div>
-                        <div class="col-md-3">
-                        
+                        <div class="col-md-2">
                            <div id = "btn_multidelete" class="btn btn-inverse my-button btn-outline-primary" data-toggle="modal" data-target="#multiconfirm-modal" style="
-                           margin-left: 0px;">Verify and Approve</div></div>
-                              
-
+                           margin-left: 0px;">Verify and Approve
+                           </div>
+                        </div>
+                        <div class="col-md-2">
+                           <!-- Button trigger modal -->
+                           {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                           Launch demo modal
+                           </button>  --}}
+                           <!-- Modal -->
+                           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="exampleModalLabel">User Status</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <h3>
+                                          Approved Users : {{$approved ?? ''}}
+                                       </h3>
+                                       <br>
+                                       <h3>
+                                          Denied Users Users : {{$denied ?? ''}}
+                                       </h3>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                      </div>
                   <div class="table_section padding_infor_info">
@@ -116,15 +148,15 @@
                                      
                                        </div>
                                        <div class="modal-footer">
-                                          <form>
-                                             @csrf
-                                             <input name="pass_checkedvalue" type="hidden" value="pass_checkedvalue" id="hidden_checkedinput">
+                                          {{-- <form> --}}
+                                             {{-- @csrf --}}
+                                             <input name="pass_checkedvalue" type="hidden" id="hidden_checkedinput">
                                              <input class="btn btn-secondary" type="submit" name="submit_button" value="OK">
-                                                 </form>
+                                          {{-- </form> --}}
                                        </div>
                                        </form>
                                        </div>
-                                    </div>
+                                 </div>
                               </div>
                         </table>
                        

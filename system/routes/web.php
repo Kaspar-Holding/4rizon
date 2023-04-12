@@ -76,6 +76,7 @@ Route::group(['middleware' =>[
     Route::get('/invalid_users_lists/{fromdate}/{todate}' ,  [UserController::class, 'invalid_users_lists'])->name('invalid_users_lists');
     Route::get('/view_user_details/{id}', [UserController::class, 'view_user_details'])->name('view_user_details');
     Route::post('/multiple_approve', [UserController::class, 'multiple_approve'])->name('multiple_approve');
+    Route::post('/multiple_delete', [UserController::class, 'multiple_delete'])->name('multiple_delete');
     Route::post('/multiple_approve_dj', [UserController::class, 'multiple_approve_dj'])->name('multiple_approve_dj');
     Route::get('/delete_user_details/{id}' ,  [UserController::class, 'delete_user_details'])->name('delete_user_details');
     Route::post('/user_status_update', [UserController::class, 'user_status_update'])->name('user_status_update');

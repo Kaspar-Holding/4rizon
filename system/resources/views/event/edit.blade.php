@@ -2,6 +2,7 @@
 @section('pageTitle','Edit Event')
 @section('content')
 
+
 <style>
   .select2-results__options[aria-multiselectable="true"] li {
   padding-left: 30px;
@@ -37,6 +38,35 @@
 {
 padding: 10px;
 }
+.dot {
+ 
+  padding: 8px;
+  margin-top : 5px;
+  height: 19px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color:#30dd30;
+}
+.red-dot {
+  padding: 8px;
+  margin-top : 5px;
+  height: 19px;
+  width: 8px !important;
+  border-radius: 50%;
+  display: inline-block;
+  background-color:red;
+}
+.yellow-dot {
+  padding: 8px;
+  margin-top : 5px;  
+  height: 19px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color:yellow;
+}
+
 </style>
     <div onload="test()" class="container-fluid">
         <div class="row column_title">
@@ -99,10 +129,11 @@ padding: 10px;
                   <input type="time" name="event_start_time" class="form-control" value="" ><br>
                   <span style=" background: rgb(13 45 80);border-radius: 5px;padding: 9px;color:rgb(69 161 243 / 54%);"> Current Start Time {{$start_time}}</span>
                 </div>
+                
                 <br>
                 <div>
                   <label class="form-label">Event End Time</label>
-                  <input type="time" name="event_end_time" class="form-control" value="{{$event->event_start_time}}" ><br>
+                  <input type="time" name="event_end_time" class="form-control" value="" ><br>
                   <span style=" background: rgb(13 45 80);border-radius: 5px;padding: 9px;color:rgb(69 161 243 / 54%);"> Current End Time {{$end_time}}</span>
                 </div>
                 <br>
@@ -153,26 +184,32 @@ padding: 10px;
                           <tr>
                             <input type="hidden" name="count" value="{{ $count }}">
                             @php
-                            $time = date('h:i A', strtotime($i));
+                            $time = $i;
                             $event_data = \App\Models\Dj_Event::where('event_id',$event->id)->where('time',$time)->first();
-                            // echo json_encode($event_data);die();
+                            //  echo json_encode($event_data);die();
                             @endphp
+                            <td>
+                              <input  name="time[]" value="{{$i}}" id="time" class="form-control txtedit" readonly/>
+                            </td>
                             
                             <td>
-                              <input  name="time[]" value="{{date('h:i A', strtotime($i))}}" id="time" class="form-control txtedit" readonly/>
-                            </td>
-                            <td>
-                                <select name="artist1[]" id="artist1" class="form-control  txtedit" >
-                                  @if(!empty($event_data))
+                              
+                              <div class="row">
+                                <select name="artist1[]" id="artist1"  class="form-control  txtedit col-md-10">
+                                   @if(!empty($event_data))
                                     @if($event_data->artist1 == "")
                                     <option selected value="">Select One</option>
                                     @else
                                     @php
                                       $artist_data1 = \App\Models\DjUser::where('id',$event_data->artist1)->first();
                                     @endphp
+                                    {{-- @php echo json_encode($artist_data1);die();@endphp --}}
+
+                                  
                                     <option selected value="{{$artist_data1->id}}">
-                                      {{$artist_data1->first_name}} {{$artist_data1->last_name}}</option>
+                                      {{$artist_data1->first_name}} {{$artist_data1->last_name}} </option>
                                       @endif
+                                      
                                   @else
                                   <option selected value="">Select One</option>
                                   @endif
@@ -180,9 +217,22 @@ padding: 10px;
                                   <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
                                   @endforeach
                                 </select>
+                                @if(!empty($event_data))
+                                  @if($event_data->going_status1 == "1")
+                                  <span class = "col-md-1 dot" style="margin-left:5px;"></span>
+                                  @elseif($event_data->going_status1 == "2")
+                                  <span class = "col-md-1 red-dot" style="margin-left:5px;"></span>
+                                  @elseif($event_data->going_status1 == "0")
+                                  <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
+                                  @endif
+                                @endif
+                            </div>
                             </td>
+                          
+
                             <td>
-                              <select name="artist2[]" id="artist2" class="form-control  txtedit" >
+                              <div class="row">
+                              <select name="artist2[]" id="artist2" class="form-control  txtedit col-md-10" >
                                 @if(!empty($event_data))
                                 @if($event_data->artist2 == "")
                                 <option selected value="">Select One</option>
@@ -200,9 +250,20 @@ padding: 10px;
                                 <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
                                 @endforeach
                               </select>
+                              @if(!empty($event_data))
+                                @if($event_data->going_status2 == "1")
+                                <span class = "col-md-1 dot" style="margin-left:5px;"></span>
+                                @elseif($event_data->going_status2 == "2")
+                                <span class = "col-md-1 red-dot" style="margin-left:5px;"></span>
+                                @elseif($event_data->going_status2 == "0")
+                                <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
+                                @endif
+                              @endif
+                          </div>
                             </td>
                             <td>
-                              <select name="artist3[]" id="artist3" class="form-control txtedit" >
+                              <div class="row">
+                              <select name="artist3[]" id="artist3" class="form-control txtedit col-md-10" >
                                 @if(!empty($event_data))
                                 @if($event_data->artist3 == "")
                                 <option selected value="">Select One</option>
@@ -220,6 +281,16 @@ padding: 10px;
                                 <option value="{{$artist['id']}}">{{$artist['first_name']}} {{$artist['last_name']}}</option>
                                 @endforeach
                               </select>
+                              @if(!empty($event_data))
+                                @if($event_data->going_status3 == "1")
+                                <span class = "col-md-1 dot" style="margin-left:5px;"></span>
+                                @elseif($event_data->going_status3 == "2")
+                                <span class = "col-md-1 red-dot" style="margin-left:5px;"></span>
+                                @elseif($event_data->going_status3 == "0")
+                                <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
+                                @endif
+                              @endif
+                          </div>
                             </td>
                           </tr>
                           @php $count++ @endphp
@@ -240,5 +311,6 @@ padding: 10px;
         </div>
       </div>
   </div>
-    
+  
 @stop
+ 

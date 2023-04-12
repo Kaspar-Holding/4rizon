@@ -8,6 +8,7 @@ use Mail;
 use App\Models\PasswordReset;
 use App\Models\PasswordReset2;
 use App\Models\user_infos;
+use App\Models\DjUser;
 use App\Models\Conatct;
 use App\Models\Users;
 
@@ -77,6 +78,16 @@ class UserEmails extends Model
         Mail::send("notifications", $data, function($message) use ($to_name, $to_email) {
         $message->to($to_email, $to_name)
         ->subject("User Approved");
+        $message->from("4rizontech@gmail.com","4rizon Contact");});
+    }
+    public static function dj_assignment($useremail){
+        $password = DjUser::where('email','=',$useremail)->pluck('email');
+        $to_name = $useremail;
+        $to_email = $useremail;
+        $data = array("useremail"=>$useremail);
+        Mail::send("dj_assignment", $data, function($message) use ($to_name, $to_email) {
+        $message->to($to_email, $to_name)
+        ->subject("You have been assigned an event");
         $message->from("4rizontech@gmail.com","4rizon Contact");});
     }
     public static function contact($name,$email,$messagee){

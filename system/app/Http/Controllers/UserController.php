@@ -973,6 +973,7 @@ public function save_token(Request $req){
     ]);
     $users_data = user_infos::where('user_status',0)->orWhere('user_status',3)->get();
 
+
     return view("users.inactivelist",['users_list'=>$users_data,]);
   }
  
@@ -1137,6 +1138,7 @@ public function save_token(Request $req){
             user_infos::where('user_id','=',$cb)->update([
               'user_status'=>"1"
             ]);
+         
             $userFind = user_infos::where('user_id',$cb)->first();
             $message = "Your Account Has Been Approved";
             if (!is_null($userFind->player_id)){
@@ -1144,11 +1146,13 @@ public function save_token(Request $req){
             }
             $email = user_infos::where('user_id','=',$cb)->first();
             UserEmails::notifications($email->email);
+          
           }
          
     
           else{
             $user_infos = user_infos::where('user_id','=',$cb)->first();
+            if(!empty($user_infos)){
               if($user_infos->identification_type == 2){
                 user_infos::where('user_id','=',$cb)->update([
                   'user_status'=>"1"
@@ -1162,79 +1166,127 @@ public function save_token(Request $req){
                 UserEmails::notifications($email->email);
               }
               else{
-            $data_array = array();
-            $data_array['Token'] = "9a88abd8-2f4a-4f6f-bbcf-22755254f89b";
-            $data_array['Username'] = "Jynx";
-            $data_array['Password'] = "Pass12345";
-            $data_array['TransactionReference'] = "Your internal reference";
-            
-            $data_array['idNumber'] = $user_infos->identification_num;
-            $result = json_decode(file_get_contents("php://input"), true);
-            // $make_call = array();
-            // $make_call['personName'] = "KANZA";
-            // $make_call['personSurname'] = "NAJAM UL HUDA";
-            // $make_call['gender'] = "Female";
-            // $make_call['dateOfBirth'] = "1986-08-12";
-            // $make_call['aliveStatus'] = "ALIVE";
-            $make_call = json_decode($this->callCoreInfoAPI(json_encode($data_array)),true);
-            // $make_call = json_decode('{
-            //     "personName": "KANZA",
-            //     "personSurname": "NAJAM UL HUDA",
-            //     "gender": "Female",
-            //     "dateOfBirth": "1986-08-12",
-            //     "aliveStatus": "ALIVE",
-            //     "clientFeedback": {
-            //         "systemErrorInfo": "0",
-            //         "clientErrorInfo": "0"
-            //     }
-            // }', true);
+                $data_array = array();
+                $data_array['Token'] = "9a88abd8-2f4a-4f6f-bbcf-22755254f89b";
+                $data_array['Username'] = "Jynx";
+                $data_array['Password'] = "Pass12345";
+                $data_array['TransactionReference'] = "Your internal reference";
+                
+                $data_array['idNumber'] = $user_infos->identification_num;
+                $result = json_decode(file_get_contents("php://input"), true);
+                // $make_call = array();
+                // $make_call['personName'] = "KANZA";
+                // $make_call['personSurname'] = "NAJAM UL HUDA";
+                // $make_call['gender'] = "Female";
+                // $make_call['dateOfBirth'] = "1986-08-12";
+                // $make_call['aliveStatus'] = "ALIVE";
+                $make_call = json_decode($this->callCoreInfoAPI(json_encode($data_array)),true);
+                // $make_call = json_decode('{
+                //     "personName": "KANZA",
+                //     "personSurname": "NAJAM UL HUDA",
+                //     "gender": "Female",
+                //     "dateOfBirth": "1986-08-12",
+                //     "aliveStatus": "ALIVE",
+                //     "clientFeedback": {
+                //         "systemErrorInfo": "0",
+                //         "clientErrorInfo": "0"
+                //     }
+                // }', true);
            
-            if(empty($make_call)){
-              user_infos::where('user_id','=',$cb)->update([
-                'user_status'=>"3"
-              ]);
-              $userFind = user_infos::where('user_id',$cb)->first();
-              $message = "Your Account Has Been Denied";
-              if (!is_null($userFind->player_id)){
-                $this->mobile_push_notification($message,$userFind->player_id);
+                if(empty($make_call)){
+                  user_infos::where('user_id','=',$cb)->update([
+                    'user_status'=>"3"
+                  ]);
+                  $userFind = user_infos::where('user_id',$cb)->first();
+                  $message = "Your account approval has been denied due to invalid South African Id";
+                  if (!is_null($userFind->player_id)){
+                    $this->mobile_push_notification($message,$userFind->player_id);
+                  }
+                }
+                else{
+                $dha_info = new Dha_profile;
+                $dha_info->user_id              = $cb;
+                $dha_info->identification_num   = $user_infos->identification_num;
+                $dha_info->personName           = $make_call['personName'];
+                $dha_info->personSurname        = $make_call['personSurname'];
+                $dha_info->gender               = $make_call['gender'];
+                $dha_info->dateOfBirth          = $make_call['dateOfBirth'];
+                $dha_info->aliveStatus          = $make_call['aliveStatus'];
+                $dha_info->dha_api_status       = $make_call['clientFeedback']['clientErrorInfo'];
+                $dha_info->save();
+                $dha_profile = Dha_profile::where('user_id','=',$cb)->first();
+                if(!empty($dha_profile)){
+                  user_infos::where('user_id','=',$cb)->update([
+                    'user_status'=>"1"
+                  ]);
+                  $userFind = user_infos::where('user_id',$cb)->first();
+                    $message = "Your Account Has Been Approved";
+                    if (!is_null($userFind->player_id)){
+                      $this->mobile_push_notification($message,$userFind->player_id);
+                    }
+                  $email = user_infos::where('user_id','=',$cb)->first();
+                  UserEmails::notifications($email->email);
+                }
+              
+                }
               }
             }
-            else{
-              $dha_info = new Dha_profile;
-            $dha_info->user_id              = $cb;
-            $dha_info->identification_num   = $user_infos->identification_num;
-            $dha_info->personName           = $make_call['personName'];
-            $dha_info->personSurname        = $make_call['personSurname'];
-            $dha_info->gender               = $make_call['gender'];
-            $dha_info->dateOfBirth          = $make_call['dateOfBirth'];
-            $dha_info->aliveStatus          = $make_call['aliveStatus'];
-            $dha_info->dha_api_status       = $make_call['clientFeedback']['clientErrorInfo'];
-            $dha_info->save();
-            $dha_profile = Dha_profile::where('user_id','=',$cb)->first();
-            if(!empty($dha_profile)){
-              user_infos::where('user_id','=',$cb)->update([
-                'user_status'=>"1"
-              ]);
-               $userFind = user_infos::where('user_id',$cb)->first();
-                $message = "Your Account Has Been Approved";
-                if (!is_null($userFind->player_id)){
-                  $this->mobile_push_notification($message,$userFind->player_id);
-                }
-              $email = user_infos::where('user_id','=',$cb)->first();
-              UserEmails::notifications($email->email);
-            }
-           
-            }
-          }
+              
           }
         }
       
       }
       $users_data = user_infos::where('user_status',0)->orWhere('user_status',3)->get();
-     
-      return view("users.inactivelist",['users_list'=>$users_data]);
+      if(!empty($checkbox)){
+        $approved = array();
+        $denied = array();
+        foreach($checkbox as $user_id){
+          $status = user_infos::where('user_id',$user_id)->first();
+          if(!empty($status)){
+            if($status->user_status == "1"){
+              $approved_count = $status->user_status;
+              array_push($approved,$approved_count);
+            }
+            if($status->user_status == "3"){
+              $denied_count = $status->user_status;
+              array_push($denied,$denied_count);
+            }
+          }
+        }
+        $count_approved = count($approved);
+        $count_denied = count($denied);
+      }
+      return redirect('/inactive_users')->with('success_users','&nbsp <b>Approved Users:</b> '.$count_approved.'<br> &nbsp&nbsp&nbsp&nbsp&nbsp &nbsp <b>Denied Users:</b> &nbsp&nbsp'.$count_denied);
+      // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
 
   }
+  function multiple_delete(Request $req){
+   
+    // $s = $req->input('pass_checkedvalue');
+    $s = $_POST['pass_checkedvalue'];
+     
+    // $string1 = implode(',',$s);
+ 
+    $string = $s;
+    $checkbox = explode(',', $string);
+    
+  
+    if(!empty($checkbox)){
+      
+      foreach($checkbox as $cb){
+        $user = user_infos::where('user_id','=',$cb)->first();
+        if(!empty($user)){
+          $delete = user_infos::where('user_id',$cb)->delete();
+
+        }
+      }
+    
+    }
+    
+    return redirect('/users_list')->with('success','User Deleted Successfully');
+    // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
+
+}
   public function delete_user_details ($id) {
     if(user_infos::where('user_id', $id)->exists()) {
        $user= user_infos::where('user_id', $id)->delete();

@@ -564,7 +564,7 @@ class DjAppController extends Controller
     if ($dj_check == null ){
       return response()->json(["message" => "DJ is not approved yet"], 404);
     }else{
-      $events = Event::select(DB::raw("events.* ,DATE_FORMAT(events.event_date, '%d') as event_date_daY, DATE_FORMAT(events.event_date, '%b') as event_date_month,  events.dj_qr_code_status as qr_code_status"),)->join('dj_event','dj_event.event_id','=','events.id')->where('dj_event.artist1','=',$result['id'])->orWhere('dj_event.artist2','=',$result['id'])->orWhere('dj_event.artist3','=',$result['id'])->where('events.event_date', '>=', DB::raw('curdate()'))->where('dj_event.going_status','=','1')->orWhere('dj_event.going_status','=','0')->get();
+      $events = Event::select(DB::raw("events.* ,DATE_FORMAT(events.event_date, '%d') as event_date_daY, DATE_FORMAT(events.event_date, '%b') as event_date_month,  events.dj_qr_code_status as qr_code_status"),)->join('dj_event','dj_event.event_id','=','events.id')->where('dj_event.artist1','=',$result['id'])->orWhere('dj_event.artist2','=',$result['id'])->orWhere('dj_event.artist3','=',$result['id'])->where('events.event_date', '>=', DB::raw('curdate()'))->orWhere('dj_event.going_status1','=','1')->orWhere('dj_event.going_status1','=','0')->orWhere('dj_event.going_status2','=','1')->orWhere('dj_event.going_status2','=','0')->orWhere('dj_event.going_status3','=','1')->orWhere('dj_event.going_status3','=','0')->groupBy('events.id')->get();
               // ->whereNotIn('events.id',$event_reject->pluck('event_id'))
       return response()->json(['event_list' =>$events ,
                               //  'event_reject'=> $event_reject, 
@@ -810,10 +810,25 @@ class DjAppController extends Controller
   public function accept_event(Request $req){
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);
-
-    Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->orWhere('artist2','=',$result['dj_id'])->orWhere('artist3','=',$result['dj_id'])->update([
-      'going_status'=>1
-    ]);
+    $going_check = Dj_Event::where('event_id','=',$result['event_id'])->get();
+    foreach($going_check as $gk){
+      if($gk->artist1 == $result['dj_id'] ){
+        Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->update([
+          'going_status1'=>1
+        ]);
+      }
+      if($gk->artist2 == $result['dj_id'] ){
+        Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+          'going_status2'=>1
+        ]);
+      }
+      if($gk->artist3 == $result['dj_id'] ){
+        Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+          'going_status2'=>1
+        ]);
+      }
+    }
+   
       $bookings = new Bookings;
       $bookings->dj_id       = $result['dj_id'];
       $bookings->event_id = $result['event_id'];
@@ -847,9 +862,26 @@ class DjAppController extends Controller
       $djusers->event_id      = $result['event_id'];
       $djusers->dj_id        = $result['dj_id'];
       $djusers->save(); 
-
-    Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->orWhere('artist2','=',$result['dj_id'])->orWhere('artist3','=',$result['dj_id'])->update(['going_status'=>2,
-        ]);           
+      $going_check = Dj_Event::where('event_id','=',$result['event_id'])->get();
+      foreach($going_check as $gk){
+        if($gk->artist1 == $result['dj_id'] ){
+          Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->update([
+            'going_status1'=>2
+          ]);
+        }
+        if($gk->artist2 == $result['dj_id'] ){
+          Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+            'going_status2'=>2
+          ]);
+        }
+        if($gk->artist3 == $result['dj_id'] ){
+          Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+            'going_status2'=>2
+          ]);
+        }
+      }
+    // Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->orWhere('artist2','=',$result['dj_id'])->orWhere('artist3','=',$result['dj_id'])->update(['going_status'=>2,
+    //     ]);           
         return response()->json(["message" => "$event->event_name Rejected"],200);
   }
   function gallery_event_list(Request $req){
@@ -864,6 +896,7 @@ class DjAppController extends Controller
             ->orWhere('dj_event.artist1','=',$result['id'])
             ->orWhere('dj_event.artist2',$result['id'])
             ->orWhere('dj_event.artist3',$result['id'])
+            ->groupBy('events.id')
             ->get();
             // ->where('dj_id','=',$result['id'])
            

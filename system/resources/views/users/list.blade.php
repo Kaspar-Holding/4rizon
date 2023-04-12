@@ -45,6 +45,8 @@
                     </div>
                   <div class="full graph_head" style="margin-bottom:20px !important;">
                      <div class="heading1 margin_0">
+                        <form class="container-fluid" action="{{route('multiple_delete')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
+                            @csrf
                          <div class="row">
                             <div class="col-md-8">
                                 <h2>Users Lists</h2>
@@ -55,6 +57,9 @@
                             <div class = "col-md-2"> --}}
                                 @if( Auth::user()->role == "super admin")
                                 <span data-href="/export-csv" id="export" class="btn btn-inverse my-button btn-outline-primary" onclick ="exportTasks (event.target);">Export</span>
+                                <div id = "btn_multidelete1" class="btn btn-inverse my-button btn-outline-primary" data-toggle="modal" data-target="#multiconfirm-modal1" style="
+                                margin-left: 0px;">Delete
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -78,6 +83,7 @@
                                  <th>Citizenship</th>
                                  {{-- <th>Gender</th> --}}
                                  <th>Register at</th>
+                                 <th>Select All &nbsp;<input type="checkbox" id="deleteAll" /></th>
                                  
                                 
                                  
@@ -150,11 +156,41 @@
                                 @endphp
                                 <td class="text-capitalize">{{$user['created_at']}}</td>
                                
-                              
+                                <td>
+                                    <input type = "checkbox" id = "example1" class="record1" name = "checkbox[]" value="{{$user['user_id']}}"></td>
+                                       
                               </tr>
                               <?php $count = $count+1;?>
                               @endforeach
                            </tbody>
+                           <div class="modal fade" id="multiconfirm-modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                               <div class="modal-content" style = "background_color : #0a1022">
+                                  <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Delete Users</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                  </button>
+                                  </div>
+                                  <div class="modal-body">
+                                     <div class="row">
+                                           <!-- table section -->
+                                     <div class="col-md-12">
+                                           <p>Are you sure?</p>
+                                           {{-- <input type = "text" name = "checkbox[]" id = "checkbox"> --}}
+                                   
+                                     </div>
+                                     <div class="modal-footer">
+                                        {{-- <form> --}}
+                                           {{-- @csrf --}}
+                                           <input name="pass_checkedvalue" type="hidden" id="hidden_checkedinput1">
+                                           <input class="btn btn-secondary" type="submit" name="submit_button" value="Delete">
+                                        {{-- </form> --}}
+                                     </div>
+                                     </form>
+                                     </div>
+                               </div>
+                            </div>
                         </table>
                      </div>
                   </div>

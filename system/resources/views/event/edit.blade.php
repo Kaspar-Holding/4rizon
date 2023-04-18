@@ -219,9 +219,10 @@ padding: 10px;
                                 </select>
                                 @if(!empty($event_data))
                                   @if($event_data->going_status1 == "1")
-                                  <span class = "col-md-1 dot" style="margin-left:5px;"></span>
+                                  <i class="fa fa-check" style="color: #32ec51;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
                                   @elseif($event_data->going_status1 == "2")
-                                  <span class = "col-md-1 red-dot" style="margin-left:5px;"></span>
+                                  <i class="fa fa-times" style="width:25px;color: red;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
+                                  
                                   @elseif($event_data->going_status1 == "0")
                                   <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
                                   @endif
@@ -252,9 +253,9 @@ padding: 10px;
                               </select>
                               @if(!empty($event_data))
                                 @if($event_data->going_status2 == "1")
-                                <span class = "col-md-1 dot" style="margin-left:5px;"></span>
+                                <i class="fa fa-check" style="color: #32ec51;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
                                 @elseif($event_data->going_status2 == "2")
-                                <span class = "col-md-1 red-dot" style="margin-left:5px;"></span>
+                                <i class="fa fa-times" style="width:25px;color: red;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
                                 @elseif($event_data->going_status2 == "0")
                                 <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
                                 @endif
@@ -283,9 +284,9 @@ padding: 10px;
                               </select>
                               @if(!empty($event_data))
                                 @if($event_data->going_status3 == "1")
-                                <span class = "col-md-1 dot" style="margin-left:5px;"></span>
+                                <i class="fa fa-check" style="color: #32ec51;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
                                 @elseif($event_data->going_status3 == "2")
-                                <span class = "col-md-1 red-dot" style="margin-left:5px;"></span>
+                                <i class="fa fa-times" style="width:25px;color: red;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
                                 @elseif($event_data->going_status3 == "0")
                                 <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
                                 @endif

@@ -108,9 +108,9 @@
       <!-- <script src="{{ asset('new/js/analyser.js')}}"></script> -->
       <!-- nice scrollbar -->
       <script src="{{ asset('new/js/perfect-scrollbar.min.js')}}"></script>
-      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
       
-      <script src="//cdn.datatables.net/3.2.1/js/jquery.dataTables.min.js"></script>
+      <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
       <script>
          var ps = new PerfectScrollbar('#sidebar');
@@ -327,26 +327,6 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
-       // Save data
-       $(".txtedit").focusout(function(){
-           var data=$('#user_form').serialize();
-           var dataJSON = JSON.stringify(data);
-           console.log(data);
-           $.ajax({
-               url:"{{url('api/showData')}}",
-               type:'post',
-               data:data,
-               success:function(response){
-              
-                   console.log(response);
-               }
-       });
-       });
-   
-   });
-</script>
-<script type="text/javascript">
  window.addEventListener('click', function(e){
     if (document.getElementById('submit').contains(e.target)){
         e.preventDefault();
@@ -378,7 +358,28 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
     } 
 })
 </script>
-
+<script>var jQuery132 = $.noConflict(true);</script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+       // Save data
+       $(".txtedit").focusout(function(){
+           var data=$('#user_form').serialize();
+           var dataJSON = JSON.stringify(data);
+           console.log(data);
+           $.ajax({
+               url:"{{url('api/showData')}}",
+               type:'post',
+               data:data,
+               success:function(response){
+              
+                   console.log(response);
+               }
+       });
+       });
+   
+   });
+</script>
 	</body>
 </body>
             

@@ -357,6 +357,13 @@ class EventController extends Controller
             Guest::where('booking_id','=',$booking_id)->where('user_id','=',$user_id)->update([
                 'status'=> $status
               ]);
+              $userFind = user_infos::where('user_id',$user_id)->first();
+              $name = $userFind->first_name;
+              $message = $name." has accepted your invitation";
+              $hostFind = user_infos::where('user_id',$host_id)->first();
+              if (!is_null($hostFind->player_id)){
+                $this->mobile_push_notification($message,$hostFind->player_id);
+              }
              
         }
         return response()->json(['message' => "status updated", 'success' => true], 200);
@@ -364,9 +371,30 @@ class EventController extends Controller
     function event_list_api($id){
         $date = \Carbon\Carbon::today();
         // echo json_encode($date);die();
-        $event_data = Event::where('event_date','>=',$date)->get();
+        $event_data1 = DB::table('events')
+            ->join('dj_event', 'events.id', '=', 'dj_event.event_id')
+            ->select('events.*', 'dj_event.time')
+            ->where('events.event_date','>=',$date)
+            ->orWhere('dj_event.artist1','=',$id)
+            ->orWhere('dj_event.artist2','=',$id)
+            ->orWhere('dj_event.artist3','=',$id)
+            ->get();
+            echo json_encode($event_data1);die();
+        $event_data2 = Event::where('event_date','>=',$date)->get();
+        // echo json_encode($event_data2);die();
+        $event_data = array();
+       foreach($event_data2 as $e){
+        $event_idd = $e['id'];
+        echo json_encode($event_idd);die();
+        $going = Bookings::where('event_id',$event_idd)->where('going_status',1)->get();
+       
+        $count =  count($going);
+        $e['user_going_count'] = $count;
+        echo json_encode($e);die();
+        array_push($event_data,$e);
+       }
+       echo json_encode($event_data);die();
         $bookings   = Bookings::where('user_id',$id)->get();
-        
         $bookings1 = Guest::where('user_id',$id)->orWhere('host_id',$id)->orderBy('guest_id','DESC')->first();
         // $bookings1 = Guest::where('host_id',$id)->orderBy('guest_id','DESC')->first();
         $bookingsRecord = Guest::where('booking_id',$bookings1->booking_id)->get();
@@ -475,9 +503,10 @@ class EventController extends Controller
     {
         
         $event_id = $request->event_id;
+     
         // $data = array();
         $count = count($request->time);
-        
+   
         for($i=0; $i<$count; $i++){
             $data[] = array(
                 'time' => $request->time[$i],
@@ -486,14 +515,23 @@ class EventController extends Controller
                 'artist2' => $request->artist2[$i],
                 'artist3' => $request->artist3[$i]
             ); 
-            $emails = DjUser::where('id','=',$request->artist1[$i])->orWhere('id','=',$request->artist2[$i])->orWhere('id','=',$request->artist2[$i])->first();
-           echo json_encode($emails);die();
-             UserEmails::dj_assignment("$emails->email");
-              
+            
+            $emails1 = DjUser::where('id','=',$request->artist1[$i])->first();
+            if(!empty($emails1)){
+                $mail1 = UserEmails::dj_assignment($emails1->email);
+            } 
+            $emails2 = DjUser::where('id','=',$request->artist2[$i])->first();
+            if(!empty($emails2)){
+                $mail2 = UserEmails::dj_assignment($emails2->email);
+            } 
+            $emails3 = DjUser::where('id','=',$request->artist3[$i])->first();
+            if(!empty($emails3)){
+                $mail3 = UserEmails::dj_assignment($emails3->email);
+            } 
         }
         
-        Dj_Event::where('event_id',$event_id)->delete();
-
+        $delete = Dj_Event::where('event_id',$event_id)->delete();
+       
         $insert = DB::table('dj_event')->insert($data);
       
         return response()->json($request);

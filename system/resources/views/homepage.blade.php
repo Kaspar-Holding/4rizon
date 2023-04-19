@@ -3,6 +3,23 @@
 <html data-wf-page="636417981c03ca1eb5a84b13" data-wf-site="636417981c03ca1b09a84b12">
 <head>
   <meta charset="utf-8">
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '649528116542530');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=649528116542530&ev=PageView&noscript=1"
+    /></noscript>
+  <!-- End Meta Pixel Code -->
   <title>4RIZON</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
@@ -239,15 +256,17 @@
             <div class="w-layout-grid grid-11">
               <div id="w-node-d79204e9-6a71-909b-8b63-070778ed3dc7-b5a84b13"><img src="images/icon-03.webp" loading="lazy" width="696" id="w-node-ef6687b5-37ed-2755-78d5-5bfb4e29f9eb-b5a84b13" sizes="(max-width: 479px) 57vw, (max-width: 767px) 91vw, 695.9942626953125px" srcset="images/icon-03-p-500.webp 500w, images/icon-03-p-800.webp 800w, images/icon-03.webp 1392w" alt="" class="image-2"></div>
               <div id="w-node-_282152f2-4872-b5c6-4a38-e615f5c1a003-b5a84b13">
-                <h6 class="heading-11">Fourways, Johannesburg</h6>
+                <h6 class="heading-11"><a href="https://www.google.com/maps/place/Fourways, Johannesburg">
+                  Fourways, Johannesburg
+               </a></h6>
               </div>
               <div id="w-node-_40c5f859-5786-53a1-39be-b678ddbacd56-b5a84b13"><img src="images/icon-04.webp" loading="lazy" id="w-node-_7bab0343-76e0-d7f0-919b-6c4175c72bb5-b5a84b13" srcset="images/icon-04-p-500.webp 500w, images/icon-04-p-800.webp 800w, images/icon-04.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-3"></div>
               <div id="w-node-_1533551e-2849-f0bf-9479-2e925e545d29-b5a84b13">
-                <h6 class="heading-12">+27 66 230 4022</h6>
+                <h6 class="heading-12"><a href="tel:+27-66-230-4022">+27-66-230-4022</a></h6>
               </div>
               <div id="w-node-_47e5aff7-874e-52c9-045a-84fe8c68c385-b5a84b13"><img src="images/icon-05.webp" loading="lazy" id="w-node-_8ba039fa-7113-8084-3abd-ea1cc74bd5f1-b5a84b13" srcset="images/icon-05-p-500.webp 500w, images/icon-05-p-800.webp 800w, images/icon-05.webp 1392w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 95vw, (max-width: 991px) 727.9923706054688px, 939.9999389648438px" alt="" class="image-4"></div>
               <div id="w-node-b56d7c11-3533-446a-9f2c-a4eaf3e133d9-b5a84b13" class="div-block-29">
-                <h6 class="heading-13">contact@4rizon.com</h6>
+                <span id="email" style="display:none">contact@4rizon.com</span><h6 class="heading-13"><span id="go" style="cursor: pointer;">contact@4rizon.com</span></h6>
               </div>
             </div>
             <div class="" style = "display : flex;">
@@ -286,6 +305,7 @@
       </div>
     </div>
   </div>
+
   <script>
 var video = document.getElementById("myVideo");
 var btn = document.getElementById("myBtn");
@@ -349,5 +369,14 @@ function myFunction() {
 }
     </script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+  <script>
+    $('#go').click(function(event){
+    var email =  $('#email').text();
+    if(email)
+    window.location.href = 'https://mail.google.com/mail/?view=cm&fs=1&to='+email;
+    else
+    alert('please enter your email');
+    })
+  </script>
 </body>
 </html>

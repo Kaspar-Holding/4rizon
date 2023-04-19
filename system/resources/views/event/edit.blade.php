@@ -195,6 +195,7 @@ padding: 10px;
                             <td>
                               
                               <div class="row">
+                                
                                 <select name="artist1[]" id="artist1"  class="form-control  txtedit col-md-10">
                                    @if(!empty($event_data))
                                     @if($event_data->artist1 == "")
@@ -233,6 +234,7 @@ padding: 10px;
 
                             <td>
                               <div class="row">
+                               
                               <select name="artist2[]" id="artist2" class="form-control  txtedit col-md-10" >
                                 @if(!empty($event_data))
                                 @if($event_data->artist2 == "")

@@ -201,6 +201,8 @@ Route::group(['middleware' =>[
     // Admin Msg Routes
     Route::get('/admin_msg_list', [AdminNotificationController::class, 'admin_msg_list'])->name('admin_msg_list');
     Route::get('/create_group', [AdminNotificationController::class, 'create_group'])->name('create_group');
+    Route::get('/show_group', [AdminNotificationController::class, 'show_group'])->name('show_group');
+    Route::get('/view_group/{id}', [AdminNotificationController::class, 'view_group'])->name('view_group');
     Route::get('/notif_list', [AdminNotificationController::class, 'notif_list'])->name('notif_list');
      Route::get('/delivery_new_notifications', [AdminNotificationController::class, 'delivery_new_notifications'])->name('delivery_new_notifications');
     Route::get('/event_new_notifications', [AdminNotificationController::class, 'event_new_notifications'])->name('event_new_notifications');

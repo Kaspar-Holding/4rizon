@@ -32,7 +32,7 @@
                             <h2>{{ $user['first_name'] }} {{$user['last_name']}}'s Profile</h2>
                          </div>
                     </div>
-        @foreach($users as $user)
+                @foreach($users as $user)
                     <form class="container-fluid" action="{{ route('user_status_update')}}" method="post">
                         @csrf
                         

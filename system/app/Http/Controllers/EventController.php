@@ -370,30 +370,25 @@ class EventController extends Controller
     }
     function event_list_api($id){
         $date = \Carbon\Carbon::today();
-        // echo json_encode($date);die();
-        $event_data1 = DB::table('events')
-            ->join('dj_event', 'events.id', '=', 'dj_event.event_id')
-            ->select('events.*', 'dj_event.time')
+        $event_data2 = Event::where('event_date','>=',$date)->get();
+        $eve = Event::join('dj_event', 'events.id', '=', 'dj_event.event_id')
             ->where('events.event_date','>=',$date)
             ->orWhere('dj_event.artist1','=',$id)
             ->orWhere('dj_event.artist2','=',$id)
             ->orWhere('dj_event.artist3','=',$id)
-            ->get();
-            echo json_encode($event_data1);die();
-        $event_data2 = Event::where('event_date','>=',$date)->get();
-        // echo json_encode($event_data2);die();
+            ->get(['events.*', 'dj_event.time']);
+           
         $event_data = array();
-       foreach($event_data2 as $e){
+       foreach($eve as $e){
         $event_idd = $e['id'];
-        echo json_encode($event_idd);die();
         $going = Bookings::where('event_id',$event_idd)->where('going_status',1)->get();
        
         $count =  count($going);
         $e['user_going_count'] = $count;
-        echo json_encode($e);die();
+       
         array_push($event_data,$e);
        }
-       echo json_encode($event_data);die();
+  
         $bookings   = Bookings::where('user_id',$id)->get();
         $bookings1 = Guest::where('user_id',$id)->orWhere('host_id',$id)->orderBy('guest_id','DESC')->first();
         // $bookings1 = Guest::where('host_id',$id)->orderBy('guest_id','DESC')->first();

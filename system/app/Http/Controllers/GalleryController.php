@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-
+use File;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Gallery;
@@ -33,6 +33,16 @@ class GalleryController extends Controller
     	return view("gallery.add",['events'=>$event_data,]);
     }
     function create_gallery(Request $req){
+        // $event = Event::where('id',$req->event_id)->first();
+        // $event_name = $event->event_name;
+        // $path = public_path().'gallery/'.$event_name;
+
+        //     if(!File::isDirectory($path)){
+        //         $file = File::makeDirectory($path, 0777, true, true);
+        //         echo json_encode($file);
+        //     } 
+       
+        // die();
         $findUsersAttendedEvent = Bookings::where("event_id",$req->event_id)->whereNotNull("enter_at")->get();
         foreach($findUsersAttendedEvent as $attendUsers){
             $getUser = user_infos::where("user_id",$attendUsers->user_id)->first();
@@ -51,6 +61,8 @@ class GalleryController extends Controller
         $gallery->gallery_date      = $req->gallery_date;
         $gallery->unique_id         = $unique_id;
         $gallery->save();
+     
+       
         if($req->hasFile('gallery_images'))
         {
             $names = [];

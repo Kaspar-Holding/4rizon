@@ -20,6 +20,23 @@ class AdminNotificationController extends Controller
     	$notification_data = AdminNotification::all();
     	return view("notification.list",['notification_list'=>$notification_data,]);
     }
+    
+    function show_group(){
+    	// $notification_data = AdminNotification::all();
+    	return view("notification.show_group");
+    }
+    function view_group(Request $req,$group_name){
+        // $result = json_decode(file_get_contents("php://input"), true);
+        $users = array();
+        $group = UserGroup::where('group_name',$group_name)->get();
+        foreach($group as $g){
+            $id = $g['user_id'];
+            $user_data = user_infos::where('user_id','=',$id)->first();
+            array_push($users, $user_data);
+        }
+       
+        return view("notification.view_group",['users'=>$users]);
+    }
     function notif_list(){
     	$notification_data = AdminNotification::all();
         $delivery_new_count = AdminNotification::where('notification_type',2)->where('status',0)->get();

@@ -3,16 +3,18 @@
 @section('content')
     <div class="container-fluid">
         <div class="row column_title">
-            <div class="col-md-8">
+            <div class="col-md-7">
                <div class="page_title">
                   <h2>Notification Lists</h2>
                </div>
             </div>
             
-               <div class="col-md-4"  style="margin-top: 40px;">
+               <div class="col-md-5"  style="margin-top: 40px;">
                   <a href="{{ route('notif_list') }}" class="btn btn-inverse my-button btn-outline-primary">All Notifications</a>
                   @if( Auth::user()->role == "super admin" || Auth::user()->role == "general admin"  )
-                  <a href="{{ route('create_group') }}" class="btn btn-inverse my-button btn-outline-primary">Create Group</a>@endif
+                  <a href="{{ route('create_group') }}" class="btn btn-inverse my-button btn-outline-primary">Create Group</a>
+                  <a href="{{ route('show_group') }}" class="btn btn-inverse my-button btn-outline-primary">Show Group</a>
+                  @endif
               </div>
          
         </div>
@@ -28,7 +30,7 @@
                      <div class="heading1 margin_0">
                         <div class="row">
                             <div class="col-md-9">
-                                <h2>Notification Lists</h2>
+                                {{-- <h2>Notification Lists</h2> --}}
                             </div>
                             <div class="col-md-3">
                                 <a href="{{ route('add_admin_msg')}}" class="btn my-button btn-inverse btn-outline-primary">Create Notification</a>
@@ -66,7 +68,7 @@
                                @endif
                               <tr>
                                 <td class="text-capitalize">{{$count}}</td>;
-                                <td class="text-capitalize">@if(!empty($user)) {{$user->first_name}} {{$user->last_name}} @else Event Type @endif</td>
+                                <td class="text-capitalize">@if(!empty($user)) {{$user->first_name}} {{$user->last_name}} @else Not Found @endif</td>
                                 <td class="text-capitalize">{{$notification['admin_msg']}}</td>
                                 <td class="text-capitalize">@if($notification['notification_type'] == 3) Admin Message @elseif($notification['notification_type'] == 2) Purchase Item Notification @elseif($notification['notification_type'] == 1) Event Notification @elseif($notification['notification_type'] == 4) Event Invitation @elseif($notification['notification_type'] ==5) DJ Notification @endif</td>
                                 <td class="text-capitalize">{{$notification['status']}}</td>

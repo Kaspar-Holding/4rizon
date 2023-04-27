@@ -60,6 +60,7 @@
                                 <div id = "btn_multidelete1" class="btn btn-inverse my-button btn-outline-primary" data-toggle="modal" data-target="#multiconfirm-modal1" style="
                                 margin-left: 0px;">Delete
                                 </div>
+                                <div><i class="fa-solid fa-bars" onclick="selectAll()"></i></div>
                                 
                                 @endif
                             </div>
@@ -84,10 +85,7 @@
                                  <th>Citizenship</th>
                                  {{-- <th>Gender</th> --}}
                                  <th>Register at</th>
-                                 <th id="multipleHead">Select All &nbsp;<input type="checkbox" id="deleteAll" /></th>
-                                 
-                                
-                                 
+                                 <th id="multipleHead" onclick="selectAll()">Select All &nbsp;<input type="checkbox" id="deleteAll" style="display: none;" /></th>
                               </tr>
                            </thead>
                            <tbody>
@@ -157,7 +155,7 @@
                                 @endphp
                                 <td class="text-capitalize">{{$user['created_at']}}</td>
                                
-                                <td id="multipleSelectBox" style="display: none;">
+                                <td id="multipleSelectBox"  onclick="selectAll()">
                                     <input type = "checkbox" id = "example1" class="record1" name = "checkbox[]" value="{{$user['user_id']}}"></td>
                                        
                               </tr>

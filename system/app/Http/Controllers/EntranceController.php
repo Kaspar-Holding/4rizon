@@ -26,6 +26,7 @@ use App\Models\Entries;
 use App\Models\DjUser;
 use App\Models\VipPkg;
 use App\Models\Users;
+use App\Models\Guest;
 use App\Models\Bookings;
 use App\Models\Purchase;
 use App\Models\Item;
@@ -403,7 +404,8 @@ class EntranceController extends Controller
           return response()->json(["status"=>"0","message" => "User not found!","user_data"=>$json_input], 404);
         }
         else{            
-            
+            // $user_id = user_infos::where('id',$user_infos->pluck('id'))->first();
+            // $guest_status = 
             return response()->json(["status"=>"1","message" => "User found!","user_data"=>$user_infos], 200);
         }
         # code...
@@ -476,6 +478,8 @@ class EntranceController extends Controller
             $responseArr['message'] = $validator->errors();
             return response()->json($responseArr);
         }
+       
+
         $booking_infos = Bookings::where('booking_id','=',$req->booking_id)->get();
         if (sizeof($booking_infos) == 0){
             return response()->json(["qr_information"=>[["message"=> "Booking not found!"]]], 404);
@@ -514,15 +518,29 @@ class EntranceController extends Controller
             return response()->json($responseArr);
         }
         $booking_infos = Bookings::where('booking_id','=',$req->booking_id)->get();
+      
         if (sizeof($booking_infos) == 0){
             return response()->json(["qr_information"=>[["message"=> "Booking not found!"]]], 404);
         //   return response()->json(["response"=> "Booking not found!"], 404);
         }
         else{     
+             //count of payment in advance
+             $booking_count = Bookings::where('event_id','=',$booking_infos->pluck('event_id'))->where('payment_status','=',1)->get();
+             $count_of_booking = count($booking_count);
+           
+            foreach($booking_infos as $b){
+                $b['advance_booking_count'] = count($booking_count);
+            }
+            
             $booking_infoss = Bookings::where('booking_id','=',$req->booking_id)->first();     
             $date = Carbon::now();
             $entry = new Entries ;
-            $entry->user_id = $booking_infoss->user_id;
+            if(!empty($booking_infoss->user_id)){
+                $entry->user_id = $booking_infoss->user_id;
+            }
+            if(!empty($booking_infoss->dj_id)){
+                $entry->user_id = $booking_infoss->dj_id;
+            }
             $entry->event_id = $booking_infoss->event_id;
             if(!empty($req->reason)){
                 $entry->reason = $req->reason;
@@ -540,12 +558,20 @@ class EntranceController extends Controller
                 // $a = array();
                 $combined_user_data = $booking_infos->toArray()[0];
                 // $combined_user_data['user_details'] = $user_infos->toArray();
-                
-                $combined_user_data = $booking_infos->toArray()[0];
+              
+                $combined_user_data = $b->toArray();
                 $combined_user_data['user_details'] = $user_infos->toArray()[0];
                 $combined_user_data["event_details"] = $event_info->toArray()[0];
+                
+             
             }
             if ($booking_infos[0]['booking_type'] == "1"){
+                 //count of payment in advance
+                $booking_count = Bookings::where('event_id','=',$booking_infos->pluck('event_id'))->where('payment_status','=',1)->get();
+                $count_of_booking = count($booking_count);
+                foreach($booking_infos as $b){
+                    $b['advance_booking_count'] = count($booking_count);
+                }
                 $user_infos = user_infos::select('user_id','first_name','last_name','email','phone_number','gender','dob','identification_type','identification_num','nationality')->where('user_infos.user_id','=',$booking_infos->pluck('user_id'))->get();
                 $dha_user_infos = Dha_profile::selectRaw('personName,personSurname,gender,dateOfBirth,aliveStatus')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
                 $dha_address_infos = Dha_Address::selectRaw('addressLine1,addressLine2,addressLine3,addressLine4,addressLine5')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
@@ -555,7 +581,7 @@ class EntranceController extends Controller
                 $combined_user_data = $booking_infos->toArray()[0];
                 // $combined_user_data['user_details'] = $user_infos->toArray();
                 
-                $combined_user_data = $booking_infos->toArray()[0];
+                $combined_user_data = $b->toArray();
                 $combined_user_data['user_details'] = $user_infos->toArray()[0];
                 $combined_user_data["event_details"] = $event_info->toArray()[0];
                 if (sizeof($dha_user_infos) > 0) {
@@ -573,7 +599,31 @@ class EntranceController extends Controller
             //         # code...
             // }
             if ($booking_infos[0]['booking_type'] == "2"){
-                $user_infos = user_infos::select('user_id','first_name','last_name','email','phone_number','gender','dob','identification_type','identification_num','nationality')->where('user_infos.user_id','=',$booking_infos->pluck('user_id'))->get();
+                 //count of payment in advance
+                $booking_count = Bookings::where('event_id','=',$booking_infos->pluck('event_id'))->where('payment_status','=',1)->get();
+                $count_of_booking = count($booking_count);
+                $vip_arrived_count = Guest::where('booking_id','=',$req->booking_id)->where('status','=',2)->get();
+                $vip_yet_to_come_count = Guest::where('booking_id','=',$req->booking_id)->where('status','=',1)->get();
+                $booking_user_type = Bookings::where('booking_id',$req->booking_id)->pluck('user_id');
+                // $host = Guest::
+                foreach($booking_infos as $b){
+                    $b['advance_booking_count'] = count($booking_count);
+                    $b['vip_guests_arrived'] = count($vip_yet_to_come_count);
+                    $b['vip_guests_coming'] = count($vip_arrived_count);
+                }
+                $new_users_details = array();
+                $all_users = Guest::where('booking_id',$req->booking_id)->get();
+                foreach($all_users as $users){
+                    $user_infos = user_infos::select('user_id','first_name','last_name','email','phone_number','gender','dob','identification_type','identification_num','nationality')->where('user_infos.user_id','=',$users['user_id'])->first();
+                    if($users['user_id'] == $users['host_id']){
+                        $user_infos['user_type'] = "Host";
+                    }
+                    else{
+                        $user_infos['user_type'] = "Guest";
+                    }
+                    array_push($new_users_details,$user_infos);
+                }
+                
                 $dha_user_infos = Dha_profile::selectRaw('personName,personSurname,gender,dateOfBirth,aliveStatus')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
                 $dha_address_infos = Dha_Address::selectRaw('addressLine1,addressLine2,addressLine3,addressLine4,addressLine5')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
                 $event_info = Event::select()->where('id','=',$booking_infos->pluck('event_id'))->get();
@@ -582,8 +632,8 @@ class EntranceController extends Controller
                 $combined_user_data = $booking_infos->toArray()[0];
                 // $combined_user_data['user_details'] = $user_infos->toArray();
                 
-                $combined_user_data = $booking_infos->toArray()[0];
-                $combined_user_data['user_details'] = $user_infos->toArray()[0]; 
+                $combined_user_data = $b->toArray();
+                $combined_user_data['user_details'] = $new_users_details; 
                 $combined_user_data["event_details"] = $event_info->toArray()[0];
                 if (sizeof($dha_user_infos) > 0) {
                     // $combined_user_data = array_merge($user_infos->toArray()[0],$dha_user_infos->toArray());
@@ -601,6 +651,7 @@ class EntranceController extends Controller
                 // print_r($combined_user_data);
                 foreach($combined_user_data['guest_lists'] as $guest => &$r){
                     $r['guest_user_detail'] = user_infos::select('user_id','first_name','last_name','email','phone_number','gender','dob','identification_type','identification_num','nationality')->where('user_infos.user_id','=',$r['id'])->get()->toArray()[0];
+
                     $dha_guest_user_infos = Dha_profile::selectRaw('personName,personSurname,gender,dateOfBirth,aliveStatus')->where('user_id','=',$r['id'])->get();
                     $dha_guest_user_address_infos = Dha_Address::selectRaw('addressLine1,addressLine2,addressLine3,addressLine4,addressLine5')->where('user_id','=',$r['id'])->get();
                     if (sizeof($dha_guest_user_infos) > 0) {
@@ -618,6 +669,12 @@ class EntranceController extends Controller
                 $combined_user_data['vip_booth_details']['remaining_seats'] = (int)$combined_user_data['vip_booth_details']['max_guests'] - sizeof($combined_user_data['guest_lists']);
             }
             if ($booking_infos[0]['booking_type'] == "3"){
+                 //count of payment in advance
+                $booking_count = Bookings::where('event_id','=',$booking_infos->pluck('event_id'))->where('payment_status','=',1)->get();
+                $count_of_booking = count($booking_count);
+                foreach($booking_infos as $b){
+                    $b['advance_booking_count'] = count($booking_count);
+                }
                 $user_infos = user_infos::select('user_id','first_name','last_name','email','phone_number','gender','dob','identification_type','identification_num','nationality')->where('user_infos.user_id','=',$booking_infos->pluck('user_id'))->get();
                 $dha_user_infos = Dha_profile::selectRaw('personName,personSurname,gender,dateOfBirth,aliveStatus')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
                 $dha_address_infos = Dha_Address::selectRaw('addressLine1,addressLine2,addressLine3,addressLine4,addressLine5')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
@@ -627,7 +684,7 @@ class EntranceController extends Controller
                 $combined_user_data = $booking_infos->toArray()[0];
                 // $combined_user_data['user_details'] = $user_infos->toArray();
                 
-                $combined_user_data = $booking_infos->toArray()[0];
+                $combined_user_data = $b->toArray();
                 $combined_user_data['user_details'] = $user_infos->toArray()[0];
                 $combined_user_data["event_details"] = $event_info->toArray()[0];
                 if (sizeof($dha_user_infos) > 0) {

@@ -358,6 +358,14 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
     } 
 })
 </script>
+<script>
+    function selectAll() {
+        document.getElementById('multipleSelectBox').style.display = "block";
+        document.getElementById('multipleHead').style.display = "block";
+
+        
+    }
+</script>
 <script>var jQuery132 = $.noConflict(true);</script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">

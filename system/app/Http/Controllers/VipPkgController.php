@@ -118,6 +118,7 @@ class VipPkgController extends Controller
                      $guest_list = new Guest;
                         $guest_list->host_id         = $result['userId'];
                         $guest_list->booking_id       = $code;
+                        $guest_list->event_id  = $result['eventId'];
                         $guest_list->user_id          = $user['id'];
                         $guest_list->first_name      = $user['name'] ;
                         $guest_list->last_name      = $user['sur_name'] ;

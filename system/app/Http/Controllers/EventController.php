@@ -257,6 +257,26 @@ class EventController extends Controller
     }
     public function delete_event ($id) {
         if(Event::where('id', $id)->exists()) {
+            $event_name = Event::where('id',$id)->first();
+            $bookings = Booking::where('event_id',$id)->get();
+            foreach($bookings as $booking){
+                $user_id = $booking['user_id'];
+                $dj_id = $booking['dj_id'];
+                if(!empty($user_id)){
+                    $player_id = user_infos::where('id',$user_id)->pluck('player_id'); 
+                    $message = $event_name->event_name."on".$event_name->event_date."is cancelled";
+                    $this->mobile_push_notification($message,$player_id);
+                }
+                if(!empty($dj_id)){
+                    $player_id = DjUser::where('id',$dj_id)->pluck('device_id'); 
+                    $message = $event_name->event_name."on".$event_name->event_date."is cancelled";
+                    $this->mobile_push_notification($message,$player_id);
+                }
+            }
+
+            $delete_bookings = Booking::where('event_id',$id)->delete();
+            $delete_guests = Guest::where('event_id',$id)->delete();
+            $delete_dj = Dj_Event::where('event_id',$id)->delete();
             $event= Event::where('id', $id)->delete();
             return redirect('/event_list')->with('success','Event Details Deleted Successfully!');
         }else{
@@ -392,9 +412,11 @@ class EventController extends Controller
         $bookings   = Bookings::where('user_id',$id)->get();
         $bookings1 = Guest::where('user_id',$id)->orWhere('host_id',$id)->orderBy('guest_id','DESC')->first();
         // $bookings1 = Guest::where('host_id',$id)->orderBy('guest_id','DESC')->first();
-        $bookingsRecord = Guest::where('booking_id',$bookings1->booking_id)->get();
-        $status = $bookings1->status;
+     
         if(!empty($bookings1)){
+            
+            $bookingsRecord = Guest::where('booking_id',$bookings1->booking_id)->get();
+            $status = $bookings1->status;
             $bookingsVip   = Bookings::where('booking_id',$bookings1->booking_id)->get();
             foreach($bookingsVip as $vip){
                 // $guest = $vip['guest_lists'];
@@ -402,10 +424,12 @@ class EventController extends Controller
                 // echo json_encode($vip);die();
             }
         }
-        $merged = $bookings->merge($bookingsVip);
-
-        $result = $merged->all();
-        if(!empty($bookings)){
+        // echo json_encode($bookings);die();
+        if($bookings == []){
+        
+            $merged = $bookings->merge($bookingsVip);
+      
+            $result = $merged->all();
             return response()->json(['event_list' =>$event_data,'booking_list' =>$result,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
         }
         

@@ -158,6 +158,12 @@ class EventController extends Controller
         //           ]);
         //     }
         // }
+        $users = user_infos::get();
+        foreach($users as $user){
+            $player_id = user_infos::where('user_id',$user['user_id'])->pluck('player_id');
+            $message = "New ".$req->event_name." is created";
+            $this->mobile_push_notification($message,$player_id);
+        }
         return redirect('/edit_event/'.$last_id)->with('success','Event Created Successfully!');
     }
     function payment(Request $req){
@@ -212,13 +218,13 @@ class EventController extends Controller
             $user3 = DjUser::where('id',$ad['artist3'])->first();
             $messages = "You have been assigned a new event".$req->event_name;
             if(!empty($user1)){
-                $this->mobile_push_notificationdj($messages,"edc55869-6cf5-446a-9370-d2f4cb3deb12");
+                $this->mobile_push_notificationdj($messages,$user1->device_id);
             }
             if(!empty($user2)){
-                $this->mobile_push_notification($messages,$user2->device_id);
+                $this->mobile_push_notificationdj($messages,$user2->device_id);
             }
             if(!empty($user3)){
-                $this->mobile_push_notification($messages,$user3->device_id);
+                $this->mobile_push_notificationdj($messages,$user3->device_id);
             }    
         }
         
@@ -390,13 +396,8 @@ class EventController extends Controller
     }
     function event_list_api($id){
         $date = \Carbon\Carbon::today();
-        $event_data2 = Event::where('event_date','>=',$date)->get();
-        $eve = Event::join('dj_event', 'events.id', '=', 'dj_event.event_id')
-            ->where('events.event_date','>=',$date)
-            ->orWhere('dj_event.artist1','=',$id)
-            ->orWhere('dj_event.artist2','=',$id)
-            ->orWhere('dj_event.artist3','=',$id)
-            ->get(['events.*', 'dj_event.time']);
+        $event_data2 = Event::where('event_date','>=',$date)->orderBy('event_date','DESC')->get();
+        $eve = Event::where('events.event_date','>=',$date)->orderBy('event_date','DESC')->get();
            
         $event_data = array();
        foreach($eve as $e){
@@ -412,7 +413,7 @@ class EventController extends Controller
         $bookings   = Bookings::where('user_id',$id)->get();
         $bookings1 = Guest::where('user_id',$id)->orWhere('host_id',$id)->orderBy('guest_id','DESC')->first();
         // $bookings1 = Guest::where('host_id',$id)->orderBy('guest_id','DESC')->first();
-     
+    
         if(!empty($bookings1)){
             
             $bookingsRecord = Guest::where('booking_id',$bookings1->booking_id)->get();
@@ -424,15 +425,20 @@ class EventController extends Controller
                 // echo json_encode($vip);die();
             }
         }
+       
         // echo json_encode($bookings);die();
         if($bookings == []){
         
             $merged = $bookings->merge($bookingsVip);
       
             $result = $merged->all();
+        
             return response()->json(['event_list' =>$event_data,'booking_list' =>$result,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
         }
-        
+        else{
+            
+            return response()->json(['event_list' =>$event_data,'booking_list' =>$bookings,'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
+        }
         return response()->json(['event_list' =>$event_data,'booking_list' =>[],'image_url'=>'https://admin.4rizon.com/image/', 'success' => true], 200);
     }
     function single_event_api($id){
@@ -456,6 +462,7 @@ class EventController extends Controller
 			"en" => $message
 			);
 		$fields = array(
+            
 			'app_id' => "346d914e-58bb-407c-875e-e9202378bf8a",
 			// 'app_id' => "9b212888-74e1-4626-b188-732bcd1f897b",
 			'include_player_ids' => array($player_id),
@@ -535,18 +542,33 @@ class EventController extends Controller
                 'artist3' => $request->artist3[$i]
             ); 
             
-            $emails1 = DjUser::where('id','=',$request->artist1[$i])->first();
-            if(!empty($emails1)){
-                $mail1 = UserEmails::dj_assignment($emails1->email);
-            } 
-            $emails2 = DjUser::where('id','=',$request->artist2[$i])->first();
-            if(!empty($emails2)){
-                $mail2 = UserEmails::dj_assignment($emails2->email);
-            } 
-            $emails3 = DjUser::where('id','=',$request->artist3[$i])->first();
-            if(!empty($emails3)){
-                $mail3 = UserEmails::dj_assignment($emails3->email);
-            } 
+            // $emails1 = DjUser::where('id','=',$request->artist1[$i])->first();
+            // if(!empty($emails1)){
+            //     $mail1 = UserEmails::dj_assignment($emails1->email);
+            //     $userFind = DjUser::where('id','=',$request->artist1[$i])->first();
+            //     $message = "You have been assigned an event";
+            //     if (!is_null($userFind->device_id)){
+            //       $this->mobile_push_notificationdj($message,$userFind->device_id);
+            //     }
+            // } 
+            // $emails2 = DjUser::where('id','=',$request->artist2[$i])->first();
+            // if(!empty($emails2)){
+            //     $mail2 = UserEmails::dj_assignment($emails2->email);
+            //     $userFind = DjUser::where('id','=',$request->artist2[$i])->first();
+            //     $message = "You have been assigned an event";
+            //     if (!is_null($userFind->device_id)){
+            //       $this->mobile_push_notificationdj($message,$userFind->device_id);
+            //     }
+            // } 
+            // $emails3 = DjUser::where('id','=',$request->artist3[$i])->first();
+            // if(!empty($emails3)){
+            //     $mail3 = UserEmails::dj_assignment($emails3->email);
+            //     $userFind = DjUser::where('id','=',$request->artist3[$i])->first();
+            //     $message = "You have been assigned an event";
+            //     if (!is_null($userFind->device_id)){
+            //       $this->mobile_push_notificationdj($message,$userFind->device_id);
+            //     }
+            // } 
         }
         
         $delete = Dj_Event::where('event_id',$event_id)->delete();

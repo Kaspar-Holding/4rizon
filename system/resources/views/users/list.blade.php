@@ -48,19 +48,21 @@
                         <form class="container-fluid" action="{{route('multiple_delete')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
                             @csrf
                          <div class="row">
-                            <div class="col-md-8">
-                                <h2>Users Lists</h2>
+                            <div class="col-md-7">
+                                <h2>Users</h2>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <a href="{{ route('register_new_user') }}" class="btn btn-inverse my-button btn-outline-primary">Register New User</a>
                             {{-- </div>
                             <div class = "col-md-2"> --}}
                                 @if( Auth::user()->role == "super admin")
                                 <span data-href="/export-csv" id="export" class="btn btn-inverse my-button btn-outline-primary" onclick ="exportTasks (event.target);">Export</span>
-                                <div id = "btn_multidelete1" class="btn btn-inverse my-button btn-outline-primary" data-toggle="modal" data-target="#multiconfirm-modal1" style="
-                                margin-left: 0px;">Delete
+                                <div id = "btn_multidelete1" class="btn btn-inverse my-button btn-outline-primary" data-toggle="modal" data-target="#multiconfirm-modal1" style="margin-left: 0px; display:none">Delete
                                 </div>
-                                <div><i class="fa-solid fa-bars" onclick="selectAll()"></i></div>
+                                <i style="color:white;font-size: 27px;
+                                position: relative;
+                                top: 8px;
+                                left: 8px;" class="fa fa-bars" onclick="selectAl()"></i>
                                 
                                 @endif
                             </div>
@@ -85,7 +87,7 @@
                                  <th>Citizenship</th>
                                  {{-- <th>Gender</th> --}}
                                  <th>Register at</th>
-                                 <th id="multipleHead" onclick="selectAll()">Select All &nbsp;<input type="checkbox" id="deleteAll" style="display: none;" /></th>
+                                 <th id="multipleHead" style="display:none;">Select All &nbsp;<input type="checkbox" id="deleteAll"  /></th>
                               </tr>
                            </thead>
                            <tbody>
@@ -155,7 +157,7 @@
                                 @endphp
                                 <td class="text-capitalize">{{$user['created_at']}}</td>
                                
-                                <td id="multipleSelectBox"  onclick="selectAll()">
+                                <td class="multipleSelectBox" style="display:none;">
                                     <input type = "checkbox" id = "example1" class="record1" name = "checkbox[]" value="{{$user['user_id']}}"></td>
                                        
                               </tr>

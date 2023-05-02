@@ -41,7 +41,12 @@
       <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
       <link rel="stylesheet" href=" https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js" type="text/css" media="all">
       <link rel="stylesheet" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
-      <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+      
+      <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+       
+       {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"> --}}
+
+     
       <style>
          .dataTables_wrapper .dataTables_filter input {
         border-radius: 11px !important;
@@ -89,7 +94,8 @@
             </div>
         </div>
             <!-- Scroll to top -->
-        <script src="{{ asset('new/js/jquery.min.js')}}"></script>
+        {{-- <script src="{{ asset('new/js/jquery.min.js')}}"> </script> --}}
+       
       <script src="{{ asset('new/js/popper.min.js')}}"></script>
       <script src="{{ asset('new/js/bootstrap.min.js')}}"></script>
       <!-- wow animation -->
@@ -108,13 +114,70 @@
       <!-- <script src="{{ asset('new/js/analyser.js')}}"></script> -->
       <!-- nice scrollbar -->
       <script src="{{ asset('new/js/perfect-scrollbar.min.js')}}"></script>
-    
-      
-      <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+      <script type="text/javascript">
+        window.addEventListener('click', function(e){
+           if (document.getElementById('submit').contains(e.target)){
+               e.preventDefault();
+               var data=$('#dj_form').serialize();
+               console.log($("#dj_form").serialize());
+               $.ajax({
+                   url:"{{url('api/dj_time_allocation')}}",
+                   type:'post',
+                   data:data,
+                   success:function(response){
+                       console.log(response);
+                       
+                           $('#timeslot').append("<p>"+response.time+"</p>");
+                       
+                       $.each(response.artist1, function (key, value) {
+                           $('#d1').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                       })
+                       $.each(response.artist2, function (key, value) {
+                           $('#d2').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                       })
+                       $.each(response.artist3, function (key, value) {
+                           $('#d3').append("<p>"+value.first_name+" "+value.last_name+"</p>");
+                           
+                       })
+                       $('#delete').append("<a href='/delete_timeslot/"+response.info+"' class='btn btn-primary'>Delete</a>");
+                   }
+               }); 
+               
+           } 
+       })
+       </script>
+      <script type="text/javascript">
+        $(document).ready(function() {
+           
+           // Save data
+           $(".txtedit").focusout(function(){
+               var data=$('#user_form').serialize();
+               var dataJSON = JSON.stringify(data);
+               console.log(data);
+               $.ajax({
+                   url:"{{url('api/showData')}}",
+                   type:'post',
+                   data:data,
+                   success:function(response){
+                       console.log(response);
+                   }
+           });
+           });
+       
+       });
+    </script>
+     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
       <script>
-         var ps = new PerfectScrollbar('#sidebar');
-      </script>
+        $(document).ready( function () {
+            
+            $('#myTable').DataTable();
+     
+        } );
+        </script>
+    <script>
+        var ps = new PerfectScrollbar('#sidebar');
+    </script>
     
       <!-- custom js -->
       <script src="{{ asset('new/js/custom.js')}}"></script>
@@ -195,12 +258,7 @@
                 $('#txtDate').attr('min', maxDate);
             });
         </script>
-        <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-     
-        } );
-        </script>
+       
         <script>
             function exportTasks(_this) {
                let _url = $(_this).data('href');
@@ -326,68 +384,34 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
 </script>
 
 
-<script type="text/javascript">
- window.addEventListener('click', function(e){
-    if (document.getElementById('submit').contains(e.target)){
-        e.preventDefault();
-        var data=$('#dj_form').serialize();
-        console.log($("#dj_form").serialize());
-        $.ajax({
-            url:"{{url('api/dj_time_allocation')}}",
-            type:'post',
-            data:data,
-            success:function(response){
-                console.log(response);
-                
-                    $('#timeslot').append("<p>"+response.time+"</p>");
-                
-                $.each(response.artist1, function (key, value) {
-                    $('#d1').append("<p>"+value.first_name+" "+value.last_name+"</p>");
-                })
-                $.each(response.artist2, function (key, value) {
-                    $('#d2').append("<p>"+value.first_name+" "+value.last_name+"</p>");
-                })
-                $.each(response.artist3, function (key, value) {
-                    $('#d3').append("<p>"+value.first_name+" "+value.last_name+"</p>");
-                    
-                })
-                $('#delete').append("<a href='/delete_timeslot/"+response.info+"' class='btn btn-primary'>Delete</a>");
-            }
-        }); 
-        
-    } 
-})
-</script>
-<script>
-    function selectAll() {
-        document.getElementById('multipleSelectBox').style.display = "block";
-        document.getElementById('multipleHead').style.display = "block";
 
+<script>
+    function selectAl() {
+        console.log("in select al");
+       var elems =  document.getElementsByClassName('multipleSelectBox');
+       for (var i=0;i<elems.length;i+=1){
+            if(elems[i].style.display = 'none'){
+                elems[i].style.display = 'block';
+            }
+            else{
+                elems[i].style.display = 'none';
+            }
+        }
+       
+        var head = document.getElementById('multipleHead');
+        if(head.style.display = "none"){
+            head.style.display = "block";
+        }
+        else{
+            head.style.display = "none";
+        }
+        document.getElementById('btn_multidelete1').style.display = "inline";
         
     }
 </script>
-<script>var jQuery132 = $.noConflict(true);</script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-       // Save data
-       $(".txtedit").focusout(function(){
-           var data=$('#user_form').serialize();
-           var dataJSON = JSON.stringify(data);
-           console.log(data);
-           $.ajax({
-               url:"{{url('api/showData')}}",
-               type:'post',
-               data:data,
-               success:function(response){
-              
-                   console.log(response);
-               }
-       });
-       });
-   
-   });
-</script>
+
+
+
 	</body>
 </body>
             

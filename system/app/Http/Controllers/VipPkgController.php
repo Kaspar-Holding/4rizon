@@ -123,9 +123,9 @@ class VipPkgController extends Controller
                         $guest_list->first_name      = $user['name'] ;
                         $guest_list->last_name      = $user['sur_name'] ;
                         $guest_list->save();
-                    $userFind = user_infos::where('user_id',$user['id'])->first();
-                    $message = "You Are Invited For An Event";
-                    $this->mobile_push_notification($message,$userFind->player_id);
+                    $userFind1 = user_infos::where('user_id',$user['id'])->first();
+                    $message1 = "You Are Invited For An Event";
+                    $this->mobile_push_notification($message1,$userFind1->player_id);
                 }
                
                 
@@ -136,9 +136,9 @@ class VipPkgController extends Controller
             Bookings::where('id','=',$check->id)->update([
             'guest_lists'=>$decodes,
             ]);
-            $message = "Booking List Updated";
-            $userFind = user_infos::where('user_id',$result['userId'])->first();
-            $this->mobile_push_notification($message,$userFind->player_id);
+            $message2 = "Booking List Updated";
+            $userFind2 = user_infos::where('user_id',$result['userId'])->first();
+            $this->mobile_push_notification($message2,$userFind2->player_id);
             return response()->json(['message' => "Booking List Updated",'qr_code' => $check->booking_id, 'success' => true], 200);
         }
     }

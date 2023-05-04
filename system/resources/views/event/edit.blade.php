@@ -220,9 +220,9 @@ padding: 10px;
                                 </select>
                                 @if(!empty($event_data))
                                   @if($event_data->going_status1 == "1")
-                                  <i class="fa fa-check" style="color: #32ec51;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
+                                  <i class="fa fa-check" style="color: #32ec51;margin-left: 8px;margin-top: 3px;font-size: 25px;"></i>
                                   @elseif($event_data->going_status1 == "2")
-                                  <i class="fa fa-times" style="width:25px;color: red;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
+                                  <i class="fa fa-times" style="width:25px;color: red;margin-left: 8px;margin-top: 3px;font-size: 25px;"></i>
                                   
                                   @elseif($event_data->going_status1 == "0")
                                   <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>

@@ -122,6 +122,7 @@ class EventController extends Controller
         // $endTime = date("g:i A", strtotime($req->event_end_time." UTC"));
         $event = new Event;
         $event->event_name         = $req->event_name;
+        $event->pkg_price         = $req->event_price;
         $event->event_short_description        = $req->event_short_description;
         $event->event_description          = $req->event_description   ;
         if ($req->hasFile('event_image')) {
@@ -375,7 +376,7 @@ class EventController extends Controller
               $name = $userFind->first_name;
               $message = $name." has rejected your invitation";
               $hostFind = user_infos::where('user_id',$host_id)->first();
-              if (!is_null($hostFind->player_id)){
+              if($hostFind->player_id != null){
                 $this->mobile_push_notification($message,$hostFind->player_id);
               }
         }
@@ -387,7 +388,8 @@ class EventController extends Controller
               $name = $userFind->first_name;
               $message = $name." has accepted your invitation";
               $hostFind = user_infos::where('user_id',$host_id)->first();
-              if (!is_null($hostFind->player_id)){
+              if($hostFind->player_id != null){
+            
                 $this->mobile_push_notification($message,$hostFind->player_id);
               }
              
@@ -498,6 +500,7 @@ class EventController extends Controller
 			"en" => $message
 			);
 		$fields = array(
+        
 			'app_id' => "e3ead764-83f0-45b2-832e-7b4aa851e4f4",
 			// 'app_id' => "9b212888-74e1-4626-b188-732bcd1f897b",
 			'include_player_ids' => array($player_id),

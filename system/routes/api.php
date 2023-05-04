@@ -90,6 +90,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::get('/verify_token/{user_id}/{token}' ,  [UserController::class, 'verify_token'])->name('verify_token');
     Route::post('/share_reward' ,  [UserController::class, 'share_reward'])->name('share_reward');
     
+    Route::post('/biometric_status' ,  [UserController::class, 'biometric_status'])->name('biometric_status');
+
     Route::post('/update_password_api' ,  [UserController::class, 'update_password_api'])->name('update_password_api');
     Route::post('/update_password',[UserController::class, 'update_password'])->name('update_password');
     Route::post('/update_forget_password_api' ,  [UserController::class, 'update_forget_password_api'])->name('update_forget_password_api');

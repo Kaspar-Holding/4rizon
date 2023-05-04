@@ -572,7 +572,7 @@ class EntranceController extends Controller
                 foreach($booking_infos as $b){
                     $b['advance_booking_count'] = count($booking_count);
                 }
-                $user_infos = user_infos::select('user_id','first_name','last_name','email','phone_number','gender','dob','identification_type','identification_num','nationality')->where('user_infos.user_id','=',$booking_infos->pluck('user_id'))->get();
+                $user_infos = user_infos::select('user_id','first_name','last_name','email','phone_number','gender','dob','identification_type','identification_num','nationality','biometric_status')->where('user_infos.user_id','=',$booking_infos->pluck('user_id'))->get();
                 $dha_user_infos = Dha_profile::selectRaw('personName,personSurname,gender,dateOfBirth,aliveStatus')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
                 $dha_address_infos = Dha_Address::selectRaw('addressLine1,addressLine2,addressLine3,addressLine4,addressLine5')->where('user_id','=',$booking_infos->pluck('user_id'))->get();
                 $event_info = Event::select()->where('id','=',$booking_infos->pluck('event_id'))->get();

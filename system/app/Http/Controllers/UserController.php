@@ -155,6 +155,7 @@ public function save_token(Request $req){
           }
         }
     }
+
     public function registered_users(Request $req) {
     
 
@@ -233,6 +234,21 @@ public function save_token(Request $req){
           return response()->json(["message" => "User Not Exists",'code'=>'201'], 201);
       }
     }
+     
+  public function biometric_status(Request $req){
+    $type = "application/json";
+    $result = json_decode(file_get_contents("php://input"), true);
+    $identification_no = $result['identification_no'];
+    if($result['status'] == 0){
+    $biometric_status = "Verified";
+    }
+    else{
+      $biometric_status = "Not verified";
+    }
+    user_infos::where('identification_no','=',$result['identification_no'])->update([
+      'biometric_status'=> $biometric_status,
+    ]);
+  }
   public function add_vaccination(Request $req){
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);

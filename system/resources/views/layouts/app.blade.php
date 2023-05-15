@@ -94,8 +94,19 @@
             </div>
         </div>
             <!-- Scroll to top -->
-        {{-- <script src="{{ asset('new/js/jquery.min.js')}}"> </script> --}}
        
+      <script src="{{ asset('new/js/jquery.min.js')}}"> </script>
+      <script>
+        $(document).ready(function(){
+            $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            if(activeTab){
+                $('#ele a[href="' + activeTab + '"]').tab('show');
+            }
+        });
+         </script> 
       <script src="{{ asset('new/js/popper.min.js')}}"></script>
       <script src="{{ asset('new/js/bootstrap.min.js')}}"></script>
       <!-- wow animation -->
@@ -113,8 +124,10 @@
       <script src="{{ asset('new/js/utils.js')}}"></script>
       <!-- <script src="{{ asset('new/js/analyser.js')}}"></script> -->
       <!-- nice scrollbar -->
-      <script src="{{ asset('new/js/perfect-scrollbar.min.js')}}"></script>
       <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+   
+      <script src="{{ asset('new/js/perfect-scrollbar.min.js')}}"></script>
+      
       <script type="text/javascript">
         window.addEventListener('click', function(e){
            if (document.getElementById('submit').contains(e.target)){
@@ -167,6 +180,7 @@
        
        });
     </script>
+      
      <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
       <script>
         $(document).ready( function () {
@@ -303,17 +317,7 @@
         });
       
         </script>
-    <script>
-    $(document).ready(function(){
-        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-            localStorage.setItem('activeTab', $(e.target).attr('href'));
-        });
-        var activeTab = localStorage.getItem('activeTab');
-        if(activeTab){
-            $('#ele a[href="' + activeTab + '"]').tab('show');
-        }
-    });
-     </script> 
+  
      <script>
      $("document").ready(function(){
         setTimeout(function(){
@@ -410,9 +414,10 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
     }
 </script>
 
+  
 
 
 	</body>
-</body>
+
             
 </html>

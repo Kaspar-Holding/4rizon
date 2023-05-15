@@ -32,7 +32,7 @@
                             <h2>{{ $user['first_name'] }} {{$user['last_name']}}'s Profile</h2>
                          </div>
                     </div>
-                @foreach($users as $user)
+        @foreach($users as $user)
                     <form class="container-fluid" action="{{ route('user_status_update')}}" method="post">
                         @csrf
                         
@@ -149,7 +149,7 @@
                                         </div>
                                         <div class="col-6">
                                             <h5>Invalid credentials</h5>
-                                            {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                            
                                         </div>
                                     </div>
                                 @else
@@ -159,7 +159,7 @@
                                         </div>
                                         <div class="col-6">
                                             <h5>{{ $dha_profile->personName }} {{ $dha_profile->personSurname }}</h5>
-                                            {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                         
                                         </div>
                                     </div>
                                     <div class="row p-3">
@@ -168,7 +168,7 @@
                                         </div>
                                         <div class="col-6">
                                             <h5>{{ $dha_profile->gender }}</h5>
-                                            {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                          
                                         </div>
                                     </div>
                                     <div class="row p-3">
@@ -177,7 +177,7 @@
                                         </div>
                                         <div class="col-6">
                                             <h5>{{ $dha_profile->dateOfBirth }}</h5>
-                                            {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                             
                                         </div>
                                     </div>
                                     <div class="row p-3">
@@ -186,14 +186,14 @@
                                         </div>
                                         <div class="col-6">
                                             <h5>{{ $dha_profile->aliveStatus }}</h5>
-                                            {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                            
                                         </div>
                                     </div>
                                     <div class="row p-3">
                                        
                                         <div class="col-6">
                                            
-                                            {{-- <input type="text" class="form-control h5" name="first_name" style="text-transform: capitalize; backgroundColor: 'transparent'" value="{{ $user->first_name }}" disabled> --}}
+                                          
                                         </div>
                                     </div>
                                 @endif
@@ -211,6 +211,46 @@
                                 <hr>
                             @endif
                         @endif
+                        <hr>
+                      
+                            <div class="full graph_head" style=" margin-bottom:20px !important;">
+                                <div class="heading1 margin_0">
+                                    <h2>Coins Detail</h2>
+                                </div>
+                            </div>           
+                                    <div class="row p-3">
+                                        <div class="col-6">
+                                            <h5>Earned:</h5>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5>{{$coins_earned}}</h5>
+                                            
+                                        </div>
+                                    </div>
+                            
+                                    <div class="row p-3">
+                                        <div class="col-6">
+                                            <h5>Spent</h5>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5>{{$coins_spend}}</h5>
+                                         
+                                        </div>
+                                    </div>
+                                    <div class="row p-3">
+                                        <div class="col-6">
+                                            <h5>Available</h5>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5>{{$available_coins}}</h5>
+                                         
+                                        </div>
+                                    </div>
+                                  
+                        
+                                
+                             
+                         
                         <!-- <div class="d-flex justify-content-center">
                             <a href="{{route('approve_user',$user->user_id)}}" type="submit" class="btn btn-primary link-light col-sm-4">Approve</a> &nbsp;
                             {{-- <button type="submit" class="btn btn-primary link-light col-sm-4">Approve</button> --}}

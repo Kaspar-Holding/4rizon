@@ -115,7 +115,8 @@
             @if( Auth::user()->role == "super admin" || Auth::user()->role == "general admin"  )
              <li><a href="{{ url('news_list') }}" class="{{Request::is('news_list') ? 'active':''}}"> <span>News</span></a></li>
              <li><a href="{{ url('gallery_list') }}" class="{{Request::is('gallery_list') ? 'active':''}}"> <span>Gallery</span></a></li>
-             <li><a href="{{ url('survey_list') }}" class="{{Request::is('survey_list') ? 'active':''}}"><span>Survey</span></a></li> @endif
+             <li><a href="{{ url('survey_list') }}" class="{{Request::is('survey_list') ? 'active':''}}"><span>Survey</span></a></li> 
+             <li><a href="{{ url('purchase_list') }}" class="{{Request::is('purchase_list') ? 'active':''}}"><span>Purchases</span></a></li>@endif
              {{-- @if( Auth::user()->role == "super admin")
              <li><a href="{{ url('splash_list') }}" class="{{Request::is('splash_list') ? 'active':''}}"> <span>Splash</span></a></li> @endif --}}
              <li><a href="{{ url('weekly_lineup_list') }}" class="{{Request::is('weekly_lineup_list') ? 'active':''}}"> <span>Weekly Lineup</span></a></li>

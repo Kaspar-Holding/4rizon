@@ -9,7 +9,7 @@ use App\Models\PasswordReset;
 use App\Models\PasswordReset2;
 use App\Models\user_infos;
 use App\Models\DjUser;
-use App\Models\Conatct;
+use App\Models\Contact;
 use App\Models\Users;
 
 class UserEmails extends Model
@@ -96,7 +96,7 @@ class UserEmails extends Model
     $data = array("name"=>$name,"email"=>$email,"messagee"=>$messagee);
     Mail::send("contact", $data, function($message) use ($to_name, $to_email) {
     $message->to('contact@4rizon.com', $to_name)
-    ->subject("Conatct Us");
+    ->subject("Contact Us");
     $message->from("4rizontech@gmail.com","4rizon Contact");});
     }
     public static function sendEmail($email){

@@ -239,16 +239,23 @@ public function save_token(Request $req){
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);
     $identification_no = $result['identification_no'];
-    if($result['status'] == 0){
+    if($result['status'] == 1){
     $biometric_status = "Verified";
     }
     else{
       $biometric_status = "Not verified";
     }
-    user_infos::where('identification_no','=',$result['identification_no'])->update([
+    $user_infos = user_infos::where('identification_num','=',$result['identification_no'])->update([
       'biometric_status'=> $biometric_status,
     ]);
+    if (!empty($user_infos)){
+      return response()->json(["message" => 'Success','code'=>'200',"Biometric_status"=>$biometric_status], 200);
+      }
+      else{
+        return response()->json(["message" => "User Not Exists",'code'=>'201'], 201);
+    }
   }
+  
   public function add_vaccination(Request $req){
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);
@@ -317,26 +324,19 @@ public function save_token(Request $req){
             }
             if(!empty($user_infos)){
                 if(Hash::check($request->password,$user_infos->password)){
-                    // if($user_infos->user_status == '0'){
-                    //     return ['code'=>'201','user_status'=>$user_infos->user_status,'message'=>'Your Account Is In Pending State Wait For The Account Approval'];
-                    // }else
+                    
                     if($user_infos->user_type == '1'){
-                        // $user_infos->remember_token=str::random(50);
-                        // DB::table('user_infos')->where('user_id',$user_infos->user_id)->update(['remember_token'=>$user_infos->remember_token]);
-                        // $sendT = UserEmails::signUpEmail($request->email, $user_infos->user_id);
+                       
                         return ['code'=>'200','Status'=>'success','image_url'=>'https://admin.4rizon.com/image/','user_info'=>$user_infos]; 
                     }elseif($user_infos->user_type == '2'){
                       $user_infos->remember_token=str::random(50);
                         DB::table('user_infos')->where('user_id',$user_infos->user_id)->update(['remember_token'=>$user_infos->remember_token]);
-                        // $sendT = UserEmails::signUpEmail($request->email, $user_infos->user_id);
                         return ['code'=>'200','Status'=>'success','image_url'=>'https://admin.4rizon.com/image/','user_info'=>$user_infos]; 
-                        // return ['code'=>'201','status'=>'failed','message'=>'Your Account Is Invalid Due To Email Verification.'];
+                        
                     }elseif($user_infos->user_status == '-1'){
                         return ['code'=>'201','status'=>'failed','message'=>'Your Account Is Blocked By Admin.'];
                     }elseif($user_infos->user_type == '3'){
-                      // $user_infos->remember_token=str::random(50);
-                      // DB::table('user_infos')->where('user_id',$user_infos->user_id)->update(['remember_token'=>$user_infos->remember_token]);
-                      // $sendT = UserEmails::signUpEmail($request->email, $user_infos->user_id);
+                      
                       return ['code'=>'200','Status'=>'success','image_url'=>'https://admin.4rizon.com/image/','user_info'=>$user_infos]; 
                   }
                   }  
@@ -474,6 +474,10 @@ public function save_token(Request $req){
             return response()->json(["message" => "Passwords Didn't Matched"], 201);
           }
         }
+  }
+  function purchase_list(){
+    $purchase_data = Purchase::all();
+    return view("survey.purchase_list",['purchase_list'=>$purchase_data,]);
   }
     public function edit_user(Request $req){
       $user_id = $req->id;
@@ -1488,15 +1492,21 @@ public function save_token(Request $req){
     return redirect('/users_list')->with('success',' User Updated Successfully!');
 }
 
-  function view_user_details(Request $req,$id){
-    $result = json_decode(file_get_contents("php://input"), true);
+function view_user_details(Request $req,$id){
+  $result = json_decode(file_get_contents("php://input"), true);
 
-    
-    $user_data = user_infos::where('user_id','=',$id)->get();
-    $dha_profile = Dha_profile::where('user_id',$user_data->pluck('user_id'))->first();
-    $dha_address = Dha_Address::where('user_id',$user_data->pluck('user_id'))->first();
-    return view("users.view",['users'=>$user_data,'dha_profile'=>$dha_profile,'dha_address'=>$dha_address]);
-  }
+  
+  $purchase_coins = Purchase::where("user_id",$id)->where("redeemed_status","0")->sum('purchase.item_price');
+  $user_wallet = user_wallets::where('user_id','=',$id)->first();
+  $coins_earned = $user_wallet->available_points;
+
+  $available_coins = $user_wallet->available_points - $purchase_coins;
+  $coins_spend = $coins_earned - $available_coins;
+  $user_data = user_infos::where('user_id','=',$id)->get();
+  $dha_profile = Dha_profile::where('user_id',$user_data->pluck('user_id'))->first();
+  $dha_address = Dha_Address::where('user_id',$user_data->pluck('user_id'))->first();
+  return view("users.view",['users'=>$user_data,'dha_profile'=>$dha_profile,'dha_address'=>$dha_address , 'coins_earned' => $coins_earned , 'coins_spend' => $coins_spend , 'available_coins' => $available_coins]);
+}
   public function user_status_update(Request $req){
     user_infos::where('user_id','=',$req->id)->update([
       'user_status'=>"2"

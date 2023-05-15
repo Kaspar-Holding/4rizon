@@ -842,17 +842,17 @@ class DjAppController extends Controller
     $going_check = Dj_Event::where('event_id','=',$result['event_id'])->get();
     foreach($going_check as $gk){
       if($gk->artist1 == $result['dj_id'] ){
-        Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->update([
+        Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->where('time','=',$result['timeslot'])->update([
           'going_status1'=>1
         ]);
       }
       if($gk->artist2 == $result['dj_id'] ){
-        Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+        Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->where('time','=',$result['timeslot'])->update([
           'going_status2'=>1
         ]);
       }
       if($gk->artist3 == $result['dj_id'] ){
-        Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+        Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->where('time','=',$result['timeslot'])->update([
           'going_status2'=>1
         ]);
       }
@@ -894,17 +894,17 @@ class DjAppController extends Controller
       $going_check = Dj_Event::where('event_id','=',$result['event_id'])->get();
       foreach($going_check as $gk){
         if($gk->artist1 == $result['dj_id'] ){
-          Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->update([
+          Dj_Event::where('event_id','=',$result['event_id'])->where('artist1','=',$result['dj_id'])->where('time','=',$result['timeslot'])->update([
             'going_status1'=>2
           ]);
         }
         if($gk->artist2 == $result['dj_id'] ){
-          Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+          Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->where('time','=',$result['timeslot'])->update([
             'going_status2'=>2
           ]);
         }
         if($gk->artist3 == $result['dj_id'] ){
-          Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->update([
+          Dj_Event::where('event_id','=',$result['event_id'])->where('artist2','=',$result['dj_id'])->where('time','=',$result['timeslot'])->update([
             'going_status3'=>2
           ]);
         }

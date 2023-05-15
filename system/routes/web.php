@@ -54,7 +54,8 @@ Route::group(['middleware' =>[
     // User Routes
     Route::get('/export-csv', [UserController::class, 'exportCSV'])->name('exportCSV');
     Route::get('/export-djcsv', [UserController::class, 'exportdjCSV'])->name('exportdjCSV');
-   
+    Route::get('/purchase_list' ,  [UserController::class, 'purchase_list'])->name('purchase_list');
+
     Route::get('/add_new_user', [UserController::class, 'add_new_user'])->name('add_new_user');
     Route::post('/add_user',[UserController::class, 'create'])->name('add_user');
     Route::get('/delete_timeslot/{id}', [EventController::class, 'delete_timeslot'])->name('delete_timeslot');

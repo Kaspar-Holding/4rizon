@@ -161,7 +161,9 @@ class EventController extends Controller
         // }
         $users = user_infos::get();
         foreach($users as $user){
-            $player_id = user_infos::where('user_id',$user['user_id'])->pluck('player_id');
+            $player = user_infos::where('user_id',$user['user_id'])->first();
+            $player_id = $player->player_id;
+
             $message = "New ".$req->event_name." is created";
             $this->mobile_push_notification($message,$player_id);
         }
@@ -502,7 +504,6 @@ class EventController extends Controller
 		$fields = array(
         
 			'app_id' => "e3ead764-83f0-45b2-832e-7b4aa851e4f4",
-			// 'app_id' => "9b212888-74e1-4626-b188-732bcd1f897b",
 			'include_player_ids' => array($player_id),
 			'data' => array("noti_type" => "order_update"),
 			'contents' => $content
@@ -577,6 +578,19 @@ class EventController extends Controller
         $delete = Dj_Event::where('event_id',$event_id)->delete();
        
         $insert = DB::table('dj_event')->insert($data);
+        $status = Dj_Event::where('event_id',$event_id)->get();
+        foreach($status as $s){
+            $id = $s['id'];
+            if($s['artist1'] != null){
+                $update = Dj_Event::where('id','=',$id)->update(['going_status1' => 0]);
+            }
+            if($s['artist2'] != null){
+                $update = Dj_Event::where('id','=',$id)->update(['going_status2' => 0]);
+            }
+            if($s['artist3'] != null){
+                $update = Dj_Event::where('id','=',$id)->update(['going_status3' => 0]);
+            }
+        }
       
         return response()->json($request);
     }

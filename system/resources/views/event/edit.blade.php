@@ -225,7 +225,8 @@ padding: 10px;
                                   <i class="fa fa-times" style="width:25px;color: red;margin-left: 8px;margin-top: 3px;font-size: 25px;"></i>
                                   
                                   @elseif($event_data->going_status1 == "0")
-                                  <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
+                                  <i class="fa fa-question col-md-1" style="font-size:25px; margin-top:2px;"></i>
+                                  {{-- <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span> --}}
                                   @endif
                                 @endif
                             </div>
@@ -259,7 +260,8 @@ padding: 10px;
                                 @elseif($event_data->going_status2 == "2")
                                 <i class="fa fa-times" style="width:25px;color: red;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
                                 @elseif($event_data->going_status2 == "0")
-                                <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
+                                <i class="fa fa-question col-md-1" style="font-size:25px; margin-top:2px;"></i>
+                                {{-- <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span> --}}
                                 @endif
                               @endif
                           </div>
@@ -290,7 +292,8 @@ padding: 10px;
                                 @elseif($event_data->going_status3 == "2")
                                 <i class="fa fa-times" style="width:25px;color: red;margin-left: 12px;margin-top: 3px;font-size: 25px;"></i>
                                 @elseif($event_data->going_status3 == "0")
-                                <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span>
+                                <i class="fa fa-question col-md-1" style="font-size:25px; margin-top:2px;"></i>
+                                {{-- <span class = "col-md-1 yellow-dot" style="margin-left:5px;"></span> --}}
                                 @endif
                               @endif
                           </div>

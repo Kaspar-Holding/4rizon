@@ -67,17 +67,17 @@
                 <br>
                 <div>
                   <label class="form-label">Stage 1</label>
-                  <input type="text" name="stage_1" class="form-control" >
+                  <input type="text" name="stage_1" class="form-control" required>
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Stage 2</label>
-                  <input type="text" name="stage_2" class="form-control" >
+                  <input type="text" name="stage_2" class="form-control" required>
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Stage 3</label>
-                  <input type="text" name="stage_3" class="form-control" >
+                  <input type="text" name="stage_3" class="form-control" required>
                 </div>
                 <br>
                 <div>

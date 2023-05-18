@@ -37,6 +37,8 @@
                                  <th>Quantity</th>
                                  <th>Coins</th>
                                  <th>Status</th>
+                                 <th>Date</th>
+                                 <th>Time</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -47,18 +49,30 @@
                               
                                     $item = \App\Models\Item::where('id',$purchase['item_id'])->first();
                                     $user = \App\Models\user_infos::where('user_id','=',$purchase['user_id'])->first();
+                                   
                                   
                                 @endphp
                                 @if(!empty($user))
                               <tr>
-                                 
+                                 @php
+                                      $date = \App\Models\user_infos::where('user_id','=',$purchase['user_id'])->first();
+                                      $new = strtotime($date->created_at);
+                                      
+                                       $newdate = date('d-m-Y',$new);
+                                      
+                                       $newtime = date('H:i',$new);
+                                 @endphp
                                 <td class="text-capitalize">{{$count}}</td>
                                 <td class="text-capitalize">{{$user['first_name']}} {{$user['last_name']}}</td>
                                 <td class="text-capitalize">{{$item->item_name}}</td>
                                 <td class="text-capitalize">{{$purchase['quantity']}}</td>
                                 <td class="text-capitalize">{{$purchase['item_price']}}</td> 
-                                <td class="text-capitalize">@if($purchase['redeem_status'] == 0)Bought @else Recieved</td> @endif   
-   
+                                <td class="text-capitalize">@if($purchase['redeem_status'] == 0)Purchased @else Recieved</td> @endif   
+                               
+                                    
+                                @endphp
+                                <td class="text-capitalize">{{$newdate}}</td> 
+                                <td class="text-capitalize">{{$newtime}}</td> 
                                 {{-- <td> 
                                     <a href="edit_survey/{{$survey['id']}}" class="btn btn-blue btn-sm btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\DjUser;
 use App\Models\Event;
+use App\Models\Gallery;
 use App\Models\EventAttend;
 use App\Models\AdminNotification;
 use App\Models\Bookings;
@@ -142,13 +143,22 @@ class EventController extends Controller
         $event->save();
         $last_id = $event->id;
         $getLastEvent = Event::where('event_name',$req->event_name)->first();
-        $notification = new Notifications;
-        $notification->notification_type  = "1";
-        $notification->event_id            = $getLastEvent->id;
-        $notification->event_name          = $req->event_name;
-        $notification->event_description   = $req->event_short_description;
-        $notification->event_date       = $req->event_date;
-        $notification->save();
+        $unique_id = str::random(15);
+        $gallery = new Gallery;
+        $gallery->event_id          = $getLastEvent->id;
+        $gallery->gallery_name      = $req->event_name;
+        $new = strtotime($getLastEvent->created_at);                         
+        $gallery_date = date('d-m-Y',$new);
+        $gallery->gallery_date      = $gallery_date;
+        $gallery->unique_id         = $unique_id;
+        $gallery->save();
+        // $notification = new Notifications;
+        // $notification->notification_type  = "1";
+        // $notification->event_id            = $getLastEvent->id;
+        // $notification->event_name          = $req->event_name;
+        // $notification->event_description   = $req->event_short_description;
+        // $notification->event_date       = $req->event_date;
+        // $notification->save();
         // $dj=Dj_Event::where('event_id',"0")->get();
         // if(!empty($dj)){
         //     foreach($dj as $d){
@@ -159,15 +169,15 @@ class EventController extends Controller
         //           ]);
         //     }
         // }
-        $users = user_infos::get();
-        foreach($users as $user){
-            $player = user_infos::where('user_id',$user['user_id'])->first();
-            $player_id = $player->player_id;
+        // $users = user_infos::get();
+        // foreach($users as $user){
+        //     $player = user_infos::where('user_id',$user['user_id'])->first();
+        //     $player_id = $player->player_id;
 
-            $message = "New ".$req->event_name." is created";
-            $this->mobile_push_notification($message,$player_id);
-        }
-        return redirect('/edit_event/'.$last_id)->with('success','Event Created Successfully!');
+        //     $message = "Get excited for an upcoming event ".$req->event_name." at 4rizon";
+        //     $this->mobile_push_notification($message,$player_id);
+        // }
+        return redirect('/event_list')->with('success','Event Created Successfully!');
     }
     function payment(Request $req){
        
@@ -231,7 +241,7 @@ class EventController extends Controller
             }    
         }
         
-        return redirect('/edit_event/'.$req->id)->with('success','Event Details Updated Successfully!');
+        return redirect('/event_list')->with('success','Event Details Updated Successfully!');
     }
     public function dj_time_allocation(Request $req){
         
@@ -267,7 +277,7 @@ class EventController extends Controller
     public function delete_event ($id) {
         if(Event::where('id', $id)->exists()) {
             $event_name = Event::where('id',$id)->first();
-            $bookings = Booking::where('event_id',$id)->get();
+            $bookings = Bookings::where('event_id',$id)->get();
             foreach($bookings as $booking){
                 $user_id = $booking['user_id'];
                 $dj_id = $booking['dj_id'];
@@ -283,7 +293,7 @@ class EventController extends Controller
                 }
             }
 
-            $delete_bookings = Booking::where('event_id',$id)->delete();
+            $delete_bookings = Bookings::where('event_id',$id)->delete();
             $delete_guests = Guest::where('event_id',$id)->delete();
             $delete_dj = Dj_Event::where('event_id',$id)->delete();
             $event= Event::where('id', $id)->delete();
@@ -536,62 +546,89 @@ class EventController extends Controller
      
         // $data = array();
         $count = count($request->time);
-   
+   $time = array();
+   $artist1 = array();
+   $artist2 = array();
+   $artist3 = array();
         for($i=0; $i<$count; $i++){
-            $data[] = array(
-                'time' => $request->time[$i],
-                'event_id' =>$event_id,
-                'artist1' => $request->artist1[$i],
-                'artist2' => $request->artist2[$i],
-                'artist3' => $request->artist3[$i]
-            ); 
-            
-            // $emails1 = DjUser::where('id','=',$request->artist1[$i])->first();
-            // if(!empty($emails1)){
-            //     $mail1 = UserEmails::dj_assignment($emails1->email);
-            //     $userFind = DjUser::where('id','=',$request->artist1[$i])->first();
-            //     $message = "You have been assigned an event";
-            //     if (!is_null($userFind->device_id)){
-            //       $this->mobile_push_notificationdj($message,$userFind->device_id);
-            //     }
-            // } 
-            // $emails2 = DjUser::where('id','=',$request->artist2[$i])->first();
-            // if(!empty($emails2)){
-            //     $mail2 = UserEmails::dj_assignment($emails2->email);
-            //     $userFind = DjUser::where('id','=',$request->artist2[$i])->first();
-            //     $message = "You have been assigned an event";
-            //     if (!is_null($userFind->device_id)){
-            //       $this->mobile_push_notificationdj($message,$userFind->device_id);
-            //     }
-            // } 
-            // $emails3 = DjUser::where('id','=',$request->artist3[$i])->first();
-            // if(!empty($emails3)){
-            //     $mail3 = UserEmails::dj_assignment($emails3->email);
-            //     $userFind = DjUser::where('id','=',$request->artist3[$i])->first();
-            //     $message = "You have been assigned an event";
-            //     if (!is_null($userFind->device_id)){
-            //       $this->mobile_push_notificationdj($message,$userFind->device_id);
-            //     }
-            // } 
-        }
-        
-        $delete = Dj_Event::where('event_id',$event_id)->delete();
+          
+            $t = $request->time[$i];
+            $a1 = $request->artist1[$i];
+            $a2 = $request->artist2[$i];
+            $a3 = $request->artist3[$i];
+              $old_data = Dj_Event::where('event_id',$event_id)->where('time',$t)->first();
+              
+              if($old_data == ""){
+                
+                $djevent = new Dj_Event;
+                $djevent->time = $t;
+                $djevent->event_id = $event_id;
+                $djevent->save();
+                if($a1 != null){
+                    if($a1 != $a2 && $a1 != $a3){
+                        $update1 = Dj_Event::where('event_id',$event_id)->where('time',$t)->update(['artist1' => $a1,'going_status1' => 0]);
+                    }
+                   
+                }
+                if($a2 != null){
+                    if($a1 != $a2 && $a2 != $a3){
+                        $update1 = Dj_Event::where('event_id',$event_id)->where('time',$t)->update(['artist2' => $a2 ,'going_status2' => 0]);
+                    }
+                }
+               
+                if($a1 != $a3 && $a2 != $a3){
+                    $update1 = Dj_Event::where('event_id',$event_id)->where('time',$t)->update(['artist3' => $a3 ,'going_status3' => 0]);
+                
+                }
+              }
+              else{
+                    if($a1 != null){
+                        if($old_data['artist1'] != $a1){
+                            if($a1 != $a2 && $a1 != $a3){
+                                $update1 = Dj_Event::where('event_id',$event_id)->where('time',$t)->update(['artist1' => $a1,'going_status1' => 0]);
+                            }
+                        }
+                    }
+                    if($a2 != null){
+                        if($old_data['artist2'] != $a2){
+                            if($a1 != $a2 && $a2 != $a3){
+                                $update1 = Dj_Event::where('event_id',$event_id)->where('time',$t)->update(['artist2' => $a2 ,'going_status2' => 0]);
+                            }
+                        }
+                    }
+                    if($a2 != null){
+                        if($old_data['artist3'] != $a3){
+                            if($a1 != $a3 && $a2 != $a3){
+                                $update1 = Dj_Event::where('event_id',$event_id)->where('time',$t)->update(['artist3' => $a3 ,'going_status3' => 0]);
+                            
+                            } 
+                        }
+                    }
+          
+          
+                 }
        
-        $insert = DB::table('dj_event')->insert($data);
-        $status = Dj_Event::where('event_id',$event_id)->get();
-        foreach($status as $s){
-            $id = $s['id'];
-            if($s['artist1'] != null){
-                $update = Dj_Event::where('id','=',$id)->update(['going_status1' => 0]);
-            }
-            if($s['artist2'] != null){
-                $update = Dj_Event::where('id','=',$id)->update(['going_status2' => 0]);
-            }
-            if($s['artist3'] != null){
-                $update = Dj_Event::where('id','=',$id)->update(['going_status3' => 0]);
-            }
+           
+                }
+            
+            // $delete = Dj_Event::where('event_id',$event_id)->delete();
+        
+           
+            // $status = Dj_Event::where('event_id',$event_id)->get();
+            // foreach($status as $s){
+            //     $id = $s['id'];
+            //     if($s['artist1'] != null){
+            //         $update = Dj_Event::where('id','=',$id)->update(['going_status1' => 0]);
+            //     }
+            //     if($s['artist2'] != null){
+            //         $update = Dj_Event::where('id','=',$id)->update(['going_status2' => 0]);
+            //     }
+            //     if($s['artist3'] != null){
+            //         $update = Dj_Event::where('id','=',$id)->update(['going_status3' => 0]);
+            //     }
+            // }
+        
+            return response()->json($request);
         }
-      
-        return response()->json($request);
-    }
+    
 }

@@ -33,6 +33,15 @@ class ItemController extends Controller
     	}
     	return view("item.edit",['item'=>$item,'item_category'=>$item_category,'attributes'=>$attributes_final_data]);
     }
+    public function item_delete(Request $req)
+    {
+        // Need to find all addresses with the contacdt Id and delete them.
+        
+        $user_id = $req->id;
+       
+        Item::where('id',$user_id)->delete();
+        return redirect('/item_list')->with('success','Item deleted successfully');   
+    }
     function add_item(){
         $attribute_data = ItemAttributes::all();
         $attributes_final_data = array();

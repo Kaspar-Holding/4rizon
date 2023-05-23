@@ -55,6 +55,7 @@ Route::group(['middleware' =>[
     Route::get('/export-csv', [UserController::class, 'exportCSV'])->name('exportCSV');
     Route::get('/export-djcsv', [UserController::class, 'exportdjCSV'])->name('exportdjCSV');
     Route::get('/purchase_list' ,  [UserController::class, 'purchase_list'])->name('purchase_list');
+Route::post('confirm_delete', [userController::class, 'confirm_delete'])->name('confirm_delete');
 
     Route::get('/add_new_user', [UserController::class, 'add_new_user'])->name('add_new_user');
     Route::post('/add_user',[UserController::class, 'create'])->name('add_user');
@@ -91,14 +92,16 @@ Route::group(['middleware' =>[
     Route::get('/fetch_dj_dha_profile/{id}', [UserController::class, 'fetch_dj_dha_profile'])->name('fetch_dj_dha_profile');
     Route::get('/edit_user_details/{id}' ,  [UserController::class, 'edit_user_details'])->name('edit_user_details');
     Route::post('/update_user_db', [UserController::class, 'update_user_db'])->name('update_user_db');
-
+    Route::post('admin_delete', [UserController::class, 'admin_delete'])->name('admin_delete');
     
     
     //DJ Routes
     Route::get('/register_new_djuser', [DjAppController::class, 'register_new_djuser'])->name('register_new_djuser');
     Route::post('/save_djuser',[DjAppController::class, 'save_djuser'])->name('save_djuser');
+    Route::post('artist_delete', [DjAppController::class, 'artist_delete'])->name('artist_delete');
 
     Route::get('/admin_djlist' ,  [DjAppController::class, 'admin_djlist'])->name('admin_djlist');
+    
     Route::get('/dj_event_attend_list' ,  [DjAppController::class, 'dj_event_attend_list'])->name('dj_event_attend_list');
     Route::get('/edit_djadmin_details/{id}' ,  [DjAppController::class, 'edit_djadmin_details'])->name('edit_djadmin_details');
     Route::get('/artistResponse/{id}' ,  [DjAppController::class, 'artistResponse'])->name('artistResponse');
@@ -113,6 +116,8 @@ Route::group(['middleware' =>[
     Route::get('/total_points_redeem/{fromdate}/{todate}', [UserController::class, 'total_points_redeem'])->name('total_points_redeem');
     Route::get('/total_qr_scans', [UserController::class, 'total_qr_scans'])->name('total_qr_scans');
     // Survey Routes
+    Route::post('survey_delete', [SurveyController::class, 'survey_delete'])->name('survey_delete');
+
     Route::get('/survey_list' ,  [SurveyController::class, 'survey_list'])->name('survey_list');
     Route::get('/add_new_survey', [SurveyController::class, 'add_new_survey'])->name('add_new_survey');
     Route::get('/delete_survey/{id}', [SurveyController::class, 'delete_survey'])->name('delete_survey');
@@ -132,6 +137,7 @@ Route::group(['middleware' =>[
     Route::post('/update_answer', [SurveyController::class, 'update_answer'])->name('update_answer');
     // Event Routes
     Route::get('/users_event_attend_list' ,  [EventController::class, 'users_event_attend_list'])->name('users_event_attend_list');
+    Route::post('event_delete', [EventController::class, 'event_delete'])->name('event_delete');
     Route::get('/users_transaction_list' ,  [EventController::class, 'users_transaction_list'])->name('users_transaction_list');
     Route::get('/users_events_attend_lists/{fromdate}/{todate}' ,  [EventController::class, 'users_events_attend_lists'])->name('users_events_attend_lists');
     Route::get('/view_user_event_details/{id}', [EventController::class, 'view_user_event_details'])->name('view_user_event_details');
@@ -154,8 +160,11 @@ Route::group(['middleware' =>[
     Route::get('/edit_weekly_lineup/{id}', [WeeklyLineupController::class, 'edit_weekly_lineup'])->name('edit_weekly_lineup');
     Route::post('/update_weekly_lineup', [WeeklyLineupController::class, 'update_weekly_lineup'])->name('update_weekly_lineup');
     Route::get('/delete_weekly_lineup/{id}', [WeeklyLineupController::class, 'delete_weekly_lineup'])->name('delete_weekly_lineup');
+    Route::post('lineup_delete', [WeeklyLineupController::class, 'lineup_delete'])->name('lineup_delete');
     // Gallery Routes
     Route::get('/gallery_list' ,  [GalleryController::class, 'gallery_list'])->name('gallery_list');
+    Route::post('gallery_delete', [GalleryController::class, 'gallery_delete'])->name('gallery_delete');
+
     Route::get('/add_new_gallery', [GalleryController::class, 'add_new_gallery'])->name('add_new_gallery');
     Route::post('/create_gallery', [GalleryController::class, 'create_gallery'])->name('create_gallery');
     Route::get('/edit_gallery/{id}', [GalleryController::class, 'edit_gallery'])->name('edit_gallery');
@@ -192,6 +201,7 @@ Route::group(['middleware' =>[
     Route::post('/update_item_element_value', [ItemElementController::class, 'update_item_element_value'])->name('update_item_element_value');
     Route::get('/delete_item_element_value/{id}/{parent}', [ItemElementController::class, 'delete_item_element_value'])->name('delete_item_element_value');
     // Item Routes
+    Route::post('item_delete', [ItemController::class, 'item_delete'])->name('item_delete');
     Route::get('/item_list' ,  [ItemController::class, 'item_list'])->name('item_list');
     Route::get('/add_item', [ItemController::class, 'add_item'])->name('add_item');
     Route::post('/create_item', [ItemController::class, 'create_item'])->name('create_item');
@@ -242,6 +252,7 @@ Route::group(['middleware' =>[
     
     // DJ Questionnaire Routes
     Route::get('/dj_questionnaire', [DJQuestionnaireController::class, 'dj_questionnaire_list'])->name('dj_questionnaire');
+    Route::post('question_delete', [DJQuestionnaireController::class, 'question_delete'])->name('question_delete');
     // Route::get('/dj_questionnaire_list' ,  [DJQuestionnaireController::class, 'dj_questionnaire_list'])->name('dj_questionnaire_list');
     Route::get('/add_new_dj_questionnaire', [DJQuestionnaireController::class, 'add_new_dj_questionnaire'])->name('add_new_dj_questionnaire');
     Route::get('/delete_dj_questionnaire/{id}', [DJQuestionnaireController::class, 'delete_dj_questionnaire'])->name('delete_dj_questionnaire');

@@ -27,6 +27,15 @@ class DJQuestionnaireController extends Controller
     function add_new_dj_questionnaire(){
     	return view("dj_questionnaire.add");
     }
+    public function question_delete(Request $req)
+    {
+        
+        
+        $user_id = $req->id;
+       
+        DJ_Questionnaire::where('id',$user_id)->delete();
+        return redirect('/dj_questionnaire')->with('success','Questionaire deleted successfully');   
+    }
     function create_dj_questionnaire(Request $req){
         $questionnaire = new DJ_Questionnaire;
         $questionnaire->questionnaire_name         = $req->questionnaire_name;

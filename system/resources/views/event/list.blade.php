@@ -71,9 +71,10 @@
                                     <a href="edit_event/{{$event['id']}}" class="btn btn-sm btn-blue btn-inverse btn-outline-success">
                                       <i class="fa fa-pencil"></i> 
                                     </a>
-                                    <a href="delete_event/{{$event['id']}}" class="btn btn-sm btn-red btn-inverse btn-outline-danger">
-                                      <i class="fa fa-trash"></i> 
-                                    </a>
+                                    <a style="margin: 2px;" style="margin: 2px;"   href="#" 
+                                    data-id={{$event['id']}} 
+                                    data-toggle="modal" 
+                                    data-target="#deleteModal" class="btn btn-sm btn-red btn-inverse btn-outline-danger del"><i class="fa fa-trash"></i></a>
                                    
                                 </td>
                               </tr>
@@ -81,6 +82,31 @@
                               @endforeach
                            </tbody>
                         </table>
+                        <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                               <div class="modal-content">
+                                   <div class="modal-header">
+                                       <h5 class="modal-title" style="color:black !important;" id="exampleModalLabel">Delete User</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                   </div>
+                                   <div class="modal-body">
+                                   <form action="{{ route('event_delete') }}" method="post">
+                                       @csrf
+                                       
+                                       <input id="id" name="id" hidden>
+                                       <h5 class="text-center" style="color:black !important;">Are you sure you want to delete this event?</h5>
+                                     
+                                   </div>
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                       <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                   </div>
+                                   </form>
+                               </div>
+                           </div>
+                       </div>
                      </div>
                   </div>
                </div>

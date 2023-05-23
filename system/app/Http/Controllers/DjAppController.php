@@ -542,6 +542,15 @@ class DjAppController extends Controller
       
       return response()->json(['genre_list' =>$p,'status' => "1"], 200);
   }
+  public function artist_delete(Request $req)
+{
+    // Need to find all addresses with the contacdt Id and delete them.
+    
+    $user_id = $req->id;
+   
+    DjUser::where('id',$user_id)->delete();
+    return redirect('/admin_djlist')->with('success','Artist deleted successfully');   
+}
   function dj_agreement_status_check() {
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);
@@ -565,7 +574,7 @@ class DjAppController extends Controller
       return response()->json(["message" => "DJ is not approved yet"], 404);
     }else{
       
-      $events = Event::select(DB::raw("events.* ,DATE_FORMAT(events.event_date, '%d') as event_date_daY, DATE_FORMAT(events.event_date, '%b') as event_date_month,  events.dj_qr_code_status as qr_code_status,dj_event.time,dj_event.artist1,dj_event.artist2,dj_event.artist3,dj_event.going_status,dj_event.going_status1,dj_event.going_status2,dj_event.going_status3"),)->join('dj_event','dj_event.event_id','=','events.id')->where('dj_event.artist1','=',$result['id'])->orWhere('dj_event.artist2','=',$result['id'])->orWhere('dj_event.artist3','=',$result['id'])->where('events.event_date', '>=', DB::raw('curdate()'))->orWhere('dj_event.going_status1','=','1')->orWhere('dj_event.going_status1','=','0')->orWhere('dj_event.going_status2','=','1')->orWhere('dj_event.going_status2','=','0')->orWhere('dj_event.going_status3','=','1')->orWhere('dj_event.going_status3','=','0')->get();
+      $events = Event::select(DB::raw("events.* ,DATE_FORMAT(events.event_date, '%d') as event_date_daY, DATE_FORMAT(events.event_date, '%b') as event_date_month,  events.dj_qr_code_status as qr_code_status,dj_event.time,dj_event.artist1,dj_event.artist2,dj_event.artist3,dj_event.going_status,dj_event.going_status1,dj_event.going_status2,dj_event.going_status3"),)->join('dj_event','dj_event.event_id','=','events.id')->where('events.event_date', '>=', DB::raw('curdate()'))->where('dj_event.artist1','=',$result['id'])->orWhere('dj_event.artist2','=',$result['id'])->orWhere('dj_event.artist3','=',$result['id'])->orWhere('dj_event.going_status1','=','1')->orWhere('dj_event.going_status1','=','0')->orWhere('dj_event.going_status2','=','1')->orWhere('dj_event.going_status2','=','0')->orWhere('dj_event.going_status3','=','1')->orWhere('dj_event.going_status3','=','0')->get();
       $eventss = array();
       foreach($events as $event){
 

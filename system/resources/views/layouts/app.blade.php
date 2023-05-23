@@ -417,7 +417,13 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
         
     }
 </script>
-
+<script>
+    $(document).on('click','.del',function(){
+         let id = $(this).attr('data-id');
+         
+         $('#id').val(id);
+    });
+    </script>
   
 
 

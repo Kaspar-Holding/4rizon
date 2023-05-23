@@ -1286,7 +1286,7 @@ public function save_token(Request $req){
     $s = $_POST['pass_checkedvalue'];
      
     // $string1 = implode(',',$s);
- 
+    echo json_encode($s);die();
     $string = $s;
     $checkbox = explode(',', $string);
     
@@ -1306,6 +1306,24 @@ public function save_token(Request $req){
     return redirect('/users_list')->with('success','User Deleted Successfully');
     // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
 
+}
+public function confirm_delete(Request $req)
+{
+    // Need to find all addresses with the contacdt Id and delete them.
+    echo json_encode("hey");die();
+    $user_id = $req->id;
+   
+    user_infos::where('user_id',$user_id)->delete();
+    return redirect('/users_list')->with('success','User deleted successfully');   
+}
+public function admin_delete(Request $req)
+{
+    // Need to find all addresses with the contacdt Id and delete them.
+    
+    $user_id = $req->id;
+   
+    Admin::where('id',$user_id)->delete();
+    return redirect('/admin_list')->with('success','Admin deleted success');   
 }
   public function delete_user_details ($id) {
     if(user_infos::where('user_id', $id)->exists()) {
@@ -1552,8 +1570,8 @@ function view_user_details(Request $req,$id){
   }
   public function share_reward(Request $req){
     $reward = user_wallets::where('user_id',$req->user_id)->first();
-    $users  = Hash::make($req->password);
-    print_r($users);die();
+    // $users  = Hash::make($req->password);
+    // print_r($users);die();
     $share = AppShare::where('count_share','count_share')->first();
     AppShare::where('count_share','count_share')->update([
       'count_share'=> $share->count_share + 1,

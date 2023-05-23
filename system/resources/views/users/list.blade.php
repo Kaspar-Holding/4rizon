@@ -105,9 +105,14 @@
                                    </a>
                                    @endif
                                    @if( Auth::user()->role == "super admin")
-                                   <a style="margin: 2px;" style="margin: 2px;" href="delete_user_details/{{$user['user_id']}}" class="btn btn-sm btn-red btn-inverse btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                   {{-- <a style="margin: 2px;" id = "btn_multidelete1" style="margin: 2px;" href="delete_user_details/{{$user['user_id']}}" data-toggle="modal" data-target="#multiconfirm-modal1" class="btn btn-sm btn-red btn-inverse btn-outline-danger"><i class="fa fa-trash"></i></a> --}}
+                                   <a style="margin: 2px;" style="margin: 2px;"   href="#" 
+                                   data-id={{$user['user_id']}} 
+                                   data-toggle="modal" 
+                                   data-target="#deleteModal" class="btn btn-sm btn-red btn-inverse btn-outline-danger del"><i class="fa fa-trash"></i></a>
+                                
                                    @endif
-                                   
+                                   {{-- <div id = "btn_multidelete1" class="btn btn-inverse my-button btn-outline-primary" data-toggle="modal" data-target="#multiconfirm-modal1" style="margin-left: 0px; display:none">Delete --}}
                                 </td>  
                                 <td class="text-capitalize">
                                     @if ($user['user_status'] == "0")
@@ -164,35 +169,33 @@
                               <?php $count = $count+1;?>
                               @endforeach
                            </tbody>
-                           <div class="modal fade" id="multiconfirm-modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                               <div class="modal-content" style = "background_color : #0a1022">
-                                  <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Delete Users</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                     <span aria-hidden="true">&times;</span>
-                                  </button>
-                                  </div>
-                                  <div class="modal-body">
-                                     <div class="row">
-                                           <!-- table section -->
-                                     <div class="col-md-12">
-                                           <p>Are you sure?</p>
-                                           {{-- <input type = "text" name = "checkbox[]" id = "checkbox"> --}}
-                                   
-                                     </div>
-                                     <div class="modal-footer">
-                                        {{-- <form> --}}
-                                           {{-- @csrf --}}
-                                           <input name="pass_checkedvalue" type="hidden" id="hidden_checkedinput1">
-                                           <input class="btn btn-secondary" type="submit" name="submit_button" value="Delete">
-                                        {{-- </form> --}}
-                                     </div>
-                                     </form>
-                                     </div>
-                               </div>
-                            </div>
+                        </form>
                         </table>
+                        <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" style="color:black !important;" id="exampleModalLabel">Delete User</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <form action="{{ route('confirm_delete') }}" method="post">
+                                        @csrf
+                                        
+                                        <input id="id" name="id" hidden>
+                                        <h5 class="text-center" style="color:black !important;">Are you sure you want to delete this user?</h5>
+                                      
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                      </div>
                   </div>
                </div>

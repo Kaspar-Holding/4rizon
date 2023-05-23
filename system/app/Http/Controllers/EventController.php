@@ -118,10 +118,25 @@ class EventController extends Controller
     function add_new_event(){
     	return view("event.add");
     }
+    public function event_delete(Request $req)
+{
+    // Need to find all addresses with the contacdt Id and delete them.
+    
+    $user_id = $req->id;
+   
+    Event::where('id',$user_id)->delete();
+    return redirect('/event_list')->with('success','Event deleted successfully');   
+}
     function create_event(Request $req){
         // $startTime = date("g:i A", strtotime($req->event_start_time." UTC"));
         // $endTime = date("g:i A", strtotime($req->event_end_time." UTC"));
-        $event = new Event;
+        $check = Event::where('event_date',$req->event_date)->first();
+        if(!empty($check)){
+            return redirect('/add_new_event')->with('success','This date is not available');
+        }
+        else{
+           
+            $event = new Event;
         $event->event_name         = $req->event_name;
         $event->pkg_price         = $req->event_price;
         $event->event_short_description        = $req->event_short_description;
@@ -147,9 +162,13 @@ class EventController extends Controller
         $gallery = new Gallery;
         $gallery->event_id          = $getLastEvent->id;
         $gallery->gallery_name      = $req->event_name;
-        $new = strtotime($getLastEvent->created_at);                         
-        $gallery_date = date('d-m-Y',$new);
+        
+        $new = strtotime($getLastEvent->created_at); 
+                                
+        $gallery_date = date('Y-m-d',$new);
+       
         $gallery->gallery_date      = $gallery_date;
+        
         $gallery->unique_id         = $unique_id;
         $gallery->save();
         // $notification = new Notifications;
@@ -178,6 +197,7 @@ class EventController extends Controller
         //     $this->mobile_push_notification($message,$player_id);
         // }
         return redirect('/event_list')->with('success','Event Created Successfully!');
+        }
     }
     function payment(Request $req){
        
@@ -241,7 +261,7 @@ class EventController extends Controller
             }    
         }
         
-        return redirect('/event_list')->with('success','Event Details Updated Successfully!');
+        return redirect('/edit_event/'.$event_id)->with('success','Event Details Updated Successfully!');
     }
     public function dj_time_allocation(Request $req){
         

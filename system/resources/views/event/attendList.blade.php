@@ -74,7 +74,7 @@
                                        To Pay
                                        </button> @else Paid @endif</td>
                                 <td>
-                                    <a href="view_user_event_details/{{$event['id']}}" class="btn btn-sm btn-inverse btn-outline-success">
+                                    <a href="view_user_event_details/{{$event['id']}}" class="btn btn-sm btn-blue  btn-inverse btn-outline-primary" style = "background-color: #10948C !important; ">
                                       <i class="fa fa-eye"></i> 
                                     </a>
                                     

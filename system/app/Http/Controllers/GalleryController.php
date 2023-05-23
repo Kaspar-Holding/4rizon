@@ -80,6 +80,15 @@ class GalleryController extends Controller
         }
         return redirect('/gallery_list')->with('success','gallery Created Successfully!');
     }
+    public function gallery_delete(Request $req)
+    {
+        // Need to find all addresses with the contacdt Id and delete them.
+        
+        $user_id = $req->id;
+       
+        Gallery::where('id',$user_id)->delete();
+        return redirect('/gallery_list')->with('success','Gallery deleted successfully');   
+    }
     function update_gallery(Request $req){
         $gallery                               = Gallery::find($req->id);
         $gallery->event_id                     =$req->id;

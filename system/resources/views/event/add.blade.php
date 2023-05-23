@@ -21,8 +21,12 @@
                  
                 </div>
               </div>
+           
               <form class="container-fluid" action="{{ route('create_event')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
                 @csrf
+                <div class = "alerti">
+                  @include('flashmessages')
+              </div>
                 <div>
                   <label class="form-label">Event Name</label>
                   <input type="text" name="event_name" class="form-control" required >
@@ -52,6 +56,7 @@
                   <label class="form-label">Event Date</label>
                   <input type="date" name="event_date" id="txtDate" class="form-control" required >
                 </div>
+                
                 <br>
                 <div>
                   <label class="form-label">Event Start Time</label>

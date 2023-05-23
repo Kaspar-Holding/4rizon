@@ -55,7 +55,7 @@
                                 @if(!empty($user))
                               <tr>
                                  @php
-                                      $date = \App\Models\user_infos::where('user_id','=',$purchase['user_id'])->first();
+                                      $date = \App\Models\Purchase::where('id','=',$purchase['id'])->first();
                                       $new = strtotime($date->created_at);
                                       
                                        $newdate = date('d-m-Y',$new);
@@ -67,10 +67,7 @@
                                 <td class="text-capitalize">{{$item->item_name}}</td>
                                 <td class="text-capitalize">{{$purchase['quantity']}}</td>
                                 <td class="text-capitalize">{{$purchase['item_price']}}</td> 
-                                <td class="text-capitalize">@if($purchase['redeem_status'] == 0)Purchased @else Recieved</td> @endif   
-                               
-                                    
-                                @endphp
+                                <td class="text-capitalize">@if($purchase['redeem_status'] == 0)Purchased @else Recieved</td> @endif  
                                 <td class="text-capitalize">{{$newdate}}</td> 
                                 <td class="text-capitalize">{{$newtime}}</td> 
                                 {{-- <td> 

@@ -175,6 +175,10 @@ padding: 10px;
                 <div class="col-lg-10">
                   <form id="user_form" method="POST" enctype="multipart/form-data">
                   @csrf
+                  <div>
+                    <p style="color: white;"><i class="fa fa-lightbulb-o" style="
+                      margin-right: 6px; color: yellow;"></i><b>Tip:</b> All platforms should have different artists for each timeslot. </p>
+                  </div>
                   <input type="hidden" name="event_id" value="{{ $event->id }}">
                   <table id="table" class="table table-bordered table-striped update">
                       <thead>

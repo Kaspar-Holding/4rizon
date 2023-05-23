@@ -41,15 +41,20 @@
                 <br>
                 <div>
                   <label class="form-label">Gallery Image</label>
+                  
+                  @if(!empty($gallery->gallery_image))
                   <img src="{{asset('image/'.$gallery->gallery_image)}}" style="width: 20%;">
                 </div>
                 <br>
                 <div>
                   <label class="form-label">Change Gallery Image</label>
+                  @endif
                   <input type="file" name="gallery_image" class="form-control">
                 </div>
                 <br>
+                
                 <div>
+                 
                   <label class="form-label">Gallery Images</label>
                   @foreach($gallery_images as $image)
                   <img src="{{asset('image/'.$image->image)}}" style="width: 10%;"> 

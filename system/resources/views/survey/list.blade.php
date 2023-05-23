@@ -49,7 +49,7 @@
                                 <td class="text-capitalize">{{$count}}</td>
                                 <td class="text-capitalize">{{$survey['survey_name']}}</td>
                                 <td class="text-capitalize">{{$survey['survey_price']}}</td>
-                                <td class="text-capitalize"><a href="view_survey_questions/{{$survey['id']}}" class="btn eye-icon btn-sm btn-inverse btn-outline-primary">
+                                <td class="text-capitalize"><a href="view_survey_questions/{{$survey['id']}}" class="btn btn-sm btn-blue  btn-inverse btn-outline-primary" style = "background-color: #10948C !important; ">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     </a></td>                               
                                 <td> 
@@ -57,9 +57,10 @@
                                       <i class="fa fa-pencil"></i> 
                                     </a>
                                     @if( Auth::user()->role == "super admin")
-                                    <a href="delete_survey/{{$survey['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
-                                      <i class="fa fa-trash"></i> 
-                                    </a>
+                                    <a style="margin: 2px;" style="margin: 2px;"   href="#" 
+                                    data-id={{$survey['id']}} 
+                                    data-toggle="modal" 
+                                    data-target="#deleteModal" class="btn btn-sm btn-red btn-inverse btn-outline-danger del"><i class="fa fa-trash"></i></a>
                                     @endif
                                    
                                 </td>
@@ -68,6 +69,31 @@
                               @endforeach
                            </tbody>
                         </table>
+                        <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                               <div class="modal-content">
+                                   <div class="modal-header">
+                                       <h5 class="modal-title" style="color:black !important;" id="exampleModalLabel">Delete Survey</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                   </div>
+                                   <div class="modal-body">
+                                   <form action="{{ route('survey_delete') }}" method="post">
+                                       @csrf
+                                       
+                                       <input id="id" name="id" hidden>
+                                       <h5 class="text-center" style="color:black !important;">Are you sure you want to delete this survey?</h5>
+                                     
+                                   </div>
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                       <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                   </div>
+                                   </form>
+                               </div>
+                           </div>
+                       </div>
                      </div>
                   </div>
                </div>

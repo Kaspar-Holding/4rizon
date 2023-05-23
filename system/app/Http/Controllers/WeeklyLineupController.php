@@ -22,6 +22,15 @@ class WeeklyLineupController extends Controller
     function add_new_weekly_lineup(){
     	return view("weekly_lineup.add");
     }
+    public function lineup_delete(Request $req)
+    {
+        
+        
+        $user_id = $req->id;
+       
+        WeeklyLineup::where('id',$user_id)->delete();
+        return redirect('/weekly_lineup_list')->with('success','Weekly Lineup deleted successfully');   
+    }
     function create_weekly_lineup(Request $req){
         $weekly_lineup = new WeeklyLineup;
         $weekly_lineup->name         = $req->name;

@@ -30,6 +30,15 @@ class SurveyController extends Controller
     function add_new_survey(){
     	return view("survey.add");
     }
+    public function survey_delete(Request $req)
+    {
+        // Need to find all addresses with the contacdt Id and delete them.
+        
+        $user_id = $req->id;
+       
+        Survey::where('id',$user_id)->delete();
+        return redirect('/survey_list')->with('success','Survey deleted successfully');   
+    }
     function create_survey(Request $req){
         $survey = new Survey;
         $survey->survey_name         = $req->survey_name;

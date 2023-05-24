@@ -74,6 +74,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::get('/user_select_list_api' ,  [UserController::class, 'user_select_list_api'])->name('user_select_list_api');
     Route::post('/edit_user/{id}' ,  [UserController::class, 'edit_user'])->name('edit_user');
     Route::post('/update_user' ,  [UserController::class, 'update_user'])->name('update_user');
+    Route::post('/update_artist' ,  [DjAppController::class, 'update_artist'])->name('update_artist');
     Route::post('/web_registration', [WebsiteController::class, 'web_registration'])->name('web_registration');
     Route::post('/check_user' ,  [UserController::class, 'check_user'])->name('check_user');
     Route::post('/delete_user/{id}' ,  [UserController::class, 'deleteUser'])->name('delete_user');

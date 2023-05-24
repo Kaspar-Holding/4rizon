@@ -1310,7 +1310,7 @@ public function save_token(Request $req){
 public function confirm_delete(Request $req)
 {
     // Need to find all addresses with the contacdt Id and delete them.
-    echo json_encode("hey");die();
+    
     $user_id = $req->id;
    
     user_infos::where('user_id',$user_id)->delete();

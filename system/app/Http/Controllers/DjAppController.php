@@ -46,7 +46,16 @@ class DjAppController extends Controller
               $djusers->email            = $result['email'];
               $djusers->password         = Hash::make($result['password']);
               $djusers->phone_number     = $result['phone_number'];
-          
+              if (!empty($result['dj_picture'])){
+                $image = $result['dj_picture'];
+                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $image = base64_decode($image);
+                $pic             = time().'.'.'png';  
+                file_put_contents(public_path('image')."/".$pic,$image );
+                // $image->move(public_path('image'), $pic);
+                $djusers->profile_image = $pic;
+              }
               $djusers->save();
               $last = $djusers->id;
        
@@ -550,6 +559,45 @@ class DjAppController extends Controller
    
     DjUser::where('id',$user_id)->delete();
     return redirect('/admin_djlist')->with('success','Artist deleted successfully');   
+}
+public function update_artist(Request $req){
+if($req->identification_type == 2){
+  $passport_id = $req->identification_number;
+  $southAfrican_id = "";
+}
+if($req->identification_type == 1){
+  $passport_id = "";
+  $southAfrican_id = $req->identification_number;
+}
+if (!empty($req->dj_picture)){
+  $image = $req->dj_picture;
+  $image = str_replace('data:image/png;base64,', '', $image);
+  $image = str_replace(' ', '+', $image);
+  $image = base64_decode($image);
+  $pic             = time().'.'.'png';  
+  file_put_contents(public_path('image')."/".$pic,$image );
+  // $image->move(public_path('image'), $pic);
+  
+}
+  DjUser::where('id','=',$req->id)->update([
+    'first_name'=>$req->first_name,
+    'last_name'=>$req->last_name,
+    'phone_number'=>$req->phone_number,
+    'email'=>$req->email,
+    'passport_id'=>$passport_id,
+    'southAfrican_id'=>$southAfrican_id,
+    'identification_type'=>$req->identification_type,
+    'dob'=>$req->dob,
+    'gender'=>$req->gender,
+    'profile_image'=> $pic,
+  ]);
+          
+    // if (!empty($req->password)) {
+    //     $user_infos->password = Hash::make($req->password);
+    // }
+    // $user_infos->role = $req->role;
+    // $user_infos->save();
+    return response()->json(["message" => "User Updated Successfully"], 201);
 }
   function dj_agreement_status_check() {
     $type = "application/json";

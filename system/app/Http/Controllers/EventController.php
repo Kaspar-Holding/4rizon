@@ -260,7 +260,7 @@ class EventController extends Controller
                 $this->mobile_push_notificationdj($messages,$user3->device_id);
             }    
         }
-        
+        $event_id = $req->id;
         return redirect('/edit_event/'.$event_id)->with('success','Event Details Updated Successfully!');
     }
     public function dj_time_allocation(Request $req){

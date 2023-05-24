@@ -100,6 +100,7 @@ class DashboardController extends Controller
          
             
         }
+        $users_app = array();
         if($get_from_date_value =="" && $get_to_date_value==""){
         $users_app = user_infos::where('web_status',0)->get();
         $users_web = user_infos::where('web_status',1)->get();

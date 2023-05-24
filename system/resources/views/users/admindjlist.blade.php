@@ -27,10 +27,11 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                  <div class="full graph_head">
-                     <div class="heading1 margin_0"> 
+                  <div class = "alerti">
                      @include('flashmessages')
-                     </div>
+                 </div>
+                  <div class="full graph_head">
+                    
                   </div>
                <form class="container-fluid" action="{{route('multiple_approve_dj')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
                      @csrf
@@ -137,34 +138,35 @@
                            </tbody>
                         
                         </table>
-                        <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
-                           <div class="modal-dialog" role="document">
-                               <div class="modal-content">
-                                   <div class="modal-header">
-                                       <h5 class="modal-title" style="color:black !important;" id="exampleModalLabel">Delete User</h5>
-                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                       <span aria-hidden="true">&times;</span>
-                                       </button>
-                                   </div>
-                                   <div class="modal-body">
-                                   <form action="{{ route('artist_delete') }}" method="post">
-                                       @csrf
-                                       
-                                       <input id="id" name="id" hidden>
-                                       <h5 class="text-center" style="color:black !important;">Are you sure you want to delete this user?</h5>
-                                     
-                                   </div>
-                                   <div class="modal-footer">
-                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                       <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                   </div>
-                                   </form>
-                               </div>
-                           </div>
-                       </div>
+                        
                      </div>
                   </div>
                </form>
+               <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" style="color:black !important;" id="exampleModalLabel">Delete User</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                          <form action="{{ route('artist_delete') }}" method="post">
+                              @csrf
+                              
+                              <input id="id" name="id" hidden>
+                              <h5 class="text-center" style="color:black !important;">Are you sure you want to delete this user?</h5>
+                            
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                          </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
             </div>
          </div>            
       </div>

@@ -96,6 +96,7 @@ Route::post('confirm_delete', [userController::class, 'confirm_delete'])->name('
     
     
     //DJ Routes
+    
     Route::get('/register_new_djuser', [DjAppController::class, 'register_new_djuser'])->name('register_new_djuser');
     Route::post('/save_djuser',[DjAppController::class, 'save_djuser'])->name('save_djuser');
     Route::post('artist_delete', [DjAppController::class, 'artist_delete'])->name('artist_delete');

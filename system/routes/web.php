@@ -34,6 +34,7 @@ use Carbon\Carbon;
 */
 Route::post('/update_password',[UserController::class, 'update_password'])->name('update_password');
 Route::get('/reset_password_entrance',[UserController::class, 'reset_password_entrance'])->name('reset_password_entrance');
+Route::get('/reset_password',[UserController::class, 'reset_password'])->name('reset_password');
 
 Route::post('/update_password_admin',[UserController::class, 'update_password_admin'])->name('update_password_admin');
 Route::get('/reset_password_admin',[UserController::class, 'reset_password_admin'])->name('reset_password_admin');
@@ -287,7 +288,7 @@ Route::get('/resend_otp', [WebsiteController::class, 'resend_otp'])->name('resen
 
 
 Route::get('/register', [WebsiteController::class, 'register'])->name('register');
-Route::get('/event-page', [WebsiteController::class, 'get_event_page'])->name('event-page');
+
 Route::get('/gallery1', [WebsiteController::class, 'get_gallery1'])->name('gallery1');
 Route::get('/club', [WebsiteController::class, 'get_club'])->name('club_special');
 Route::get('/privacy_policy', [WebsiteController::class, 'privacy_policy'])->name('privacy_policy');
@@ -310,6 +311,6 @@ Route::any('/search',function(){
 });
 
 Route::get('/show-map',[DashboardController::class,'showMap'])->name('show-map');
-
+Route::get('/event-page', [WebsiteController::class, 'event_page'])->name('event-page');
 
 

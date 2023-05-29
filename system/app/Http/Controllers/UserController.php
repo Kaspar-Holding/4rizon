@@ -547,7 +547,7 @@ public function save_token(Request $req){
         return view('email_sent');
       }
       
-  }
+    }
     public function dj_password_api(Request $req){
       $user = DjUser::where('email',$req->email)->first();
       if(is_null($user)){
@@ -758,7 +758,7 @@ public function save_token(Request $req){
       if ($validator->fails()) {
         $responseArr['message'] = $validator->errors();
         return response()->json($responseArr);
-       
+      
       }
       try{
           $email=$request->email;
@@ -1571,13 +1571,15 @@ function view_user_details(Request $req,$id){
   public function share_reward(Request $req){
     $reward = user_wallets::where('user_id',$req->user_id)->first();
     // $users  = Hash::make($req->password);
-    // print_r($users);die();
-    $share = AppShare::where('count_share','count_share')->first();
-    AppShare::where('count_share','count_share')->update([
+    
+    $share = AppShare::where('id',1)->first();
+    $count = $share->count_share + 1;
+    $appshare = AppShare::where('id',1)->update([
       'count_share'=> $share->count_share + 1,
     ]);
+    
     if(!empty($reward)){
-      user_wallets::where('user_id','=',$req->user_id)->update([
+      $wallet = user_wallets::where('user_id','=',$req->user_id)->update([
         'available_points'=> $reward->available_points+150,
       ]);
       

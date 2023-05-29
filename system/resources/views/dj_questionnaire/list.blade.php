@@ -5,7 +5,7 @@
         <div class="row column_title">
             <div class="col-md-12">
                <div class="page_title">
-                  <h2>DJ Questionnaire Lists</h2>
+                  <h2>Artist Questionnaire Lists</h2>
                </div>
             </div>
         </div>
@@ -22,12 +22,12 @@
                      <div class="heading1 margin_0">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h2>DJ_Questionnaire Lists</h2>
+                                <h2>Artist Questionnaire Lists</h2>
                             </div>
                             @if( Auth::user()->role == "super admin")
 
                             <div class="col-sm-3">
-                                <a href="{{ route('add_new_dj_questionnaire') }}" class="btn my-button btn-inverse btn-outline-primary">Add New DJ Questionnaire</a>
+                                <a href="{{ route('add_new_dj_questionnaire') }}" class="btn my-button btn-inverse btn-outline-primary">Add Questionnaire</a>
                             </div>
                             @endif
                         </div>
@@ -39,7 +39,7 @@
                            <thead>
                               <tr>
                                  <th>#</th>
-                                 <th>DJ_Questionnaire Name</th>
+                                 <th>Questionnaire Name</th>
                                  <th>Questions</th>
                                        @if( Auth::user()->role == "super admin")
 

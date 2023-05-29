@@ -146,15 +146,11 @@ class DashboardController extends Controller
             if($get_from_date_value == $get_to_date_value){
                 $registered_users = user_infos::where('created_at', '>=', $get_from_date_value.' 00:00:00')->get();
             }
-            
-
+          
             else{
-                $registered_users = user_infos::whereDate('created_at', '>=', $get_from_date_value)->whereDate('created_at', '<=', $get_to_date_value)->get();
-                
+                $registered_users = user_infos::whereDate('created_at', '>=', $get_from_date_value)->whereDate('created_at', '<=', $get_to_date_value)->get();  
             }
-            
-            
-            
+      
             $pending_users    = user_infos::where('user_status',0)->whereBetween('created_at', [$get_from_date_value, $get_to_date_value])->get();
             $invalid_users    = user_infos::where('user_status',2)->whereBetween('created_at', [$get_from_date_value, $get_to_date_value])->get();
             $valid_users      = user_infos::where('user_status',1)->whereBetween('created_at', [$get_from_date_value, $get_to_date_value])->get();
@@ -166,7 +162,9 @@ class DashboardController extends Controller
             $total_qr_exit    = Bookings::whereNotNull('exit_at')->whereBetween('created_at', [$get_from_date_value, $get_to_date_value])->get();
             $points           = user_wallets::whereBetween('created_at', [$get_from_date_value, $get_to_date_value])->sum('user_wallets.available_points');
             $points_redeem    = Purchase::whereBetween('created_at', [$get_from_date_value, $get_to_date_value])->sum('purchase.item_price');
-        }elseif($get_to_date_value || !empty($get_to_date_value)) {
+        }
+        elseif($get_to_date_value || !empty($get_to_date_value))
+         {
             $registered_users = user_infos::where('created_at', $get_from_date_value)->get();
             $pending_users    = user_infos::where('user_status',0)->where('created_at', $get_from_date_value)->get();
             $invalid_users    = user_infos::where('user_status',2)->where('created_at', $get_from_date_value)->get();

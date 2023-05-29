@@ -5,7 +5,9 @@
   
   
   
- 
+  .select2-container--default .select2-selection--multiple{
+  background-color: rgba(13, 45, 80, 1) !important;
+ }
   .select2-results__options[aria-multiselectable="true"] li {
   padding-left: 30px;
   position: relative
@@ -27,7 +29,8 @@
   background-color: rgba(13, 45, 80, 1) !important;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: rgba(13, 45, 80, 1);
+  background-color: black !important;
+  color : white !important;
 }
 .select2-container--default .select2-selection--multiple{
   background-color: rgba(13, 45, 80, 1);
@@ -74,7 +77,7 @@ padding: 10px;
                         
                         <div class="col-md-6">
                         <label class="form-label">User List</label>
-                        <select name="user[]" id="cars" multiple="multiple"  class="form-control select2" required >
+                        <select name="user[]" id="cars" multiple class="form-control select2" required >
                             <option> Select Users </option>
                             @foreach($users as $user)
                             <option value="{{$user['user_id']}}">{{$user['first_name']}} {{$user['last_name']}}</option>

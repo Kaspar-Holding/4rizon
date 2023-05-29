@@ -49,7 +49,8 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <?php $count = 1;?>
+                              
+                              <?php  $count = 1;?>
                               @foreach ($event_list as $event)
                                 @php
                                     $events = \App\Models\Event::where('id',$event['event_id'])->first();
@@ -57,11 +58,11 @@
                                     $vip_pkg = App\Models\VipPkg::where('id',$event['vip_booth_id'])->first();
                                     $guest = App\Models\Guest::where('booking_id',$event['booking_id'])->where('status','=','0')->get();
                                 @endphp
-                              @if($user)
+                              {{-- @if($user) --}}
                               <tr>
                                 <td class="text-capitalize">{{$count}}</td>
                                 <td class="text-capitalize">{{$events->event_name?? ''}}</td>
-                                <td class="text-capitalize">{{$user->first_name}} {{$user->last_name}}</td>
+                                <td class="text-capitalize">{{$user->first_name ?? ''}} {{$user->last_name ?? ''}}</td>
                                 <td class="text-capitalize">{{$events->event_date ?? ''}}</td>
                                 <td class="text-capitalize">@if(!empty($vip_pkg)) {{$vip_pkg['pkg_name']}}
                                 <br> Guest : {{count($guest)}}
@@ -81,7 +82,7 @@
                                      
                                 </td>
                               </tr>
-                              @endif
+                              {{-- @endif --}}
                               <?php $count = $count+1;?>
                               @endforeach
                            </tbody>

@@ -5,7 +5,7 @@
         <div class="row column_title">
           <div class="col-md-12">
             <div class="page_title">
-              <h2>Edit DJ Questionnaire</h2>
+              <h2>Edit Artist Questionnaire</h2>
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
                 <br>
                 <br>
                 <div>
-                  <label class="form-label">dj_questionnaire Description</label>
+                  <label class="form-label">questionnaire Description</label>
                   <textarea class="form-control" name="questionnaire_description" rows="4" >{{ $dj_questionnaire->questionnaire_description }}</textarea>
                 </div>
                 <br>

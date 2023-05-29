@@ -1,6 +1,23 @@
 @extends('layouts.app')
 @section('pageTitle','Notification Lists')
 @section('content')
+<style>
+   .dataTables_wrapper .dataTables_filter input {
+       border-radius: 11px !important;
+   }
+   .dataTables_wrapper .dataTables_paginate .paginate_button {
+       color: aliceblue !important;
+   }
+   .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_pag{
+       color: aliceblue !important;
+   }
+   .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+   color: aliceblue !important;
+   }
+   .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate{
+      color: aliceblue !important;
+   }
+   </style>
     <div class="container-fluid">
         <div class="row column_title">
             <div class="col-md-7">
@@ -40,7 +57,7 @@
                   </div>
                   <div class="table_section padding_infor_info">
                      <div class="table-responsive-sm">
-                        <table class="table table-striped">
+                        <table class="table table-striped" id = "myTable">
                            <thead>
                               <tr>
                                  <th>#</th>

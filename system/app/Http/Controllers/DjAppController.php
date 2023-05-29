@@ -661,6 +661,7 @@ if (!empty($req->dj_picture)){
     $type = "application/json";
     $result = json_decode(file_get_contents("php://input"), true);
     $booking = Bookings::select('booking_id')->where('dj_id','=',$result['id'])->where( 'event_id','=',$result['event_id'])->get();
+    
     return response()->json(['booking_id' =>$booking ,'success' => true], 200);
   }
   

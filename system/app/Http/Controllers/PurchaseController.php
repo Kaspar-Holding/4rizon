@@ -27,6 +27,7 @@ class PurchaseController extends Controller
         $purchase->item_id            = $req->item_id;
         $purchase->quantity           = $req->quantity;
         $purchase->item_type          = $category->category_name;
+        // $purchase->purchase_time          = $category->purchase_time;
         if($category->category_name == "Vouchers"){
         $purchase->usage_count        = $items->entries;
         }

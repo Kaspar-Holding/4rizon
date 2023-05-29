@@ -16,6 +16,7 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <!-- site icon -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">      
       <link rel="icon" href="{{ asset('new/images/fevicon.png')}}" type="image/png" />
       <!-- bootstrap css -->
       <link rel="stylesheet" href="{{ asset('new/css/bootstrap.min.css')}}" />
@@ -31,7 +32,7 @@
       <link rel="stylesheet" href="{{ asset('new/css/perfect-scrollbar.css')}}" />
       <!-- custom css -->
       <link rel="stylesheet" href="{{ asset('new/css/custom.css')}}" />
-      <link rel="stylesheet" href="{{ asset('new/css/select2.min.css')}}" />
+      
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -120,7 +121,7 @@
       <!-- <script src="{{ asset('new/js/Chart.bundle.min.js')}}"></script> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      <script src="{{ asset('new/js/select2.full.min.js')}}"></script>
+      
       <script src="{{ asset('new/js/utils.js')}}"></script>
       <!-- <script src="{{ asset('new/js/analyser.js')}}"></script> -->
       <!-- nice scrollbar -->
@@ -229,10 +230,7 @@
                 }
             });
         });
-        $(document).ready(function() {
-            $(".select_group").select2();
-            
-        });
+       
         $(document).ready(function () {
             $(".addmore").click(function () {
                 // var cloneIndex = $(".abcd").length;
@@ -283,16 +281,7 @@
                window.location.href = _url;
             }
          </script>
-         <script>
-	$(document).ready(function() {
-		$('.select2[multiple]').select2({
-    width: '100%',
-    closeOnSelect: false
-})
-
-    
-});
-	</script>
+      
     <script>
     $('#selectAll').click(function(e){
     var table= $(e.target).closest('table');
@@ -424,7 +413,21 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
          $('#id').val(id);
     });
     </script>
-  
+    <script src=
+    "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js">
+           </script>
+            <link rel="stylesheet" 
+                  href=
+    "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script>
+      $(document).ready(function () {
+          //Select2
+          $(".select2").select2({
+              maximumSelectionLength: 2,
+          });
+      });
+      </script>
 
 
 	</body>

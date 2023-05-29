@@ -76,6 +76,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::post('/update_user' ,  [UserController::class, 'update_user'])->name('update_user');
     Route::post('/update_artist' ,  [DjAppController::class, 'update_artist'])->name('update_artist');
     Route::post('/web_registration', [WebsiteController::class, 'web_registration'])->name('web_registration');
+    Route::get('/get_gallery1', [WebsiteController::class, 'get_gallery1'])->name('get_gallery1');
+    Route::get('/get_event_page', [WebsiteController::class, 'get_event_page'])->name('get_event_page');
     Route::post('/check_user' ,  [UserController::class, 'check_user'])->name('check_user');
     Route::post('/delete_user/{id}' ,  [UserController::class, 'deleteUser'])->name('delete_user');
     Route::post('/update_status' ,  [UserController::class, 'update_status'])->name('update_status');
@@ -209,3 +211,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::post('/create_coupon', [CouponController::class, 'create_coupon'])->name('create_coupon'); 
     Route::post('/validate_coupon', [CouponController::class, 'validate_coupon'])->name('validate_coupon'); 
     Route::post('/coupon_usage', [CouponController::class, 'coupon_usage'])->name('coupon_usage'); 
+    Route::post('/web_form', [WebsiteController::class, 'web_form'])->name('web_registration');
+    Route::post('/web_otp', [WebsiteController::class, 'web_otp'])->name('web_otp');

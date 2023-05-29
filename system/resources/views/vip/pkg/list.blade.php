@@ -3,13 +3,13 @@
 @section('content')
     <div class="container-fluid">
         <div class="row column_title">
-            <div class="col-md-8">
+            <div class="col-md-9">
                <div class="page_title">
                   <h2>Bookings</h2>
                </div>
             </div>
-            <div class="col-md-4"  style="margin-top: 40px;">
-               <a href="{{ route('vip_pkg_list') }}" class="btn btn-inverse my-button btn-outline-primary">Vip Package</a>
+            <div class="col-md-3"  style="margin-top: 40px;">
+               {{-- <a href="{{ route('vip_pkg_list') }}" class="btn btn-inverse my-button btn-outline-primary">Vip Package</a> --}}
                <a href="{{ route('vip_booking_list') }}" class="btn btn-inverse my-button btn-outline-primary">Vip Bookings</a>
            </div>
         </div>

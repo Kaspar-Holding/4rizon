@@ -5,7 +5,7 @@
         <div class="row column_title">
           <div class="col-md-12">
             <div class="page_title">
-              <h2>Add DJ Questionnaire</h2>
+              <h2>Add Artist Questionnaire</h2>
             </div>
           </div>
         </div>
@@ -20,13 +20,13 @@
                 @csrf
                 <div class="row">
                   <div class="col-12">
-                    <label class="form-label">DJ Questionnaire Name</label>
+                    <label class="form-label">Artist Questionnaire Name</label>
                     <input type="text" name="questionnaire_name" class="form-control" required >
                   </div>
                 </div>
                 <div class="row" style="padding-top:10px">
                   <div class="col-12">
-                      <label class="form-label">DJ Questionnaire Description</label>
+                      <label class="form-label">Artist Questionnaire Description</label>
                       <textarea class="form-control" name="questionnaire_description" rows="4" required></textarea>
                   </div>
                 </div>

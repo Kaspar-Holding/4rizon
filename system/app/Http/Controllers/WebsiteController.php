@@ -100,6 +100,66 @@ class WebsiteController extends Controller
         } 
         
     }
+    function web_form(Request $req){
+        $type = "application/json";
+        $user_infos_email = user_infos::where('email','=',$req->email)->first();
+        $user_infos_phone = user_infos::where('phone_number','=',$req->phone_no)->first();
+        
+            // echo "Valid number";
+          
+     
+        if (!empty($user_infos_email)){
+            // return response()->json(["message" => "Email already exists!",'code'=>'201'], 201);}
+            return back()->with('error', 'Email already exists!');}
+            // return Redirect::to('/')->with('message', 'Email already exists');        }
+        elseif(!empty($user_infos_phone)){
+            // return Redirect::to('/')->with('message', 'Email already exists');
+            return back()->with('error', 'Phone No already exists!');}
+        
+        else{
+          
+          $validator = \Validator::make($req->all(), [
+            'first_name'   => 'required|string|max:191',
+            'last_name'    => 'required|string|max:191',
+            'phone_no' => 'required',
+            'email'        => 'required',
+            'password'     => 'required',
+            'c_password'   => 'required'
+          ]);
+          if ($validator->fails()) {
+            $responseArr['message'] = $validator->errors();
+            return response()->json($responseArr);
+          }
+          if ($req->password == $req->c_password) {
+            $req->password  = Hash::make($req->password);
+            $web_users = new Web_Users;
+            $web_users->first_name = $req->first_name;
+            $web_users->last_name = $req->last_name;
+            $web_users->email = $req->email;
+            $web_users->password = $req->password;
+            $web_users->phone_number = $req->phone_no;
+            $web_users->save();
+            $unique_id =  random_int(100,100000); 
+            Web_Users::where('email','=',$req->email)->update(['unique_id'=>$unique_id]);       
+            $queryStatus;
+            try {
+              $query = UserEmails::signUpEmail($req->email, $unique_id);
+                $queryStatus = "Successful";
+            } catch(Exception $e) {
+                $queryStatus = "Not success";
+            }
+            
+
+            // return back()->with('error', 'The error message here!');
+            // return response()->json(["message" => "Registration Successfull" ,'code'=>'200'], 200);
+          }
+          else{
+            return back()->with('error', 'Confirmation password does not match!');
+          }
+        }
+        
+        
+    }
     function resend_otp(Request $req){
         $type = "application/json";
         $user_infos_email = user_infos::where('email','=',$req->email)->first();
@@ -133,25 +193,61 @@ class WebsiteController extends Controller
             return back()->with('error', 'Otp is invalid!');}
         
     }
+    public function web_otp(Request $req){
+        $type = "application/json";
+        $result = json_decode(file_get_contents("php://input"), true);
+        $user = Web_Users::where('unique_id','=',$req->otp)->first();
+        if (!empty($user)){
+            
+            $web_users = new user_infos;
+            $web_users->first_name = $user->first_name;
+            $web_users->last_name = $user->last_name;
+            $web_users->email = $user->email;
+            $web_users->password = $user->password;
+            $web_users->phone_number = $user->phone_no;
+            $web_users->save();
+            UserEmails::welcomeEmail($user->first()->email);
+            // return view("register_success");
+        }else{
+            return back()->with('error', 'Otp is invalid!');}
+        
+    }
     function get_book_event(){
         return view("book-event");
     }
     function get_contact_us(){
         return view("contact-us");
     }
+    function event_page(){
+        //     $event_data1 = Event::select("*")->whereBetween('event_date', 
+        //     [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
+        // )->orderBy('event_date','DESC')->get();
+        $startDate = Carbon::today();
+        $endDate = Carbon::today()->addDays(7);
+        $event_data = Event::whereBetween('event_date', [$startDate, $endDate])->get();
+        // $event_data = Event::where('event_date','>=', $startDate)->get();
+    
+        // return  response()->json(['events'=>$event_data]);
+            return view("event-page",['event_list'=>$event_data,]);
+        }
     function get_event_page(){
-        $event_data1 = Event::select("*")->whereBetween('event_date', 
-        [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
-    )->orderBy('event_date','DESC')->get();
+    //     $event_data1 = Event::select("*")->whereBetween('event_date', 
+    //     [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
+    // )->orderBy('event_date','DESC')->get();
     $startDate = Carbon::today();
     $endDate = Carbon::today()->addDays(7);
     $event_data = Event::whereBetween('event_date', [$startDate, $endDate])->get();
-        return view("event-page",['event_list'=>$event_data,]);
+    // $event_data = Event::where('event_date','>=', $startDate)->get();
+
+    return  response()->json(['events'=>$event_data]);
+        // return view("event-page",['event_list'=>$event_data,]);
     }
    
     function get_gallery1(){
         $gallery = GalleryImage::get();
-        return view("gallery1",['gallery'=>$gallery]);
+              
+        return  response()->json(['events'=>$gallery]);
+        // return view("gallery1",['gallery'=>$gallery]);
     }
     function get_club(){
         return view("clubs");

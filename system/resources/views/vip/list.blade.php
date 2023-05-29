@@ -3,14 +3,14 @@
 @section('content')
     <div class="container-fluid">
         <div class="row column_title">
-            <div class="col-md-8">
+            <div class="col-md-9">
                <div class="page_title">
                   <h2>Bookings</h2>
                </div>
             </div>
-            <div class="col-md-4"  style="margin-top: 40px;">
+            <div class="col-md-3"  style="margin-top: 40px;">
                <a href="{{ route('vip_pkg_list') }}" class="btn btn-inverse my-button btn-outline-primary">Vip Package</a>
-               <a href="{{ route('vip_booking_list') }}" class="btn btn-inverse my-button btn-outline-primary">Vip Bookings</a>
+            
            </div>
         </div>
          <!-- row -->
@@ -40,7 +40,7 @@
                                  <th>Event</th>
                                  <th>Booked By</th>
                                  <th>Guest List</th>
-                                 <th>Action</th>
+                                 
                               </tr>
                            </thead>
                            <tbody>
@@ -48,26 +48,20 @@
                               @foreach ($vip_booking_list as $vip_book)
                               @php 
                                 $user = App\Models\user_infos::where('user_id',$vip_book['user_id'])->first();
-                                $vip_pkg = App\Models\VipPkg::where('id',$vip_book['vip_pkg_id'])->first();
-                                $event = App\Models\VipPkg::where('id',$vip_book['vip_pkg_id'])->first();
+                                $vip_pkg = App\Models\VipPkg::where('id',$vip_book['vip_booth_id'])->first();
+                                $event = App\Models\Event::where('id',$vip_book['event_id'])->first();
                               @endphp
                               <tr>
                                 <td class="text-capitalize">{{$count}}</td>
                                 <td class="text-capitalize">{{$vip_pkg['pkg_name']}}</td>
                                 <td class="text-capitalize">{{$event['event_name']}}</td>
-                                <td class="text-capitalize">{{$user->first_name}} {{$user->last_name}}</td>
+                                <td class="text-capitalize">{{$user->first_name ?? ''}} {{$user->last_name ?? ''}}</td>
                                 <td class="text-capitalize">
-                                    <a href="edit_vip_pkg/{{$vip_book['id']}}" class="btn btn-blue  btn-sm btn-inverse btn-outline-success">
-                                      <i class="fa fa-eye"></i> 
-                                    </a>
+                                 <a href="view_user_event_details/{{$vip_book['id']}}" class="btn btn-sm btn-blue  btn-inverse btn-outline-primary" style = "background-color: #10948C !important; ">
+                                    <i class="fa fa-eye"></i> 
+                                  </a>
                                 </td>
-                                <td>
-                                    
-                                    <a href="delete_vip_booking/{{$vip_book['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
-                                      <i class="fa fa-trash"></i> 
-                                    </a>
-                                   
-                                </td>
+                                
                               </tr>
                               <?php $count = $count+1;?>
                               @endforeach

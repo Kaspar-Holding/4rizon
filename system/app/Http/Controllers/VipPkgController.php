@@ -57,7 +57,7 @@ class VipPkgController extends Controller
     }
 
     function vip_booking_list(){
-    	$vip_booking_list = VipBookings::all();
+    	$vip_booking_list = Bookings::where('booking_type',2)->get();
     	return view("vip.list",['vip_booking_list'=>$vip_booking_list,]);
     }
     public function delete_vip_booking ($id) {

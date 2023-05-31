@@ -1280,31 +1280,60 @@ public function save_token(Request $req){
       // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
 
   }
-  function multiple_delete(Request $req){
+//   function multiple_delete(Request $req){
    
-    // $s = $req->input('pass_checkedvalue');
-    $s = $_POST['pass_checkedvalue'];
+//     // $s = $req->input('pass_checkedvalue');
+//     $s = $_POST['pass_checkedvalue'];
      
-    // $string1 = implode(',',$s);
-    echo json_encode($s);die();
-    $string = $s;
-    $checkbox = explode(',', $string);
+//     // $string1 = implode(',',$s);
+    
+//     $string = $s;
+//     $checkbox = explode(',', $string);
     
   
-    if(!empty($checkbox)){
+//     if(!empty($checkbox)){
       
-      foreach($checkbox as $cb){
-        $user = user_infos::where('user_id','=',$cb)->first();
-        if(!empty($user)){
-          $delete = user_infos::where('user_id',$cb)->delete();
+//       foreach($checkbox as $cb){
+//         $user = user_infos::where('user_id','=',$cb)->first();
+//         if(!empty($user)){
+//           $delete = user_infos::where('user_id',$cb)->delete();
 
-        }
+//         }
+//       }
+    
+//     }
+    
+//     return redirect('/users_list')->with('success','User Deleted Successfully');
+//     // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
+
+// }
+function multiple_delete(Request $req){
+   
+  $type = "application/json";
+  $checkbox = $req->input('checkbox',[]);
+//  $checkbox = $req->djId;
+ 
+  if(!empty($checkbox)){
+    
+    foreach($checkbox as $cb){
+    
+    foreach($checkbox as $cb){
+      $user = user_infos::where('user_id','=',$cb)->first();
+      if(!empty($user)){
+        $delete = user_infos::where('user_id',$cb)->delete();
+
       }
-    
     }
-    
-    return redirect('/users_list')->with('success','User Deleted Successfully');
-    // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
+  
+  }
+  
+  return redirect('/users_list')->with('success','User Deleted Successfully');
+  // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
+
+}
+else{
+  return redirect('/users_list')->with('success','No Record Selected');
+}
 
 }
 public function confirm_delete(Request $req)
@@ -1337,105 +1366,130 @@ public function admin_delete(Request $req)
   function multiple_approve_dj(Request $req){
     $type = "application/json";
     $checkbox = $req->input('checkbox');
-  //  $checkbox = $req->djId;
-    // print_r($checkbox);die();
-    if(!empty($checkbox)){
-      
-      foreach($checkbox as $cb){
-        $dha_profile = Dj_Dha_profile::where('dj_id','=',$cb)->first();
-        if(!empty($dha_profile)){
-          DjUser::where('id','=',$cb)->update([
-            'dj_status'=>"1"
-          ]);
-           $userFind = DjUser::where('id',$cb)->first();
-                $message = "Your Account Has Been Approved";
-                if (!is_null($userFind->device_id)){
-                  $this->mobile_push_notification($message,$userFind->device_id);
-                }
-          $email = DjUser::where('id','=',$cb)->first();
-          UserEmails::notifications($email->email);
+    $submitButton = $req->input('button');
+    // echo json_encode($submitButton);die();
+    if ($submitButton == 'delete') {
+      if(!empty($checkbox)){
+    
+        foreach($checkbox as $cb){
+        
+        foreach($checkbox as $cb){
+          $user = DjUser::where('id','=',$cb)->first();
+          if(!empty($user)){
+            $delete = DjUser::where('id',$cb)->delete();
+    
+          }
         }
       
-
-        else{
-          $user_infos = DjUser::where('id','=',$cb)->first();
-          if($user_infos->passport_id != ""){
-            $userFind = DjUser::where('id',$cb)->first();
-            $message = "Your Account Has Been Approved";
-            if (!is_null($userFind->device_id)){
-              $this->mobile_push_notification($message,$userFind->device_id);
-            }
-              $email = DjUser::where('id','=',$cb)->first();
-              UserEmails::notifications($email->email);
-          }
-          else{
-          $data_array = array();
-          $data_array['Token'] = "9a88abd8-2f4a-4f6f-bbcf-22755254f89b";
-          $data_array['Username'] = "Jynx";
-          $data_array['Password'] = "Pass12345";
-          $data_array['TransactionReference'] = "Your internal reference";
-         
-          $data_array['idNumber'] = $user_infos->southAfrican_id;
-          $result = json_decode(file_get_contents("php://input"), true);
-          // $make_call = array();
-          // $make_call['personName'] = "KANZA";
-          // $make_call['personSurname'] = "NAJAM UL HUDA";
-          // $make_call['gender'] = "Female";
-          // $make_call['dateOfBirth'] = "1986-08-12";
-          // $make_call['aliveStatus'] = "ALIVE";
-          $make_call = json_decode($this->callCoreInfoAPI(json_encode($data_array)),true);
-          // $make_call = json_decode('{
-          //     "personName": "KANZA",
-          //     "personSurname": "NAJAM UL HUDA",
-          //     "gender": "Female",
-          //     "dateOfBirth": "1986-08-12",
-          //     "aliveStatus": "ALIVE",
-          //     "clientFeedback": {
-          //         "systemErrorInfo": "0",
-          //         "clientErrorInfo": "0"
-          //     }
-          // }', true);
+      }
+      
+      return redirect('/admin_djlist')->with('success','User Deleted Successfully');
+      // return view("users.inactivelist",['users_list'=>$users_data,'approved'=>$count_approved,'denied'=>$count_denied]);
+    
+    }
+    else{
+      return redirect('/admin_djlist')->with('success','No Record Selected');
+    }
+    }
+    if($submitButton == 'verify'){
+      if(!empty($checkbox)){
         
-          if(empty($make_call)){
-            DjUser::where('id','=',$cb)->update([
-              'dj_status'=>"3"
-            ]);
-            $userFind = DjUser::where('id',$cb)->first();
-            $message = "Your Account Has Been Denied";
-            if (!is_null($userFind->device_id)){
-              $this->mobile_push_notification($message,$userFind->device_id);
-            }
-          }
-          else{
-            $dha_info = new Dj_Dha_profile;
-          $dha_info->dj_id              = $cb;
-          $dha_info->identification_num   = $user_infos->southAfrican_id;
-          $dha_info->personName           = $make_call['personName'];
-          $dha_info->personSurname        = $make_call['personSurname'];
-          $dha_info->gender               = $make_call['gender'];
-          $dha_info->dateOfBirth          = $make_call['dateOfBirth'];
-          $dha_info->aliveStatus          = $make_call['aliveStatus'];
-          $dha_info->dha_api_status       = $make_call['clientFeedback']['clientErrorInfo'];
-          $dha_info->save();
+        foreach($checkbox as $cb){
           $dha_profile = Dj_Dha_profile::where('dj_id','=',$cb)->first();
           if(!empty($dha_profile)){
             DjUser::where('id','=',$cb)->update([
               'dj_status'=>"1"
             ]);
-             $userFind = DjUser::where('id',$cb)->first();
-                $message = "Your Account Has Been Approved";
-                if (!is_null($userFind->device_id)){
-                  $this->mobile_push_notification($message,$userFind->device_id);
-                }
+            $userFind = DjUser::where('id',$cb)->first();
+                  $message = "Your Account Has Been Approved";
+                  if (!is_null($userFind->device_id)){
+                    $this->mobile_push_notification($message,$userFind->device_id);
+                  }
             $email = DjUser::where('id','=',$cb)->first();
             UserEmails::notifications($email->email);
           }
         
+
+          else{
+            $user_infos = DjUser::where('id','=',$cb)->first();
+            if($user_infos->passport_id != ""){
+              $userFind = DjUser::where('id',$cb)->first();
+              $message = "Your Account Has Been Approved";
+              if (!is_null($userFind->device_id)){
+                $this->mobile_push_notification($message,$userFind->device_id);
+              }
+                $email = DjUser::where('id','=',$cb)->first();
+                UserEmails::notifications($email->email);
+            }
+            else{
+            $data_array = array();
+            $data_array['Token'] = "9a88abd8-2f4a-4f6f-bbcf-22755254f89b";
+            $data_array['Username'] = "Jynx";
+            $data_array['Password'] = "Pass12345";
+            $data_array['TransactionReference'] = "Your internal reference";
+          
+            $data_array['idNumber'] = $user_infos->southAfrican_id;
+            $result = json_decode(file_get_contents("php://input"), true);
+            // $make_call = array();
+            // $make_call['personName'] = "KANZA";
+            // $make_call['personSurname'] = "NAJAM UL HUDA";
+            // $make_call['gender'] = "Female";
+            // $make_call['dateOfBirth'] = "1986-08-12";
+            // $make_call['aliveStatus'] = "ALIVE";
+            $make_call = json_decode($this->callCoreInfoAPI(json_encode($data_array)),true);
+            // $make_call = json_decode('{
+            //     "personName": "KANZA",
+            //     "personSurname": "NAJAM UL HUDA",
+            //     "gender": "Female",
+            //     "dateOfBirth": "1986-08-12",
+            //     "aliveStatus": "ALIVE",
+            //     "clientFeedback": {
+            //         "systemErrorInfo": "0",
+            //         "clientErrorInfo": "0"
+            //     }
+            // }', true);
+          
+            if(empty($make_call)){
+              DjUser::where('id','=',$cb)->update([
+                'dj_status'=>"3"
+              ]);
+              $userFind = DjUser::where('id',$cb)->first();
+              $message = "Your Account Has Been Denied";
+              if (!is_null($userFind->device_id)){
+                $this->mobile_push_notification($message,$userFind->device_id);
+              }
+            }
+            else{
+              $dha_info = new Dj_Dha_profile;
+            $dha_info->dj_id              = $cb;
+            $dha_info->identification_num   = $user_infos->southAfrican_id;
+            $dha_info->personName           = $make_call['personName'];
+            $dha_info->personSurname        = $make_call['personSurname'];
+            $dha_info->gender               = $make_call['gender'];
+            $dha_info->dateOfBirth          = $make_call['dateOfBirth'];
+            $dha_info->aliveStatus          = $make_call['aliveStatus'];
+            $dha_info->dha_api_status       = $make_call['clientFeedback']['clientErrorInfo'];
+            $dha_info->save();
+            $dha_profile = Dj_Dha_profile::where('dj_id','=',$cb)->first();
+            if(!empty($dha_profile)){
+              DjUser::where('id','=',$cb)->update([
+                'dj_status'=>"1"
+              ]);
+              $userFind = DjUser::where('id',$cb)->first();
+                  $message = "Your Account Has Been Approved";
+                  if (!is_null($userFind->device_id)){
+                    $this->mobile_push_notification($message,$userFind->device_id);
+                  }
+              $email = DjUser::where('id','=',$cb)->first();
+              UserEmails::notifications($email->email);
+            }
+          
+            }
+          }
           }
         }
-        }
+      
       }
-    
     }
     $users_data = DjUser::where('dj_status',0)->orWhere('dj_status',2)->orWhere('dj_status',1)->orWhere('dj_status',3)->get();
   

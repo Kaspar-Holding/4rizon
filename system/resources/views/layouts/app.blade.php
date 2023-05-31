@@ -44,7 +44,7 @@
       <link rel="stylesheet" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
       
       <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-       
+     
        {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"> --}}
 
      
@@ -161,6 +161,7 @@
            } 
        })
        </script>
+       
       <script type="text/javascript">
         $(document).ready(function() {
            
@@ -297,6 +298,27 @@
     
           </script>
     <script>
+            $('.delete_btn').click(function(e){
+                console.log("hi");
+            //     var data=$('#delete_form').serialize();
+            //    var dataJSON = JSON.stringify(data);
+            //    console.log(data);
+            //    console.log(dataJSON);
+            var data = $('.deletebtn').val();
+            console.log(data);
+               $.ajax({
+                   url:"{{url('api/multiple_delete')}}",
+                   type:'post',
+                   data:data,
+                   success:function(response){
+                       console.log(response);
+                   }
+           });
+        });
+       
+        
+    </script>
+    <script>
         $('.users').on('change',function(){
     var value = $(this).val();
     location.href = value; //or .php, etc. This will go to a page called en.html
@@ -413,13 +435,20 @@ $('#multiconfirm-modal').on('show.bs.modal', function(e) {
          $('#id').val(id);
     });
     </script>
+    <script>
+        $(document).on('click','.pay',function(){
+             let id = $(this).attr('data-id');
+            
+             $('#booking_id').val(id);
+        });
+        </script>
     <script src=
     "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js">
            </script>
             <link rel="stylesheet" 
                   href=
     "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    
     <script>
       $(document).ready(function () {
           //Select2

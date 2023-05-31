@@ -5,7 +5,7 @@
         <div class="row column_title">
             <div class="col-md-12">
                <div class="page_title">
-                  <h2>Users Lists</h2>
+                  <h2>Admin Lists</h2>
                </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
                      <div class="heading1 margin_0">
                         <div class="row">
                             <div class="col-md-9">
-                                <h2>Admin Lists</h2>
+                                
                             </div>
                             <div class="col-md-3">
                                 <a href="{{ route('add_new_user')}}" class="btn btn-inverse my-button btn-outline-primary">Add New User</a>

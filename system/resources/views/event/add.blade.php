@@ -8,6 +8,9 @@
               <h2>Create Event</h2>
                  
             </div>
+            <div class = "alerti" style="background-color:firebrick !important">
+              @include('flashmessages')
+          </div>
              <div><img class="event_banner" src="{{ asset('new/images/banner2.jpg')}}"/></div>
           </div>
         </div>
@@ -24,9 +27,7 @@
            
               <form class="container-fluid" action="{{ route('create_event')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
                 @csrf
-                <div class = "alerti">
-                  @include('flashmessages')
-              </div>
+              
                 <div>
                   <label class="form-label">Event Name</label>
                   <input type="text" name="event_name" class="form-control" required >
@@ -54,7 +55,8 @@
                 <br>
                 <div>
                   <label class="form-label">Event Date</label>
-                  <input type="date" name="event_date" id="txtDate" class="form-control" required >
+                  <input type="date" name="event_date" id="txtDate" class="form-control"  required >
+                  
                 </div>
                 
                 <br>

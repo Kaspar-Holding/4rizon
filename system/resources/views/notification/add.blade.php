@@ -5,7 +5,9 @@
   
   
   
- 
+  .select2-container--default .select2-selection--multiple{
+  background-color: rgba(13, 45, 80, 1) !important;
+ }
   .select2-results__options[aria-multiselectable="true"] li {
   padding-left: 30px;
   position: relative
@@ -27,7 +29,8 @@
   background-color: rgba(13, 45, 80, 1) !important;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: rgba(13, 45, 80, 1);
+  background-color: black !important;
+  color : white !important;
 }
 .select2-container--default .select2-selection--multiple{
   background-color: rgba(13, 45, 80, 1);
@@ -62,14 +65,14 @@ padding: 10px;
                 @csrf
                 <div class="row" style="margin-top:10px;">
                 <div class="col-md-6">
-                  <label class="form-label">Notification</label>
+                  <label class="form-label">User Notification</label>
                   <input type="text" name="admin_msg" class="form-control" required >
                 </div>
                 
                 <div class="col-md-6">
-                  <label class="form-label">Group</label>
+                  <label class="form-label">User Group</label>
                   <select name="user[]" id="cars" multiple="multiple"  class="form-control select2" required >
-                    <option> Select Users </option>
+                    
                     @foreach($usergroups as $group)
                     <option value="{{$group['group_name']}}">{{$group['group_name']}}</option>
                     @endforeach
@@ -78,21 +81,21 @@ padding: 10px;
                 </div>
                 <br>
                 <div class="row" style="padding-top:10px; padding-left:30px;">
-                  <button type="submit" class=" col-md-2 btn btn-primary my-button link-light col-sm-4">Create</button>
+                  <button type="submit" class=" col-md-2 btn btn-primary my-button link-light col-sm-4">Send</button>
                 </div>
               </form>
               <form class="container-fluid" action="create_dj_admin_msg" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding:30px;">
                 @csrf
                 <div class="row" style="margin-top:10px;">
                 <div class="col-md-6">
-                  <label class="form-label">Notification</label>
+                  <label class="form-label">Artist Notification</label>
                   <input type="text" name="admin_msg" class="form-control" required >
                 </div>
                 
                 <div class="col-md-6">
-                  <label class="form-label">DJ Group</label>
+                  <label class="form-label">Artist Group</label>
                   <select name="user[]" id="cars" multiple="multiple"  class="form-control select2" required >
-                    <option> Select Users </option>
+                    
                     @foreach($djgroups as $group)
                     <option value="{{$group['group_name']}}">{{$group['group_name']}}</option>
                     @endforeach
@@ -101,7 +104,7 @@ padding: 10px;
                 </div>
                 <br>
                 <div class="row" style="padding-top:10px; padding-left:30px;">
-                  <button type="submit" class=" col-md-2 btn btn-primary my-button link-light col-sm-4">Create</button>
+                  <button type="submit" class=" col-md-2 btn btn-primary my-button link-light col-sm-4">Send</button>
                 </div>
               </form>
             </div>

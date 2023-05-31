@@ -37,14 +37,15 @@
                      @csrf
                   
                      <div class="row"  style="margin-bottom:20px !important;">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
 
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                         
-                           <button type = "submit"  class="btn btn-inverse my-button btn-outline-primary" style="
+                           <button type = "submit" name = "button" value = "verify" class="btn btn-inverse my-button btn-outline-primary" style="
                            margin-left: 0px;">Verify and Approve</button>
-                              
+                              <button type  = "submit" name = "button" value = "delete" class=" delete_btn btn btn-inverse my-button btn-outline-primary"  style="margin-left: 0px;">Delete
+                              </button>
 
                         </div>
                      </div>

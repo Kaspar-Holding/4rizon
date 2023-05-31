@@ -1,18 +1,9 @@
 @extends('layouts.app')
-@section('pageTitle','Payment Methods')
+@section('pageTitle','In-Active Users')
 @section('content')
 <style>
     .dataTables_wrapper .dataTables_filter input {
         border-radius: 11px !important;
-    }
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        color: aliceblue !important;
-    }
-    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_pag{
-        color: aliceblue !important;
-    }
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    color: aliceblue !important;
     }
     </style>
     <div class="container-fluid">
@@ -40,41 +31,37 @@
             <!-- table section -->
             <div class="col-md-12">
                <div class="white_shd full margin_bottom_30">
-                    <div class = "alerti">
-                        @include('flashmessages')
-                    </div>
-                  <div class="full graph_head" style="margin-bottom:20px !important;">
-                     <div class="heading1 margin_0">
-                        <form class="container-fluid" action="{{route('multiple_delete')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
-                            @csrf
-                         <div class="row">
-                            <div class="col-md-7">
-                                <h2>Users</h2>
-                            </div>
-                            <div class="col-md-5">
-                                <a href="{{ route('register_new_user') }}" class="btn btn-inverse my-button btn-outline-primary">Register New User</a>
-                            {{-- </div>
-                            <div class = "col-md-2"> --}}
-                                @if( Auth::user()->role == "super admin")
-                                <span data-href="/export-csv" id="export" class="btn btn-inverse my-button btn-outline-primary" onclick ="exportTasks (event.target);">Export</span>
-                                <div id = "btn_multidelete1" class="btn btn-inverse my-button btn-outline-primary" data-toggle="modal" data-target="#multiconfirm-modal1" style="margin-left: 0px; display:none">Delete
-                                </div>
-                                <i style="color:white;font-size: 27px;
-                                position: relative;
-                                top: 8px;
-                                left: 8px;" class="fa fa-bars" onclick="selectAl()"></i>
-                                
-                                @endif
-                            </div>
+                  <div class = "alerti">
+                     @include('flashmessages')
+                 </div>
+                  <div class="full graph_head">
+                    
+                  </div>
+               <form class="container-fluid" action="{{route('multiple_delete')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
+                     @csrf
+                  
+                     <div class="row"  style="margin-bottom:20px !important;">
+                        <div class="col-md-7">
+
+                        </div>
+                        <div class="col-md-5">
+                            <a href="{{route('register_new_djuser')}}" class="btn btn-inverse my-button btn-outline-primary">Add New User</a>
+                            @if( Auth::user()->role == "super admin")
+                            <span data-href="/export-csv" id="export" class="btn btn-inverse my-button btn-outline-primary" onclick ="exportTasks (event.target);">Export</span>
+                           
+                            <button type  = "submit" class=" delete_btn btn btn-inverse my-button btn-outline-primary"  style="margin-left: 0px;">Delete
+                            </button>
+                            @endif
+                              
+
                         </div>
                      </div>
-                  </div>
                   <div class="table_section padding_infor_info">
                      <div class="table-responsive-sm">
                         <table class="table table-striped" id = "myTable">
                            <thead>
                               <tr>
-                                 <th>#</th>
+                                <th>#</th>
                                  <th>Action</th>
                                  <th>Status</th>
                                  <th>Status</th>
@@ -87,15 +74,17 @@
                                  <th>Citizenship</th>
                                  {{-- <th>Gender</th> --}}
                                  <th>Register at</th>
-                                 <th id="multipleHead" style="display:none;">Select All &nbsp;<input type="checkbox" id="deleteAll"  /></th>
+                                <th>Select All &nbsp;<input type="checkbox" id="selectAll" /></th>
                               </tr>
                            </thead>
                            <tbody>
+                              @if(!empty($users_list))
                               <?php $count = 1;?>
                               @foreach ($users_list as $user)
                               <tr>
                                 <td class="text-capitalize">{{$count}}</td>
                                 <td class = "row">
+                                    
                                     <a style="margin: 2px;" href="view_user_details/{{$user['user_id']}}" class="btn check-icon btn-sm btn-inverse btn-outline-primary">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     </a>
@@ -161,45 +150,53 @@
                                    $date = date('m/d/y',$register) ;
                                 @endphp
                                 <td class="text-capitalize">{{$user['created_at']}}</td>
-                               
-                                <td class="multipleSelectBox" style="display:none;">
-                                    <input type = "checkbox" id = "example1" class="record1" name = "checkbox[]" value="{{$user['user_id']}}"></td>
-                                       
+                              
+                                <td>
+                                 <input type = "checkbox" id = "example" name = "checkbox[]" value="{{$user['user_id']}}"></td> 
                               </tr>
+                              
                               <?php $count = $count+1;?>
                               @endforeach
+                              
+                              @else
+                              <tr>
+                                <th>No User Found</th>
+                              </tr>
+                              @endif
                            </tbody>
-                        </form>
+                        
                         </table>
-                        <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" style="color:black !important;" id="exampleModalLabel">Delete User</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                    <form action="{{ route('confirm_delete') }}" method="post">
-                                        @csrf
-                                        
-                                        <input id="id" name="id" hidden>
-                                        <h5 class="text-center" style="color:black !important;">Are you sure you want to delete this user?</h5>
-                                      
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        
                      </div>
                   </div>
-               </div>
-            </div>            
-        </div>
-    </div>
+               </form>
+               <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" style="color:black !important;" id="exampleModalLabel">Delete User</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                          <form action="{{ route('confirm_delete') }}" method="post">
+                              @csrf
+                              
+                              <input id="id" name="id" hidden>
+                              <h5 class="text-center" style="color:black !important;">Are you sure you want to delete this user?</h5>
+                            
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                          </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+            </div>
+         </div>            
+      </div>
+   </div>
 @stop

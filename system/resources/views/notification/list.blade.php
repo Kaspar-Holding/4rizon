@@ -20,13 +20,13 @@
    </style>
     <div class="container-fluid">
         <div class="row column_title">
-            <div class="col-md-7">
+            <div class="col-md-6">
                <div class="page_title">
                   <h2>Notification Lists</h2>
                </div>
             </div>
             
-               <div class="col-md-5"  style="margin-top: 40px;">
+               <div class="col-md-6"  style="margin-top: 40px;">
                   <a href="{{ route('notif_list') }}" class="btn btn-inverse my-button btn-outline-primary">All Notifications</a>
                   @if( Auth::user()->role == "super admin" || Auth::user()->role == "general admin"  )
                   <a href="{{ route('create_group') }}" class="btn btn-inverse my-button btn-outline-primary">Create Group</a>
@@ -88,14 +88,18 @@
                                 <td class="text-capitalize">@if(!empty($user)) {{$user->first_name}} {{$user->last_name}} @else Not Found @endif</td>
                                 <td class="text-capitalize">{{$notification['admin_msg']}}</td>
                                 <td class="text-capitalize">@if($notification['notification_type'] == 3) Admin Message @elseif($notification['notification_type'] == 2) Purchase Item Notification @elseif($notification['notification_type'] == 1) Event Notification @elseif($notification['notification_type'] == 4) Event Invitation @elseif($notification['notification_type'] ==5) DJ Notification @endif</td>
-                                <td class="text-capitalize">{{$notification['status']}}</td>
-                                @if( Auth::user()->role == "super admin")
+                                <td class="text-capitalize">@if($notification['status'] == 0) Delivered
+                                 @elseif($notification['status'] == 1) Received</td>
+                                 @endif
+                                 @if( Auth::user()->role == "super admin")
                                 <td>
                                     <a href="delete_admin_msg/{{$notification['id']}}" class="btn btn-red btn-sm btn-inverse btn-outline-danger">
                                       <i class="fa fa-trash"></i> 
                                     </a>
-                                   @endif
+                                   
                                 </td>
+                                 
+                                 @endif
                               </tr>
                               @php $count++; @endphp
                               @endforeach

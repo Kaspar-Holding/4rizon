@@ -35,7 +35,21 @@ class EventController extends Controller
        
         return view("event.attendList",['event_list'=>$event_data,]);
     }
-   
+   function checkDate(Request $request)
+   {
+       
+       $date = $request->date;
+       
+       $check = Event::where('event_date',$date)->first();
+       if(!empty($check)){
+        $response = "<span style='color: red;'>Not Available.</span>";
+        
+       }
+       else{
+        $response = "<span style='color: green;'>Available.</span>";
+       }
+       echo $response;
+   }
     function users_transaction_list(){
         $event_data = Transaction::all();
         return view("event.transactions",['event_list'=>$event_data,]);
@@ -199,9 +213,38 @@ class EventController extends Controller
         return redirect('/event_list')->with('success','Event Created Successfully!');
         }
     }
+    function multiple_delete_event(Request $req){
+   
+        $type = "application/json";
+        $checkbox = $req->input('checkbox',[]);
+      //  $checkbox = $req->djId;
+       
+        if(!empty($checkbox)){
+          
+          foreach($checkbox as $cb){
+          
+          foreach($checkbox as $cb){
+            $user = Event::where('id','=',$cb)->first();
+            if(!empty($user)){
+              $delete = Event::where('id',$cb)->delete();
+      
+            }
+          }
+        
+        }
+        
+        return redirect('/event_list')->with('success','Event Deleted Successfully');
+       
+      }
+      else{
+        return redirect('/event_list')->with('success','No Record Selected');
+      }
+      
+      }
     function payment(Request $req){
        
         $booking_data = Bookings::where('booking_id','=',$req->booking_id)->first();
+        
         $transaction = Transaction::where('booking','=',$req->booking_id)->first();
         if(empty($transaction)){
             $event = new Transaction;

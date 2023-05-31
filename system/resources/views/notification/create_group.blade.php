@@ -92,7 +92,7 @@ padding: 10px;
               </form>
               
                 <div class="page_title">
-                  <h2 style="padding-left: 35px;">DJ Group</h2>
+                  <h2 style="padding-left: 35px;">Artist Group</h2>
                 </div>
               
               <form class="container-fluid" action="{{ route('create_dj_admin_group')}}" method="POST" enctype="multipart/form-data" style="padding-bottom:40px; padding-left:30px; padding-right:30px;">
@@ -104,7 +104,7 @@ padding: 10px;
                     </div>
                     
                     <div class="col-md-6">
-                    <label class="form-label">DJ List</label>
+                    <label class="form-label">Artist List</label>
                     <select name="user[]" id="cars" multiple="multiple"  class="form-control select2" required >
                         <option> Select Users </option>
                         @foreach($djusers as $djuser)

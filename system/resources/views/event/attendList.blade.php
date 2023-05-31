@@ -71,9 +71,13 @@
                                
                                 <td class="text-capitalize">
                                     {{ $event->status }} </td>
-                                    <td class="text-capitalize">@if($event->payment_status == 0)   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    <td class="text-capitalize">@if($event->payment_status == 0)   <a type="button" data-id={{$event['booking_id']}} class="btn btn-primary pay" data-toggle="modal" data-target="#exampleModal">
                                        To Pay
-                                       </button> @else Paid @endif</td>
+                                    </a> @else Paid @endif</td>
+                                    {{-- <a style="margin: 2px;" style="margin: 2px;"   href="#" 
+                                   data-id={{$user['user_id']}} 
+                                   data-toggle="modal" 
+                                   data-target="#deleteModal" class="btn btn-sm btn-red btn-inverse btn-outline-danger del"> --}}
                                 <td>
                                     <a href="view_user_event_details/{{$event['id']}}" class="btn btn-sm btn-blue  btn-inverse btn-outline-primary" style = "background-color: #10948C !important; ">
                                       <i class="fa fa-eye"></i> 
@@ -101,11 +105,12 @@
                                           <div class="col-md-12">
                                        <form style = "padding-top:0px; !important" action="{{ route('payment')}}" method="POST" enctype="multipart/form-data" style="padding:30px;">
                                           @csrf
+                                          <input name="booking_id" id="booking_id" class="form-control" type = "hidden">
                                           <div>
                                              <label class="form-label">Enter Amount</label>
                                              <input type="text" name="price" class="form-control" required >
-                                             @if(!empty($event->booking_id))
-                                             <input type="hidden" name="booking_id" value="{{ $event->booking_id }}" class="form-control" required >@endif
+                                            
+                                             
                                           </div>
                                           
                                           </div></div>
@@ -117,7 +122,7 @@
                                        </form>
                                        </div>
                                     </div>
-                              </div>
+                           </div>
                         </table>
                      </div>
                   </div>

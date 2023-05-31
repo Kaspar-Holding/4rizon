@@ -21,7 +21,7 @@
                      <div class="heading1 margin_0">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h2>Survey Lists</h2>
+                                {{-- <h2>Survey Lists</h2> --}}
                             </div>       @if( Auth::user()->role == "super admin" )
 
                             <div class="col-sm-3">

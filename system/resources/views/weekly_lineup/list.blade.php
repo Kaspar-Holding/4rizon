@@ -21,7 +21,7 @@
                      <div class="heading1 margin_0">
                         <div class="row">
                             <div class="col-md-9">
-                                <h2>Weekly Lineup Lists</h2>
+                                {{-- <h2>Weekly Lineup Lists</h2> --}}
                             </div>
                             <div class="col-md-3">
                                 <a href="{{ route('add_new_weekly_lineup')}}" class="btn my-button btn-inverse btn-outline-primary">Create Weekly Lineup</a>

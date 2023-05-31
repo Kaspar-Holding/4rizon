@@ -24,12 +24,18 @@
                     </div>
                   <div class="full graph_head">
                      <div class="heading1 margin_0">
+                       
                         <div class="row">
                             <div class="col-md-9">
                                 <h2>Event Lists</h2>
                             </div>
                             <div class="col-md-3">
+
                                 <a href="{{ route('add_new_event')}}" class="btn btn-inverse my-button btn-outline-primary">Create Event</a>
+                                {{-- @if( Auth::user()->role == "super admin")
+                                <button type  = "submit" class=" delete_btn btn btn-inverse my-button btn-outline-primary"  style="margin-left: 0px;">Delete
+                                </button>
+                                @endif --}}
                             </div>
                         </div>
                      </div>
@@ -47,6 +53,7 @@
                                  <th>Event End Time</th>
                                  <th>QR Generated</th>
                                  <th>Action</th>
+                                 {{-- <th>Select All &nbsp;<input type="checkbox" id="selectAll" /></th> --}}
                               </tr>
                            </thead>
                            <tbody>
@@ -77,11 +84,14 @@
                                     data-target="#deleteModal" class="btn btn-sm btn-red btn-inverse btn-outline-danger del"><i class="fa fa-trash"></i></a>
                                    
                                 </td>
+                                {{-- <td>
+                                    <input type = "checkbox" id = "example" name = "checkbox[]" value="{{$event['id']}}"></td> --}}
                               </tr>
                               <?php $count = $count+1;?>
                               @endforeach
                            </tbody>
                         </table>
+                    </form>
                         <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
                            <div class="modal-dialog" role="document">
                                <div class="modal-content">
